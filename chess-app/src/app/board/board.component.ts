@@ -8,7 +8,7 @@ import {HttpService} from "../http.service";
 })
 export class BoardComponent implements OnInit {
 
-  fieldMatrix: Map<string, any>;
+  fieldMatrix: GameBoard;
   coordinate = {
     x: ["a","b","c","d","e","f","g","h"],
     y: ["1","2","3","4","5","6","7","8"]
