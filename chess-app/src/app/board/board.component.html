@@ -1,1 +1,64 @@
-<p>board works!</p>
+<div class="boardLayout">
+
+<!--  <div class="middleContainer">-->
+<!--    <ul *ngIf="fieldMatrix">-->
+<!--      <li *ngFor="let row of fieldMatrix | keyvalue">-->
+<!--        &lt;!&ndash;    {{row.key}} &ndash;&gt; {{row.value}}&ndash;&gt;-->
+<!--        <app-field [fieldColumn]="row.value"></app-field>-->
+<!--      </li>-->
+<!--    </ul>-->
+<!--  </div>-->
+
+  <div class="middleContainer">
+    <ul *ngIf="fieldMatrix">
+      <li *ngFor="let row of fieldMatrix | keyvalue">
+
+        <div class="fieldColumn">
+          <ul *ngIf="row.value">
+            <li *ngFor="let field of row.value | keyvalue">
+              <app-field  [field]="field.value"></app-field>
+            </li>
+          </ul>
+        </div>
+
+      </li>
+    </ul>
+  </div>
+
+  <div class="topBordDescription">
+    <ul *ngIf="coordinate" class="ulX">
+      <li *ngFor="let x of coordinate.x">
+        <div class="coordinate"> {{x | uppercase}} </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="rightBordDescription">
+    <ul *ngIf="coordinate" class="ulY">
+      <li *ngFor="let y of coordinate.y">
+        <div class="coordinate"> {{y | uppercase}} </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="bottomBordDescription">
+    <ul *ngIf="coordinate" class="ulX">
+      <li *ngFor="let x of coordinate.x">
+        <div class="coordinate"> {{x | uppercase}} </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="leftBordDescription">
+    <ul *ngIf="coordinate" class="ulY">
+      <li *ngFor="let y of coordinate.y">
+        <div class="coordinate"> {{y | uppercase}} </div>
+      </li>
+    </ul>
+  </div>
+
+</div>
+
+
+
+
