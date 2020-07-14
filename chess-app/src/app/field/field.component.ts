@@ -18,25 +18,6 @@ export class FieldComponent implements OnInit  {
 
     // console.log(Object.values(this.fieldRow))
   }
-
-  fieldSize(){
-    const mainFrameSize = document.getElementById('mainFrame').getBoundingClientRect();
-    const bodyHeight = document.body.getBoundingClientRect().height;
-    const bodyWidth = document.body.getBoundingClientRect().width;
-
-    if(bodyWidth < mainFrameSize.width){
-      return bodyWidth / 11 + 'px';
-    }
-
-
-
-
-    // console.log(height);
-
-    return bodyHeight / 11 + 'px';
-
-
-  }
 }
 
 
