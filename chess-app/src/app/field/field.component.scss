@@ -1,12 +1,15 @@
 
 .field {
-  word-break: break-word;
+  //word-break: break-word;
   overflow: hidden;
   color: white;
   width: 8vw;
   height: 8vw;
   max-height: 8vh;
   max-width: 8vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .sandybrown {
   background: sandybrown;

@@ -1,10 +1,20 @@
 <ng-template [ngIf]="field['fieldColor'] == 'BROWN'">
-  <div class="field brown">
+  <div class="field brown" (mouseover)="this.markupDesignation(this.field)">
+    <ng-template [ngIf]="this.figure != null">
+
+      <app-figure [figure]="this.figure"></app-figure>
+
+    </ng-template>
   </div>
 </ng-template>
 
 <ng-template [ngIf]="field['fieldColor'] == 'SANDYBROWN'">
-  <div class="field sandybrown">
+  <div class="field sandybrown" (mouseover)="this.markupDesignation(this.field)">
+    <ng-template [ngIf]="this.figure != null">
+
+      <app-figure [figure]="this.figure"></app-figure>
+
+    </ng-template>
   </div>
 </ng-template>
 

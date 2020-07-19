@@ -1,0 +1,28 @@
+
+<ng-template [ngIf]="this.figureType == 'PAWN'">
+  <app-pawn [figureColor]="this.figureColor"></app-pawn>
+</ng-template>
+
+<ng-template [ngIf]="this.figureType == 'ROOK'">
+  <app-rook [figureColor]="this.figureColor"></app-rook>
+</ng-template>
+
+<ng-template [ngIf]="this.figureType == 'KNIGHT'">
+  <app-knight [figureColor]="this.figureColor"></app-knight>
+</ng-template>
+
+<ng-template [ngIf]="this.figureType == 'BISHOP'">
+  <app-bishop [figureColor]="this.figureColor"></app-bishop>
+</ng-template>
+
+<ng-template [ngIf]="this.figureType == 'KING'">
+  <app-king [figureColor]="this.figureColor"></app-king>
+</ng-template>
+
+<ng-template [ngIf]="this.figureType == 'QUEEN'">
+  <app-queen [figureColor]="this.figureColor"></app-queen>
+</ng-template>
+
+
+
+

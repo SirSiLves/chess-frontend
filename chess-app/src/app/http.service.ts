@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {GameBoard} from "./board/board.component";
+import {IBoard} from "./board/board.component";
 
 
 @Injectable({
@@ -12,7 +12,7 @@ export class HttpService {
 
   getGamePicture(){
     //interface mit typisierten objekten -> statt any bspw. board
-    return this.http.get<GameBoard>('http://localhost:8080/api/game/getGamePicture', {
+    return this.http.get<IBoard>('http://localhost:8080/api/game/getGamePicture', {
       withCredentials: true,
     });
   }
