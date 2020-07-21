@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {IBoard} from "./board/board.component";
+import {catchError} from "rxjs/operators";
 
 
 @Injectable({
@@ -12,7 +13,8 @@ export class HttpService {
 
   getGamePicture(){
     //interface mit typisierten objekten -> statt any bspw. board
-    return this.http.get<IBoard>('http://localhost:8080/api/game/getGamePicture', {
+    return this.http
+      .get<IBoard>('http://localhost:8080/api/game/getGamePicture', {
       withCredentials: true,
     });
   }
@@ -22,5 +24,15 @@ export class HttpService {
       withCredentials: true,
       responseType: 'text'
     });
+  }
+
+  createGame2(){
+    return this.http.get('http://localhost:8080/api/initialize/createGame', {
+      withCredentials: true,
+      responseType: 'text'
+    }).subscribe(
+      data => console.log('success', data),
+      error => console.log('oops', error)
+    );
   }
 }

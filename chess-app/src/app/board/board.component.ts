@@ -22,6 +22,8 @@ export class BoardComponent implements OnInit {
     this._http.createGame().subscribe(data => {
       this.loadGame();
 
+      //TODO erro handling
+
       // https://www.npmjs.com/package/ngx-toastr
       this.toast.success(data, '', {
         timeOut: 3000,
