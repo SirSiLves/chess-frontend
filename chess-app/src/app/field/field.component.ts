@@ -20,47 +20,25 @@ export class FieldComponent implements OnInit {
   }
 
   removeMarkupDesignation() {
-
-    const coordinateElements = document.getElementsByClassName("coordinate");
-
-    for(let i = 0; i < coordinateElements.length; i++){
-      let liItem = coordinateElements[i];
-
+    while(document.getElementsByClassName("coordinateHovered").length > 0){
+      const coordinateElements = document.getElementsByClassName("coordinateHovered");
+      for(let i = 0; i < coordinateElements.length; i++){
+        coordinateElements.item(i).setAttribute("class", "coordinate");
+      }
     }
-
-    // for(let i = 1; i <= 8; i++){
-    //         // document.getElementById(i + "_top").style.color = 'grey';
-    //   // document.getElementById(i + "_bottom").style.color = 'grey';
-    //   document.getElementById(i + "_left").style.color = 'grey';
-    //   document.getElementById(i + "_right").style.color = 'grey';
-    // }
-
   }
 
 
   markupDesignation(hoveredField) {
+    this.removeMarkupDesignation();
+
     const x = hoveredField['fieldDesignation'][0];
     const y = hoveredField['fieldDesignation'][1];
 
-    const coordinateElements = document.getElementsByClassName("coordinateHovered");
-
-    for(let i = 1; i <= coordinateElements.length; i++){
-      let liItem = coordinateElements[i];
-      let className = liItem.getAttribute("class");
-      className = className.replace("coordinateHovered", "coordinate")
-      liItem.setAttribute("class", className)
-    }
-
-
-
-    document.getElementById(x + "_top").setAttribute("class","coordinateHovered");
-    document.getElementById(x + "_bottom").setAttribute("class","coordinateHovered");
-    document.getElementById(y + "_left").setAttribute("class","coordinateHovered");
-    document.getElementById(y + "_right").setAttribute("class","coordinateHovered");
-
-
-
-    //TODO Markup field desgination on where your mouse is
+    document.getElementById(x + "_top").setAttribute("class", "coordinateHovered");
+    document.getElementById(x + "_bottom").setAttribute("class", "coordinateHovered");
+    document.getElementById(y + "_left").setAttribute("class", "coordinateHovered");
+    document.getElementById(y + "_right").setAttribute("class", "coordinateHovered");
 
   }
 

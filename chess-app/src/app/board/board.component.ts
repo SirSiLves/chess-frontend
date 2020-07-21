@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HttpService} from "../http.service";
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-board',
@@ -10,21 +11,33 @@ export class BoardComponent implements OnInit {
 
   fieldMatrix: IBoard;
   coordinate = {
-    x: ["a","b","c","d","e","f","g","h"],
-    y: ["1","2","3","4","5","6","7","8"]
+    x: ["a", "b", "c", "d", "e", "f", "g", "h"],
+    y: ["1", "2", "3", "4", "5", "6", "7", "8"]
   };
 
-  constructor(public _http: HttpService) {
-
+  constructor(public _http: HttpService, private toast: ToastrService) {
   }
 
   ngOnInit(): void {
     this._http.createGame().subscribe(data => {
       this.loadGame();
+
+      // https://www.npmjs.com/package/ngx-toastr
+      this.toast.success(data, '', {
+        timeOut: 3000,
+        progressBar: true,
+        progressAnimation: "decreasing",
+        closeButton: true
+      });
+
+
     });
+
+
+
   }
 
-  loadGame(){
+  loadGame() {
 
     this._http.getGamePicture().subscribe(data => {
 
@@ -53,7 +66,7 @@ export class BoardComponent implements OnInit {
 
 }
 
-export interface IBoard{
+export interface IBoard {
   board: any;
   // fieldMatrix: any;
 }
