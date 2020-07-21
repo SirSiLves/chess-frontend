@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "chess-app"
+    }
+  },
+  "defaultProject": "chess-app",
+  "cli": {
+    "analytics": "4a847dfa-2884-4a25-9d04-5cbabf1e2916"
+  }
 }

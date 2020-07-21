@@ -91,9 +91,17 @@ ul {
     list-style: none;
     height: 100%;
     align-items: center;
-    font-size: 2.5vw;
-    color: grey;
   }
+}
+
+.coordinate {
+  font-size: 2.5vw;
+  color: grey;
+}
+
+.coordinateHovered {
+  color: red;
+  font-size: 2.5vw;
 }
 
 .fieldColumn {
