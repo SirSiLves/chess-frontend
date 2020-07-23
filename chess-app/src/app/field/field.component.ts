@@ -19,6 +19,7 @@ export class FieldComponent implements OnInit {
     this.figure = this.field['figure'];
   }
 
+  //TODO: auch mit service lösen
   removeMarkupDesignation() {
     while(document.getElementsByClassName("coordinateHovered").length > 0){
       const coordinateElements = document.getElementsByClassName("coordinateHovered");
@@ -28,7 +29,8 @@ export class FieldComponent implements OnInit {
     }
   }
 
-
+  //TODO: auch mit service lösen
+  //https://stackoverflow.com/questions/54413298/correct-way-to-do-dom-manipulation-in-angular-2/54420818#54420818
   markupDesignation(hoveredField) {
     this.removeMarkupDesignation();
 

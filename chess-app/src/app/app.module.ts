@@ -17,6 +17,7 @@ import {KnightComponent} from './figure/knight/knight.component';
 import {RookComponent} from './figure/rook/rook.component';
 import {QueenComponent} from './figure/queen/queen.component';
 import {ToastrModule} from "ngx-toastr";
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import {ToastrModule} from "ngx-toastr";
     AppRoutingModule,
     HttpClientModule,
     NgbModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,14 +1,23 @@
 
 
 
-
 <div class="wrapper">
-  <app-nav></app-nav>
-
-  <app-board></app-board>
+  <app-nav (click)="appBoard.loadGame()"></app-nav>
+  //TODO GAME SERVICE
+  <app-board #appBoard></app-board>
 
   <app-footer></app-footer>
 </div>
+
+
+
+<!--<div class="wrapper">-->
+<!--  <app-nav (click)="this.createGameHandler()"></app-nav>-->
+
+<!--  <app-board [fieldMatrix]="this.fieldMatrix"></app-board>-->
+
+<!--  <app-footer></app-footer>-->
+<!--</div>-->
 
 
 <!--  <router-outlet></router-outlet>-->

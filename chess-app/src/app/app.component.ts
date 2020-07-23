@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
+import {BoardComponent} from "./board/board.component";
+
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,11 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'chess-app';
+
+  // @ViewChild('appBoard') appBoard: BoardComponent;
+
+  constructor() {
+    // this.appBoard.loadGame()
+  }
+
 }

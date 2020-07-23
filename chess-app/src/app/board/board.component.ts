@@ -1,6 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {HttpService} from "../http.service";
 import {ToastrService} from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @Component({
   selector: 'app-board',
@@ -15,7 +16,7 @@ export class BoardComponent implements OnInit {
     y: ["1", "2", "3", "4", "5", "6", "7", "8"]
   };
 
-  constructor(public _http: HttpService, private toast: ToastrService) {
+  constructor(private _http: HttpService, private toast: ToastrService) {
   }
 
   ngOnInit(): void {
@@ -35,11 +36,9 @@ export class BoardComponent implements OnInit {
 
     });
 
-
-
   }
 
-  loadGame() {
+  public loadGame() {
 
     this._http.getGamePicture().subscribe(data => {
 
