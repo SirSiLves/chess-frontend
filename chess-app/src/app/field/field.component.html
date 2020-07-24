@@ -1,5 +1,6 @@
+
 <ng-template [ngIf]="field['fieldColor'] === 'BROWN'">
-  <div class="field brown" (mouseover)="this.markupDesignation(this.field)" (mouseleave)="removeMarkupDesignation()">
+  <div class="field brown">
     <ng-template [ngIf]="this.figure != null">
 
       <app-figure [figure]="this.figure"></app-figure>
@@ -9,7 +10,7 @@
 </ng-template>
 
 <ng-template [ngIf]="field['fieldColor'] === 'SANDYBROWN'">
-  <div class="field sandybrown" (mouseover)="this.markupDesignation(this.field)" (mouseleave)="removeMarkupDesignation()">
+  <div class="field sandybrown">
     <ng-template [ngIf]="this.figure != null">
 
       <app-figure [figure]="this.figure"></app-figure>
@@ -17,6 +18,29 @@
     </ng-template>
   </div>
 </ng-template>
+
+
+
+
+<!--<ng-template [ngIf]="field['fieldColor'] === 'BROWN'">-->
+<!--  <div class="field brown" (mouseover)="this.markupDesignation(this.field)" (mouseleave)="removeMarkupDesignation()">-->
+<!--    <ng-template [ngIf]="this.figure != null">-->
+
+<!--      <app-figure [figure]="this.figure"></app-figure>-->
+
+<!--    </ng-template>-->
+<!--  </div>-->
+<!--</ng-template>-->
+
+<!--<ng-template [ngIf]="field['fieldColor'] === 'SANDYBROWN'">-->
+<!--  <div class="field sandybrown" (mouseover)="this.markupDesignation(this.field)" (mouseleave)="removeMarkupDesignation()">-->
+<!--    <ng-template [ngIf]="this.figure != null">-->
+
+<!--      <app-figure [figure]="this.figure"></app-figure>-->
+
+<!--    </ng-template>-->
+<!--  </div>-->
+<!--</ng-template>-->
 
 
 <!--<div class="fieldColumn">-->

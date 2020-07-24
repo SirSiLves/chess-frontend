@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {IBoard} from "./board/board.component";
+import {Matrix} from "../board/board.component";
 import {catchError} from "rxjs/operators";
 
 
@@ -14,7 +14,7 @@ export class HttpService {
   getGamePicture(){
     //interface mit typisierten objekten -> statt any bspw. board
     return this.http
-      .get<IBoard>('http://localhost:8080/api/game/getGamePicture', {
+      .get<Matrix>('http://localhost:8080/api/game/getGamePicture', {
       withCredentials: true,
     });
   }
