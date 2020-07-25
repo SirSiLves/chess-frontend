@@ -1,6 +1,6 @@
 <div class="boardLayout" *ngIf="fieldMatrix">
 
-  <div class="middleContainer">
+  <div class="middleContainer" (mouseleave)="coordinaterService.removeMarkupDesignation()">
     <ul>
       <li *ngFor="let row of fieldMatrix | keyvalue">
         <div class="fieldColumn">

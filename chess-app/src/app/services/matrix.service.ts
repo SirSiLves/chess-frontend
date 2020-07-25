@@ -23,11 +23,21 @@ export class MatrixService {
       toggler = !toggler;
 
       for (let j = 0; j < this.coordinate.y.length; j++) {
-        if(toggler){
-          Object.assign(fieldRow, {[this.coordinate.y[j]]: {fieldColor: "BROWN"}})
-        }
-        else {
-          Object.assign(fieldRow, {[this.coordinate.y[j]]: {fieldColor: "SANDYBROWN"}})
+        let field = {}
+        if (toggler) {
+
+          Object.assign(field, {fieldColor: "BROWN"})
+          Object.assign(field, {fieldDesignation: [this.coordinate.x[i], this.coordinate.y[j]]})
+
+          Object.assign(fieldRow, {[this.coordinate.y[j]]: field});
+
+        } else {
+
+          Object.assign(field, {fieldColor: "SANDYBROWN"})
+          Object.assign(field, {fieldDesignation: [this.coordinate.x[i], this.coordinate.y[j]]})
+
+          Object.assign(fieldRow, {[this.coordinate.y[j]]: field});
+
         }
         toggler = !toggler;
       }
@@ -40,7 +50,7 @@ export class MatrixService {
     return this.fieldMatrix;
   }
 
-  getCoordinate(){
+  getCoordinate() {
     return this.coordinate;
   }
 }

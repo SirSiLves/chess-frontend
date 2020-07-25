@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Matrix} from "../board/board.component";
 import {catchError} from "rxjs/operators";
+import {MatrixService} from "./matrix.service";
 
 
 @Injectable({
@@ -14,7 +14,7 @@ export class HttpService {
   getGamePicture(){
     //interface mit typisierten objekten -> statt any bspw. board
     return this.http
-      .get<Matrix>('http://localhost:8080/api/game/getGamePicture', {
+      .get<MatrixService>('http://localhost:8080/api/game/getGamePicture', {
       withCredentials: true,
     });
   }

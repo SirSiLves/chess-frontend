@@ -1,4 +1,5 @@
 import {Component, OnInit, Input} from '@angular/core';
+import {CoordinaterService} from "../services/coordinater.service";
 
 @Component({
   selector: 'app-field',
@@ -7,11 +8,12 @@ import {Component, OnInit, Input} from '@angular/core';
 })
 export class FieldComponent implements OnInit {
 
+  //TODO field declaration
   @Input() field: Map<string, any>;
   fieldColor: string;
   figure: Map<string, any>;
 
-  constructor() {
+  constructor(private coordinaterService: CoordinaterService) {
   }
 
   ngOnInit(): void {
@@ -19,30 +21,9 @@ export class FieldComponent implements OnInit {
     this.figure = this.field['figure'];
   }
 
-  // //TODO: auch mit service lösen
-  // removeMarkupDesignation() {
-  //   while(document.getElementsByClassName("coordinateHovered").length > 0){
-  //     const coordinateElements = document.getElementsByClassName("coordinateHovered");
-  //     for(let i = 0; i < coordinateElements.length; i++){
-  //       coordinateElements.item(i).setAttribute("class", "coordinate");
-  //     }
-  //   }
-  // }
-  //
-  // //TODO: auch mit service lösen
-  // //https://stackoverflow.com/questions/54413298/correct-way-to-do-dom-manipulation-in-angular-2/54420818#54420818
-  // markupDesignation(hoveredField) {
-  //   this.removeMarkupDesignation();
-  //
-  //   const x = hoveredField['fieldDesignation'][0];
-  //   const y = hoveredField['fieldDesignation'][1];
-  //
-  //   document.getElementById(x + "_top").setAttribute("class", "coordinateHovered");
-  //   document.getElementById(x + "_bottom").setAttribute("class", "coordinateHovered");
-  //   document.getElementById(y + "_left").setAttribute("class", "coordinateHovered");
-  //   document.getElementById(y + "_right").setAttribute("class", "coordinateHovered");
-  //
-  // }
+
+
+
 
 }
 

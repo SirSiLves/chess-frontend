@@ -3,6 +3,7 @@ import {HttpService} from "../services/http.service";
 import {ToastrService} from 'ngx-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatrixService} from "../services/matrix.service";
+import {CoordinaterService} from "../services/coordinater.service";
 
 @Component({
   selector: 'app-board',
@@ -14,7 +15,8 @@ export class BoardComponent implements OnInit {
   fieldMatrix: {};
   coordinate: {};
 
-  constructor(private httpService: HttpService, private toast: ToastrService, private matrixService: MatrixService) {
+  constructor(private httpService: HttpService, private toast: ToastrService,
+              private matrixService: MatrixService, private coordinaterService: CoordinaterService) {
   }
 
   ngOnInit() {
