@@ -3,15 +3,26 @@ import {Injectable} from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class MatrixService {
+export class MatrixService implements IMatrix {
 
-  private fieldMatrix = {};
-  private coordinate = {
-    x: ["a", "b", "c", "d", "e", "f", "g", "h"],
-    y: ["1", "2", "3", "4", "5", "6", "7", "8"]
+  fieldMatrix: {
+    a: any; b: any; c: any;
+    d: any; e: any; f: any; g: any; h: any;
+  };
+  coordinate: {
+    x: string[]; y: string[];
   };
 
+
   constructor() {
+    this.fieldMatrix = {
+      a: {}, b: {}, c: {}, d: {},
+      e: {}, f: {}, g: {}, h: {}
+    };
+    this.coordinate = {
+      x: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'],
+      y: ['1', '2', '3', '4', '5', '6', '7', '8']
+    };
     this.buildMatrix();
   }
 
@@ -53,4 +64,14 @@ export class MatrixService {
   getCoordinate() {
     return this.coordinate;
   }
+}
+
+export interface IMatrix {
+  fieldMatrix: {
+    a: any, b: any, c: any, d: any
+    e: any, f: any, g: any, h: any
+  };
+  coordinate: {
+    x: string[], y: string[]
+  };
 }

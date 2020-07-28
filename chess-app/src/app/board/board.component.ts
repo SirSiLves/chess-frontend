@@ -12,8 +12,13 @@ import {CoordinaterService} from "../services/coordinater.service";
 })
 export class BoardComponent implements OnInit {
 
-  fieldMatrix: {};
-  coordinate: {};
+  fieldMatrix: {
+    a: any; b: any; c: any; d: any;
+    e: any; f: any; g: any; h: any
+  };
+  coordinate: {
+    x: string[]; y: string[]
+  };
 
   constructor(private httpService: HttpService, private toast: ToastrService,
               private matrixService: MatrixService, private coordinaterService: CoordinaterService) {
