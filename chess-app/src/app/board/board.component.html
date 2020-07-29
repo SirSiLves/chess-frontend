@@ -1,11 +1,12 @@
-<div class="boardLayout" *ngIf="fieldMatrix">
+
+<div class="boardLayout" *ngIf="boardMatrix$">
 
   <div class="middleContainer" (mouseleave)="coordinaterService.removeMarkupDesignation()">
     <ul>
-      <li *ngFor="let row of fieldMatrix | keyvalue">
+      <li *ngFor="let column of boardMatrix$ | keyvalue">
         <div class="fieldColumn">
-          <ul *ngIf="row.value">
-            <li *ngFor="let field of row.value | keyvalue">
+          <ul *ngIf="column.value">
+            <li *ngFor="let field of column.value | keyvalue">
               <app-field  [field]="field.value"></app-field>
             </li>
           </ul>

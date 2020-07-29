@@ -1,9 +1,10 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HttpService} from "../services/http.service";
 import {ToastrService} from 'ngx-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatrixService} from "../services/matrix.service";
 import {CoordinaterService} from "../services/coordinater.service";
+
 
 @Component({
   selector: 'app-board',
@@ -12,24 +13,25 @@ import {CoordinaterService} from "../services/coordinater.service";
 })
 export class BoardComponent implements OnInit {
 
-  fieldMatrix: {
-    a: any; b: any; c: any; d: any;
-    e: any; f: any; g: any; h: any
-  };
+  boardMatrix$: { column: any };
   coordinate: {
     x: string[]; y: string[]
   };
 
   constructor(private httpService: HttpService, private toast: ToastrService,
-              private matrixService: MatrixService, private coordinaterService: CoordinaterService) {
+              private matrixService: MatrixService, public coordinaterService: CoordinaterService) {
   }
 
   ngOnInit() {
-    this.fieldMatrix = this.matrixService.getMatrix();
     this.coordinate = this.matrixService.getCoordinate();
 
-    console.log(this.fieldMatrix);
+    this.matrixService.getMatrix().subscribe(matrixData => {
+      this.boardMatrix$ = matrixData;
+    });
+
+    console.log(this.boardMatrix$);
   }
+
 
 }
 

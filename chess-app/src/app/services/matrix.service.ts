@@ -1,24 +1,22 @@
 import {Injectable} from '@angular/core';
+import {BehaviorSubject, Observable} from "rxjs";
+
 
 @Injectable({
   providedIn: 'root'
 })
-export class MatrixService implements IMatrix {
+export class MatrixService {
 
-  fieldMatrix: {
-    a: any; b: any; c: any;
-    d: any; e: any; f: any; g: any; h: any;
-  };
+  fieldMatrix$: BehaviorSubject<IMatrix>;
   coordinate: {
     x: string[]; y: string[];
   };
 
-
   constructor() {
-    this.fieldMatrix = {
+    this.fieldMatrix$ = new BehaviorSubject<any>({
       a: {}, b: {}, c: {}, d: {},
       e: {}, f: {}, g: {}, h: {}
-    };
+    });
     this.coordinate = {
       x: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'],
       y: ['1', '2', '3', '4', '5', '6', '7', '8']
@@ -52,13 +50,22 @@ export class MatrixService implements IMatrix {
         }
         toggler = !toggler;
       }
-      Object.assign(this.fieldMatrix, {[this.coordinate.x[i]]: fieldRow})
+      Object.assign(this.fieldMatrix$.value, {[this.coordinate.x[i]]: fieldRow})
     }
   }
 
+  createNewGame(): void {
 
-  getMatrix() {
-    return this.fieldMatrix;
+  }
+
+  setMatrix(boardMatrix): void {
+    this.fieldMatrix$.next(boardMatrix)
+    console.log("SET matrix with picture!")
+    console.log(boardMatrix);
+  }
+
+  getMatrix(): Observable<any> {
+    return this.fieldMatrix$;
   }
 
   getCoordinate() {
@@ -67,10 +74,12 @@ export class MatrixService implements IMatrix {
 }
 
 export interface IMatrix {
-  fieldMatrix: {
-    a: any, b: any, c: any, d: any
-    e: any, f: any, g: any, h: any
-  };
+  board: {
+    fieldMatrix: {
+      a: any, b: any, c: any, d: any
+      e: any, f: any, g: any, h: any
+    }
+  }
   coordinate: {
     x: string[], y: string[]
   };
