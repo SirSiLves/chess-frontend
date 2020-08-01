@@ -1,5 +1,7 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from "rxjs";
+import {HttpService} from "./http.service";
+import {ToastrService} from "ngx-toastr";
 
 
 @Injectable({
@@ -12,7 +14,7 @@ export class MatrixService {
     x: string[]; y: string[];
   };
 
-  constructor() {
+  constructor(private httpService: HttpService, private toast: ToastrService) {
     this.fieldMatrix$ = new BehaviorSubject<any>({
       a: {}, b: {}, c: {}, d: {},
       e: {}, f: {}, g: {}, h: {}
@@ -21,10 +23,22 @@ export class MatrixService {
       x: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'],
       y: ['1', '2', '3', '4', '5', '6', '7', '8']
     };
-    this.buildMatrix();
+
+    this.preBuildMatrix();
+
+    this.httpService.getPreGamePicture().subscribe(
+      data => {
+        if(data.message != 'The game is not yet initialized'){
+          this.setMatrix(data.board.fieldMatrix);
+        }
+        else {
+          this.toast.info(data.message);
+        }
+      }
+    );
   }
 
-  buildMatrix() {
+  preBuildMatrix() {
     let toggler = true;
 
     for (let i = 0; i < this.coordinate.x.length; i++) {
@@ -52,10 +66,6 @@ export class MatrixService {
       }
       Object.assign(this.fieldMatrix$.value, {[this.coordinate.x[i]]: fieldRow})
     }
-  }
-
-  createNewGame(): void {
-
   }
 
   setMatrix(boardMatrix): void {

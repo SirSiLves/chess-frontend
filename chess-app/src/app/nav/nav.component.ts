@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpService} from "../services/http.service";
 import {ToastrService} from "ngx-toastr";
-import {MatrixService} from "../services/matrix.service";
+import {IMatrix, MatrixService} from "../services/matrix.service";
 import {CoordinaterService} from "../services/coordinater.service";
 
 @Component({
@@ -22,15 +22,14 @@ export class NavComponent implements OnInit {
 
   createGame(): void {
 
-    this.httpService.createGame().subscribe(createGameResponse => {
-      this.toast.success(createGameResponse);
+    this.httpService.initializeGame().subscribe(responseInitialize => {
 
       this.httpService.getGamePicture().subscribe(responsePicture => {
         this.matrixService.setMatrix(responsePicture.board.fieldMatrix);
+        //console.log(responseInitialize);
+        this.toast.success(responseInitialize);
       });
     });
-
-    console.log("Matrix creating clicked!!!")
   }
 
 
