@@ -55,8 +55,14 @@ export class HttpService {
       //console.log(`${errMsg}:`, err)
 
       if (err instanceof HttpErrorResponse) {
-        //console.log(`status: ${err.status}, ${err.statusText}`);
-        this.toast.error(err.error.message);
+        console.log(`status: ${err.status}, ${err.statusText}`);
+        if(err.error.message){
+          this.toast.error(err.error.message);
+        }
+        else{
+          this.toast.error(errMsg);
+        }
+
       }
       return throwError(err);
     }

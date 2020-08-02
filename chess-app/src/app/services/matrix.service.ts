@@ -32,6 +32,7 @@ export class MatrixService {
           this.setMatrix(data.board.fieldMatrix);
         }
         else {
+          //TODO better text output
           this.toast.info(data.message);
         }
       }
@@ -70,8 +71,6 @@ export class MatrixService {
 
   setMatrix(boardMatrix): void {
     this.fieldMatrix$.next(boardMatrix)
-    console.log("SET matrix with picture!")
-    console.log(boardMatrix);
   }
 
   getMatrix(): Observable<any> {

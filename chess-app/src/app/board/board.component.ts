@@ -29,7 +29,7 @@ export class BoardComponent implements OnInit {
       this.boardMatrix$ = matrixData;
     });
 
-    console.log(this.boardMatrix$);
+    //console.log(this.boardMatrix$);
   }
 
 
