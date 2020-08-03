@@ -67,6 +67,10 @@ ul {
   width: 100%;
   margin: 1vw 0 1vw 0;
 
+  @media screen and (min-width: 1200px) {
+    margin: 10px 0 10px 0;
+  }
+
   li {
     display: flex;
     list-style: none;
@@ -81,6 +85,10 @@ ul {
   height: 100%;
   margin: 0 0.5vw 0 0.5vw;
 
+  @media screen and (min-width: 1200px) {
+    margin: 0 5px 0 5px;
+  }
+
   li {
     display: flex;
     list-style: none;
@@ -92,12 +100,19 @@ ul {
 .coordinate {
   font-size: 2.5vw;
   color: lightgray;
+
+  @media screen and (min-width: 1200px) {
+    font-size: 35px;
+  }
 }
 
 .coordinateHovered {
   font-size: 2.5vw;
   color: dodgerblue;
   //text-shadow: 0 0 1px #282c34;
+  @media screen and (min-width: 1200px) {
+    font-size: 35px;
+  }
 }
 
 .fieldColumn {

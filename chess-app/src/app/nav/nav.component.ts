@@ -1,4 +1,8 @@
-import {Component, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {HttpService} from "../services/http.service";
+import {ToastrService} from "ngx-toastr";
+import {IMatrix, MatrixService} from "../services/matrix.service";
+import {CoordinaterService} from "../services/coordinater.service";
 
 @Component({
   selector: 'app-nav',
@@ -7,19 +11,26 @@ import {Component, OnInit, Output, EventEmitter} from '@angular/core';
 })
 export class NavComponent implements OnInit {
 
-  @Output() clickedEvent = new EventEmitter();
+  //@Output() clickedEvent = new EventEmitter();
 
-  constructor() { }
+  constructor(private httpService: HttpService, private toast: ToastrService,
+              private matrixService: MatrixService) {
+  }
 
   ngOnInit(): void {
   }
 
-  // handleClick(event: Event) {
-  //   console.log('Click!', event)
-  // }
+  createGame(): void {
 
-  createGameClicked() {
-    this.clickedEvent.emit();
+    this.httpService.initializeGame().subscribe(responseInitialize => {
+
+      this.httpService.getGamePicture().subscribe(responsePicture => {
+        this.matrixService.setMatrix(responsePicture.board.fieldMatrix);
+        //console.log(responseInitialize);
+        this.toast.success(responseInitialize);
+      });
+    });
   }
+
 
 }
