@@ -52,7 +52,9 @@ export class HttpService {
     return this.http.post('http://localhost:8080/api/move/doMove', moveObj, {
       withCredentials: true,
       responseType: 'text'
-    });
+    }).pipe(
+      catchError(this.handleError('validateMove'))
+    );
   }
 
 
