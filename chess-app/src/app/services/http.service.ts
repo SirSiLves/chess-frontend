@@ -14,7 +14,7 @@ export class HttpService {
   constructor(private http: HttpClient, private toast: ToastrService) {
   }
 
-  public getPreGamePicture(): Observable<any>{
+  public getPreGamePicture(): Observable<any> {
     return this.http.get('http://localhost:8080/api/game/getGamePicture', {
       withCredentials: true
     }).pipe(
@@ -48,6 +48,13 @@ export class HttpService {
     );
   }
 
+  validateMove(moveObj): Observable<any> {
+    return this.http.post('http://localhost:8080/api/move/doMove', moveObj, {
+      withCredentials: true,
+      responseType: 'text'
+    });
+  }
+
 
   private handleError(operation: String) {
     return (err: any) => {
@@ -56,10 +63,9 @@ export class HttpService {
 
       if (err instanceof HttpErrorResponse) {
         console.log(`status: ${err.status}, ${err.statusText}`);
-        if(err.error.message){
+        if (err.error.message) {
           this.toast.error(err.error.message);
-        }
-        else{
+        } else {
           this.toast.error(errMsg);
         }
 

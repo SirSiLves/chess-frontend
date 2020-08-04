@@ -23,24 +23,8 @@ export class FieldComponent implements OnInit {
   }
 
   clickedFieldForMove(clickedField) {
-
-    //console.log(this.moveService.sourceField$);
-
-    if(this.moveService.sourceField$ == clickedField){
-
-      this.moveService.sourceField$ = clickedField;
-    }
-    else{
-      this.moveService.targetField$ = clickedField;
-
-      this.moveService.doMove();
-    }
-    console.log(this.moveService.targetField$)
-
-
-
+    this.moveService.prepareMove(clickedField)
   }
-
 
 }
 

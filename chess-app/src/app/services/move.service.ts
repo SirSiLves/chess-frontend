@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject} from "rxjs";
+import {HttpService} from "./http.service";
+import {ToastrService} from "ngx-toastr";
+import {MatrixService} from "./matrix.service";
 
 
 @Injectable({
@@ -10,29 +13,54 @@ export class MoveService {
   sourceField$: BehaviorSubject<any>;
   targetField$: BehaviorSubject<any>;
 
-  constructor() {
+  constructor(private httpService: HttpService, private toast: ToastrService, private matrixService: MatrixService) {
     this.sourceField$ = new BehaviorSubject<any>({ fieldDesignation: []});
     this.targetField$ = new BehaviorSubject<any>({ fieldDesignation: []});
   }
 
 
+  prepareMove(clickedField){
+
+    if(this.sourceField$.value.fieldDesignation.length == 0){
+      this.sourceField$.next(clickedField);
+    }
+    else if (this.sourceField$.value.fieldDesignation != clickedField.fieldDesignation) {
+      this.targetField$.next(clickedField);
+
+      this.doMove();
+    }
+  }
+
+
   doMove(){
 
-    console.log(this.sourceField$);
-    console.log(this.targetField$);
+    const moveObj = {
+      sourceField : this.sourceField$.value.fieldDesignation,
+      targetField : this.targetField$.value.fieldDesignation
+    }
 
-    this.sourceField$ = null;
-    this.targetField$ = null;
+    console.log(moveObj);
 
+    this.httpService.validateMove(moveObj).subscribe(validateResponse => {
+
+      if(validateResponse){
+        this.reloadGamePicture();
+      }
+    });
+
+    this.resetBinding();
   }
 
-
-  setMove(sourceField, targetField){
-    this.sourceField$.next(sourceField);
-    this.targetField$.next(targetField);
+  resetBinding(){
+    this.sourceField$ = new BehaviorSubject<any>({ fieldDesignation: []});
+    this.targetField$ = new BehaviorSubject<any>({ fieldDesignation: []});
   }
 
-
+  reloadGamePicture(){
+    this.httpService.getGamePicture().subscribe(responsePicture => {
+      this.matrixService.setMatrix(responsePicture.board.fieldMatrix);
+    });
+  }
 
 
 }
