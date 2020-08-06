@@ -39,11 +39,9 @@ export class MoveService {
       targetField : this.targetField$.value.fieldDesignation
     }
 
-    console.log(moveObj);
-
     this.httpService.validateMove(moveObj).subscribe(validateResponse => {
 
-      if(validateResponse){
+      if(validateResponse.state){
         this.reloadGamePicture();
       }
     });
