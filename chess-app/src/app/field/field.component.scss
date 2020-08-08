@@ -1,5 +1,4 @@
 
-
 .field {
   //word-break: break-word;
   overflow: hidden;
@@ -20,6 +19,14 @@
 
 .brown {
   background: brown;
+}
+
+.clicked {
+  background-color: dodgerblue;
+}
+
+.field:hover {
+  background-color: dodgerblue;
 }
 
 

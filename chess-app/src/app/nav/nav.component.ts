@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpService} from "../services/http.service";
 import {ToastrService} from "ngx-toastr";
-import {IMatrix, MatrixService} from "../services/matrix.service";
-import {CoordinaterService} from "../services/coordinater.service";
+import {MatrixService} from "../services/matrix.service";
+
 
 @Component({
   selector: 'app-nav',
@@ -13,8 +13,7 @@ export class NavComponent implements OnInit {
 
   //@Output() clickedEvent = new EventEmitter();
 
-  constructor(private httpService: HttpService, private toast: ToastrService,
-              private matrixService: MatrixService) {
+  constructor(private httpService: HttpService, private toast: ToastrService, private matrixService: MatrixService) {
   }
 
   ngOnInit(): void {
