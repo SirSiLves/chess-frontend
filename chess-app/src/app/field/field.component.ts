@@ -18,6 +18,7 @@ export class FieldComponent implements OnInit {
   moveEvent$: any;
 
   constructor(public coordinaterService: CoordinaterService, private moveService: MoveService) {
+    this.isClicked$ = false;
   }
 
   ngOnInit(): void {
@@ -27,7 +28,7 @@ export class FieldComponent implements OnInit {
 
   clickedFieldForMove(clickedField): void {
 
-    if(clickedField.figure != null || this.moveService.getClickedCount() > 0){
+    if((clickedField.figure != null || this.moveService.getClickedCount() > 0) && this.isClicked$ == false ){
       this.moveEvent$ = this.moveService.onClick
         .pipe(take(2))
         .subscribe(event => {
