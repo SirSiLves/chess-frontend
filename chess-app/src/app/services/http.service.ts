@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse, HttpParams} from "@angular/common/http";
 import {catchError, tap} from "rxjs/operators";
 import {IMatrix} from "./matrix.service";
 import {ToastrService} from "ngx-toastr";
@@ -56,6 +56,29 @@ export class HttpService {
         console.log('server data move:', data)
       }),
       catchError(this.handleError('validateMove'))
+    );
+  }
+
+  retrieveValidFields(clickedField): Observable<any> {
+    return this.http.post('http://localhost:8080/api/validFields/getFields' , clickedField, {
+      withCredentials: true
+    }).pipe(
+      tap(data => {
+        console.log('server data possible fields:', data)
+      }),
+      catchError(this.handleError('getValidFields'))
+    );
+  }
+
+  doBotMove(): Observable<any> {
+    return this.http.get('http://localhost:8080/api/move/doBotMove', {
+      withCredentials: true,
+      responseType: 'text'
+    }).pipe(
+      tap(data => {
+        console.log('server data bot move:', data)
+      }),
+      catchError(this.handleError('doBotMove'))
     );
   }
 

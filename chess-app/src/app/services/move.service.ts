@@ -27,6 +27,20 @@ export class MoveService {
     return this.clickedCount;
   }
 
+  getValidField(clickedField) {
+
+    const clickedFieldObj = {
+      sourceField: clickedField.fieldDesignation,
+    }
+
+    this.httpService.retrieveValidFields(clickedFieldObj).subscribe(possibleFields => {
+      //TODO highlight fields
+      //console.log(possibleFields);
+    });
+
+
+  }
+
 
   prepareMove(clickedField) {
 
@@ -34,6 +48,10 @@ export class MoveService {
     this.onClick.emit(this.clickedCount);
 
     if (this.clickedCount == 1 && clickedField.figure != null) {
+
+      this.getValidField(clickedField);
+
+
       this.sourceField$.next(clickedField);
     } else if (this.clickedCount >= 2) {
       this.targetField$.next(clickedField);
@@ -61,6 +79,8 @@ export class MoveService {
     this.httpService.validateMove(moveObj).subscribe(validateResponse => {
       if (validateResponse.state) {
         this.reloadGamePicture();
+        this.executeBotMove();
+
       } else {
         this.toast.warning(validateResponse.text)
         this.printErrorUnitTestsForApi(moveObj);
@@ -75,6 +95,14 @@ export class MoveService {
       this.matrixService.setMatrix(responsePicture.board.fieldMatrix);
 
       this.printSuccessUnitTestsForApi(responsePicture.board.moveHistory);
+    });
+  }
+
+  executeBotMove() {
+    this.httpService.doBotMove().subscribe(responseBotMove => {
+      this.toast.info(responseBotMove)
+
+      this.reloadGamePicture();
     });
   }
 
