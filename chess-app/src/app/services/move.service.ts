@@ -1,8 +1,9 @@
 import {Injectable, EventEmitter} from '@angular/core';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {HttpService} from './http.service';
 import {ToastrService} from 'ngx-toastr';
 import {MatrixService} from './matrix.service';
+import {take} from "rxjs/operators";
 
 
 @Injectable({
@@ -12,6 +13,7 @@ export class MoveService {
 
   private sourceField$: BehaviorSubject<any>;
   private targetField$: BehaviorSubject<any>;
+  private loadingPicture$: BehaviorSubject<boolean>;
 
   public onClick: EventEmitter<number> = new EventEmitter<number>();
   private clickedCount: number;
@@ -21,6 +23,7 @@ export class MoveService {
     this.sourceField$ = new BehaviorSubject<any>({fieldDesignation: []});
     this.targetField$ = new BehaviorSubject<any>({fieldDesignation: []});
     this.clickedCount = 0;
+    this.loadingPicture$ = new BehaviorSubject<any>(false);
   }
 
   getClickedCount() {
@@ -47,25 +50,17 @@ export class MoveService {
     this.clickedCount++;
     this.onClick.emit(this.clickedCount);
 
-    if (this.clickedCount == 1 && clickedField.figure != null) {
+    if (this.clickedCount == 1 && clickedField.figure != null && this.loadingPicture$.value == false) {
 
       this.getValidField(clickedField);
-
-
       this.sourceField$.next(clickedField);
+
     } else if (this.clickedCount >= 2) {
+
       this.targetField$.next(clickedField);
       this.doMove();
     }
 
-    // if(this.sourceField$.value.fieldDesignation.length == 0){
-    //   this.sourceField$.next(clickedField);
-    // }
-    // else if (this.sourceField$.value.fieldDesignation != clickedField.fieldDesignation) {
-    //   this.targetField$.next(clickedField);
-    //
-    //   this.doMove();
-    // }
   }
 
 
@@ -76,25 +71,34 @@ export class MoveService {
       targetField: this.targetField$.value.fieldDesignation
     }
 
-    this.httpService.validateMove(moveObj).subscribe(validateResponse => {
+    this.httpService.doMove(moveObj).subscribe(validateResponse => {
       if (validateResponse.state) {
+
         this.reloadGamePicture();
-        this.executeBotMove();
+
+        this.loadingPicture$.pipe(take(2)).subscribe(s => {
+          if (s == false) {
+            this.executeBotMove();
+          }
+        });
 
       } else {
         this.toast.warning(validateResponse.text)
-        this.printErrorUnitTestsForApi(moveObj);
+        // this.printErrorUnitTestsForApi(moveObj);
       }
     });
 
     this.clickedCount = 0;
   }
 
-  reloadGamePicture() {
+  reloadGamePicture(): void {
+    this.loadingPicture$.next(true);
+
     this.httpService.getGamePicture().subscribe(responsePicture => {
       this.matrixService.setMatrix(responsePicture.board.fieldMatrix);
 
-      this.printSuccessUnitTestsForApi(responsePicture.board.moveHistory);
+      this.loadingPicture$.next(false);
+      // this.printSuccessUnitTestsForApi(responsePicture.board.moveHistory);
     });
   }
 

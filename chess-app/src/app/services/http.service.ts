@@ -48,7 +48,7 @@ export class HttpService {
     );
   }
 
-  validateMove(moveObj): Observable<any> {
+  doMove(moveObj): Observable<any> {
     return this.http.post('http://localhost:8080/api/move/doMove', moveObj, {
       withCredentials: true,
     }).pipe(
