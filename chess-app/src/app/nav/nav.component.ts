@@ -19,6 +19,10 @@ export class NavComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  handleBot(){
+    this.matrixService.botEnabled = !this.matrixService.botEnabled;
+  }
+
   createGame(): void {
 
     this.httpService.initializeGame().subscribe(responseInitialize => {

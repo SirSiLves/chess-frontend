@@ -9,10 +9,13 @@ import {ToastrService} from "ngx-toastr";
 })
 export class MatrixService {
 
-  fieldMatrix$: BehaviorSubject<IMatrix>;
-  coordinate: {
+  private readonly fieldMatrix$: BehaviorSubject<IMatrix>;
+  private readonly coordinate: {
     x: string[]; y: string[];
   };
+
+  public botEnabled: boolean;
+
 
   constructor(private httpService: HttpService, private toast: ToastrService) {
     this.fieldMatrix$ = new BehaviorSubject<any>({
@@ -37,6 +40,8 @@ export class MatrixService {
         }
       }
     );
+
+    this.botEnabled = true;
   }
 
   preBuildMatrix() {

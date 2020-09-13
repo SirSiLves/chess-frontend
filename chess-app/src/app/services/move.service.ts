@@ -76,11 +76,13 @@ export class MoveService {
 
         this.reloadGamePicture();
 
-        this.loadingPicture$.pipe(take(2)).subscribe(s => {
-          if (s == false) {
-            this.executeBotMove();
-          }
-        });
+        if(this.matrixService.botEnabled){
+          this.loadingPicture$.pipe(take(2)).subscribe(s => {
+            if (s == false) {
+              this.executeBotMove();
+            }
+          });
+        }
 
       } else {
         this.toast.warning(validateResponse.text)
@@ -104,7 +106,7 @@ export class MoveService {
 
   executeBotMove() {
     this.httpService.doBotMove().subscribe(responseBotMove => {
-      this.toast.info(responseBotMove)
+      // this.toast.info(responseBotMove)
 
       this.reloadGamePicture();
     });
