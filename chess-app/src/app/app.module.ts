@@ -19,6 +19,8 @@ import {QueenComponent} from './figure/queen/queen.component';
 import {ToastrModule} from "ngx-toastr";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {InterceptorService} from "./services/interceptor.service";
+import {MatSlideToggleModule} from "@angular/material/slide-toggle";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -41,7 +43,9 @@ import {InterceptorService} from "./services/interceptor.service";
     HttpClientModule,
     NgbModule,
     ToastrModule.forRoot(),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatSlideToggleModule,
+    FormsModule
   ],
   /* providers: [
     {

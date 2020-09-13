@@ -16,32 +16,51 @@ export class FieldComponent implements OnInit {
   figure: Map<string, any>;
   isClicked$: boolean;
   moveEvent$: any;
+  backGround: string;
 
-  constructor(public coordinaterService: CoordinaterService, private moveService: MoveService) {
+  constructor(public coordinaterService: CoordinaterService, public moveService: MoveService) {
     this.isClicked$ = false;
   }
 
   ngOnInit(): void {
-    this.fieldColor = this.field['fieldColor'];
     this.figure = this.field['figure'];
+    this.markupField();
+    // console.log(this.field['fieldDesignation'])
   }
 
   clickedFieldForMove(clickedField): void {
 
-    if((clickedField.figure != null || this.moveService.getClickedCount() > 0) && this.isClicked$ == false ){
-      this.moveEvent$ = this.moveService.onClick
+    if ((clickedField.figure != null || this.moveService.getClickedCount() > 0) && this.isClicked$ == false) {
+      this.moveEvent$ = this.moveService.onClick$
         .pipe(take(2))
         .subscribe(event => {
-          if(event == 1){
+          if (event == 1) {
             this.isClicked$ = true;
-          }
-          else{
+          } else {
             this.isClicked$ = false;
             this.moveEvent$.unsubscribe();
           }
         });
 
       this.moveService.prepareMove(clickedField);
+    }
+  }
+
+  markupField() {
+    if (this.moveService.lastBotSourceField != null
+      && this.moveService.lastBotSourceField[0] === this.field['fieldDesignation'][0]
+      && this.moveService.lastBotSourceField[1] === this.field['fieldDesignation'][1]) {
+
+      this.backGround = 'lastMoveSource';
+    }
+    else if(this.moveService.lastBotTargetField != null
+      && this.moveService.lastBotTargetField[0] === this.field['fieldDesignation'][0]
+      && this.moveService.lastBotTargetField[1] === this.field['fieldDesignation'][1]){
+
+      this.backGround = 'lastMoveTarget';
+    }
+    else {
+      this.backGround = this.field['fieldColor'];
     }
   }
 

@@ -1,6 +1,6 @@
 
 <ng-template [ngIf]="field['fieldColor'] === 'BROWN'">
-  <div class="field brown" (mouseover)="coordinaterService.markupDesignation(field)"
+  <div class="field {{this.backGround}}" (mouseover)="coordinaterService.markupDesignation(field)"
        (click)="this.clickedFieldForMove(field)" [ngClass]="isClicked$ ? 'clicked' : ''">
     <ng-template [ngIf]="this.figure != null">
 
@@ -11,7 +11,7 @@
 </ng-template>
 
 <ng-template [ngIf]="field['fieldColor'] === 'SANDYBROWN'">
-  <div class="field sandybrown" (mouseover)="coordinaterService.markupDesignation(field)"
+  <div class="field {{this.backGround}}" (mouseover)="coordinaterService.markupDesignation(field)"
        (click)="this.clickedFieldForMove(field)" [ngClass]="isClicked$ ? 'clicked' : ''">
     <ng-template [ngIf]="this.figure != null">
 

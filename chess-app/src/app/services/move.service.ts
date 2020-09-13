@@ -13,17 +13,20 @@ export class MoveService {
 
   private sourceField$: BehaviorSubject<any>;
   private targetField$: BehaviorSubject<any>;
-  private loadingPicture$: BehaviorSubject<boolean>;
-
-  public onClick: EventEmitter<number> = new EventEmitter<number>();
+  public loadingPicture$: BehaviorSubject<boolean>;
+  public onClick$: EventEmitter<number> = new EventEmitter<number>();
   private clickedCount: number;
 
+  public lastBotSourceField: any;
+  public lastBotTargetField: any;
 
   constructor(private httpService: HttpService, private toast: ToastrService, private matrixService: MatrixService) {
     this.sourceField$ = new BehaviorSubject<any>({fieldDesignation: []});
     this.targetField$ = new BehaviorSubject<any>({fieldDesignation: []});
     this.clickedCount = 0;
     this.loadingPicture$ = new BehaviorSubject<any>(false);
+    this.lastBotSourceField = null;
+    this.lastBotTargetField = null;
   }
 
   getClickedCount() {
@@ -40,15 +43,18 @@ export class MoveService {
       //TODO highlight fields
       //console.log(possibleFields);
     });
+  }
 
-
+  resetLastPlayed(){
+    this.lastBotSourceField = null;
+    this.lastBotTargetField = null;
   }
 
 
   prepareMove(clickedField) {
 
     this.clickedCount++;
-    this.onClick.emit(this.clickedCount);
+    this.onClick$.emit(this.clickedCount);
 
     if (this.clickedCount == 1 && clickedField.figure != null && this.loadingPicture$.value == false) {
 
@@ -107,6 +113,11 @@ export class MoveService {
   executeBotMove() {
     this.httpService.doBotMove().subscribe(responseBotMove => {
       // this.toast.info(responseBotMove)
+
+      console.log(responseBotMove);
+
+      this.lastBotSourceField = responseBotMove[0].fieldDesignation;
+      this.lastBotTargetField = responseBotMove[1].fieldDesignation;
 
       this.reloadGamePicture();
     });
