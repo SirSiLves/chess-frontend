@@ -12,6 +12,9 @@
   align-items: center;
   border: solid 2px #282c34;
 }
+.possibleMove {
+  background: #c6ecc6;
+}
 
 .lastMoveSource {
   background: lightgray;
@@ -29,11 +32,11 @@
 }
 
 .clicked {
-  background-color: dodgerblue;
+  background: dodgerblue;
 }
 
 .field:hover {
-  background-color: dodgerblue;
+  background: dodgerblue;
 }
 
 

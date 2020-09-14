@@ -1,5 +1,5 @@
 import {Injectable, EventEmitter} from '@angular/core';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {HttpService} from './http.service';
 import {ToastrService} from 'ngx-toastr';
 import {MatrixService} from './matrix.service';
@@ -15,44 +15,39 @@ export class MoveService {
   private targetField$: BehaviorSubject<any>;
   public loadingPicture$: BehaviorSubject<boolean>;
   public onClick$: EventEmitter<number> = new EventEmitter<number>();
-  private clickedCount: number;
+  public clickedCount: number;
 
-  public lastBotSourceField: any;
-  public lastBotTargetField: any;
+  public lastBotSourceField: BehaviorSubject<any>;
+  public lastBotTargetField: BehaviorSubject<any>;
+  public possibleFields: Subject<any>;
 
   constructor(private httpService: HttpService, private toast: ToastrService, private matrixService: MatrixService) {
     this.sourceField$ = new BehaviorSubject<any>({fieldDesignation: []});
     this.targetField$ = new BehaviorSubject<any>({fieldDesignation: []});
     this.clickedCount = 0;
     this.loadingPicture$ = new BehaviorSubject<any>(false);
-    this.lastBotSourceField = null;
-    this.lastBotTargetField = null;
-  }
-
-  getClickedCount() {
-    return this.clickedCount;
+    this.lastBotSourceField = new BehaviorSubject<any>("eifach öpis");
+    this.lastBotTargetField = new BehaviorSubject<any>("eifach öpis");
+    this.possibleFields = new Subject<any>();
   }
 
   getValidField(clickedField) {
-
     const clickedFieldObj = {
       sourceField: clickedField.fieldDesignation,
     }
 
     this.httpService.retrieveValidFields(clickedFieldObj).subscribe(possibleFields => {
-      //TODO highlight fields
-      //console.log(possibleFields);
+      this.possibleFields.next(possibleFields);
     });
   }
 
-  resetLastPlayed(){
+  resetLastPlayed() {
     this.lastBotSourceField = null;
     this.lastBotTargetField = null;
   }
 
 
   prepareMove(clickedField) {
-
     this.clickedCount++;
     this.onClick$.emit(this.clickedCount);
 
@@ -70,8 +65,7 @@ export class MoveService {
   }
 
 
-  doMove() {
-
+  doMove(): void {
     const moveObj = {
       sourceField: this.sourceField$.value.fieldDesignation,
       targetField: this.targetField$.value.fieldDesignation
@@ -82,7 +76,7 @@ export class MoveService {
 
         this.reloadGamePicture();
 
-        if(this.matrixService.botEnabled){
+        if (this.matrixService.botEnabled) {
           this.loadingPicture$.pipe(take(2)).subscribe(s => {
             if (s == false) {
               this.executeBotMove();
@@ -113,13 +107,10 @@ export class MoveService {
   executeBotMove() {
     this.httpService.doBotMove().subscribe(responseBotMove => {
       // this.toast.info(responseBotMove)
-
-      console.log(responseBotMove);
-
-      this.lastBotSourceField = responseBotMove[0].fieldDesignation;
-      this.lastBotTargetField = responseBotMove[1].fieldDesignation;
-
       this.reloadGamePicture();
+
+      this.lastBotSourceField.next(responseBotMove[0].fieldDesignation);
+      this.lastBotTargetField.next(responseBotMove[1].fieldDesignation);
     });
   }
 
@@ -151,7 +142,6 @@ export class MoveService {
     testString += sourceField + ', ' + targetField + ').isState());' + '\n';
 
     console.log(testString);
-
   }
 
 

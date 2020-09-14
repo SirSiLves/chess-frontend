@@ -64,9 +64,9 @@ export class HttpService {
       withCredentials: true
     }).pipe(
       tap(data => {
-        console.log('server data possible fields:', data)
+        // console.log('server data possible fields:', data)
       }),
-      catchError(this.handleError('getValidFields'))
+      catchError(this.handleError('retrieveValidFields'))
     );
   }
 

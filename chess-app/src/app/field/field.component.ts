@@ -1,7 +1,8 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, OnInit, Input, EventEmitter} from '@angular/core';
 import {CoordinaterService} from "../services/coordinater.service";
 import {MoveService} from "../services/move.service";
 import {take} from "rxjs/operators";
+import {BehaviorSubject, Subject} from "rxjs";
 
 @Component({
   selector: 'app-field',
@@ -12,25 +13,28 @@ export class FieldComponent implements OnInit {
 
   //TODO field declaration
   @Input() field: Map<string, any>;
-  fieldColor: string;
   figure: Map<string, any>;
   isClicked$: boolean;
   moveEvent$: any;
-  backGround: string;
+  backGround$: string;
 
-  constructor(public coordinaterService: CoordinaterService, public moveService: MoveService) {
+
+  constructor(public coordinaterService: CoordinaterService,
+              public moveService: MoveService) {
     this.isClicked$ = false;
   }
 
   ngOnInit(): void {
     this.figure = this.field['figure'];
-    this.markupField();
-    // console.log(this.field['fieldDesignation'])
+    this.backGround$ = this.field['fieldColor'];
+
+    this.markupLastMove();
+    this.markupPossibleField();
   }
 
-  clickedFieldForMove(clickedField): void {
 
-    if ((clickedField.figure != null || this.moveService.getClickedCount() > 0) && this.isClicked$ == false) {
+  clickedFieldForMove(clickedField): void {
+    if ((clickedField.figure != null || this.moveService.clickedCount > 0) && this.isClicked$ == false) {
       this.moveEvent$ = this.moveService.onClick$
         .pipe(take(2))
         .subscribe(event => {
@@ -46,22 +50,38 @@ export class FieldComponent implements OnInit {
     }
   }
 
-  markupField() {
-    if (this.moveService.lastBotSourceField != null
-      && this.moveService.lastBotSourceField[0] === this.field['fieldDesignation'][0]
-      && this.moveService.lastBotSourceField[1] === this.field['fieldDesignation'][1]) {
+  markupPossibleField(): void {
+    this.moveService.possibleFields.subscribe(fields => {
+      for (let i = 0; i < fields.length; i++) {
+        let field = fields[i].fieldDesignation;
 
-      this.backGround = 'lastMoveSource';
-    }
-    else if(this.moveService.lastBotTargetField != null
-      && this.moveService.lastBotTargetField[0] === this.field['fieldDesignation'][0]
-      && this.moveService.lastBotTargetField[1] === this.field['fieldDesignation'][1]){
+        if (field[0] === this.field['fieldDesignation'][0] && field[1] === this.field['fieldDesignation'][1]) {
+          this.backGround$ = 'possibleMove';
+        }
+      }
+    });
+  }
 
-      this.backGround = 'lastMoveTarget';
-    }
-    else {
-      this.backGround = this.field['fieldColor'];
-    }
+
+  markupLastMove(): void {
+    this.moveService.lastBotSourceField.subscribe(sourceField => {
+      if (sourceField != null
+        && sourceField[0] === this.field['fieldDesignation'][0]
+        && sourceField[1] === this.field['fieldDesignation'][1]) {
+
+        this.backGround$ = 'lastMoveSource';
+      }
+    }).unsubscribe();
+
+    this.moveService.lastBotTargetField.subscribe(targetField => {
+      if (targetField != null
+        && targetField[0] === this.field['fieldDesignation'][0]
+        && targetField[1] === this.field['fieldDesignation'][1]) {
+
+        this.backGround$ = 'lastMoveTarget';
+      }
+    }).unsubscribe();
+
   }
 
 }
