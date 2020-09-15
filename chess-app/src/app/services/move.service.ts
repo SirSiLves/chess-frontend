@@ -27,10 +27,10 @@ export class MoveService {
     this.targetField$ = new BehaviorSubject<any>({fieldDesignation: []});
     this.clickedCount = 0;
     this.loadingPicture$ = new BehaviorSubject<any>(false);
-    this.possibleFields$ = new Subject<any>();
 
-    this.lastBotSourceField = null;
-    this.lastBotTargetField = null;
+    // this.possibleFields$ = new Subject<any>();
+    // this.lastBotSourceField = null;
+    // this.lastBotTargetField = null;
   }
 
 
@@ -39,16 +39,16 @@ export class MoveService {
       sourceField: clickedField.fieldDesignation,
     }
 
-    this.httpService.retrieveValidFields(clickedFieldObj).subscribe(responsePossibleFields => {
-      this.possibleFields$.next(responsePossibleFields);
-    });
+    // this.httpService.retrieveValidFields(clickedFieldObj).subscribe(responsePossibleFields => {
+    //   this.possibleFields$.next(responsePossibleFields);
+    // });
 
   }
 
-  resetLastPlayed() {
-    this.lastBotSourceField = null;
-    this.lastBotTargetField = null;
-  }
+  // resetLastPlayed() {
+  //   this.lastBotSourceField = null;
+  //   this.lastBotTargetField = null;
+  // }
 
 
   prepareMove(clickedField) {
@@ -59,6 +59,7 @@ export class MoveService {
     if (this.clickedCount == 1 && clickedField.figure != null && this.loadingPicture$.value == false) {
 
       this.getValidField(clickedField);
+
       this.sourceField$.next(clickedField);
 
     } else if (this.clickedCount >= 2) {
@@ -82,8 +83,8 @@ export class MoveService {
         this.reloadGamePicture();
 
         if (this.matrixService.botEnabled) {
-          this.loadingPicture$.pipe(take(2)).subscribe(s => {
-            if (s == false) {
+          this.loadingPicture$.pipe(take(2)).subscribe(isLoading => {
+            if (isLoading == false) {
               this.executeBotMove();
             }
           });
@@ -111,6 +112,7 @@ export class MoveService {
   executeBotMove() {
     this.httpService.doBotMove().subscribe(responseBotMove => {
       // this.toast.info(responseBotMove)
+      // this.lastBotFields$.next(responseBotMove);
 
       this.lastBotSourceField = responseBotMove[0].fieldDesignation;
       this.lastBotTargetField = responseBotMove[1].fieldDesignation;

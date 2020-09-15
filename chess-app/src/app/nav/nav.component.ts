@@ -34,7 +34,8 @@ export class NavComponent implements OnInit {
     this.httpService.initializeGame().subscribe(responseInitialize => {
 
       this.httpService.getGamePicture().subscribe(responsePicture => {
-        this.moveService.resetLastPlayed();
+
+        // this.moveService.resetLastPlayed();
 
         this.matrixService.setMatrix(responsePicture.board.fieldMatrix);
         //console.log(responseInitialize);

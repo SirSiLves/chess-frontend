@@ -17,8 +17,10 @@ export class FieldComponent implements OnInit {
   isClicked$: boolean;
   moveEvent$: any;
   backGround$: string;
-  possibleFields$: Subscription;
-  removeMarkup$: Subscription;
+
+  // possibleFields$: Subscription;
+  // removeMarkup$: Subscription;
+  // lastBotMove$: Subscription;
 
   constructor(public coordinaterService: CoordinaterService,
               public moveService: MoveService) {
@@ -29,23 +31,28 @@ export class FieldComponent implements OnInit {
     this.figure = this.field['figure'];
     this.backGround$ = this.field['fieldColor'];
 
-    this.possibleFields$ = this.moveService.possibleFields$.subscribe(moveResponse => {
-      this.markupPossibleField(moveResponse);
-    });
+    // this.possibleFields$ = this.moveService.possibleFields$.subscribe(moveResponse => {
+    //   this.markupPossibleField(moveResponse);
+    // });
 
-    this.removeMarkup$ = this.moveService.removeMarkup$.subscribe(state => {
-      if (state) {
-        //removes all markups
-        this.markupLastMove();
-      }
-    });
+    // this.removeMarkup$ = this.moveService.removeMarkup$.subscribe(state => {
+    //   if (state) {
+    //     //removes all markups
+    //     // this.markupLastMove();
+    //   }
+    // });
 
-    this.markupLastMove();
+    // this.lastBotMove$ = this.moveService..subscribe(botResponse => {
+    //   this.lastBotMove$ = new BehaviorSubject(botResponse);
+    //   this.markupLastMove();
+    // });
+
   }
 
   ngOnDestroy(): void {
-    this.possibleFields$.unsubscribe();
-    this.removeMarkup$.unsubscribe();
+    // this.possibleFields$.unsubscribe();
+    // this.lastBotMove$.unsubscribe();
+    // this.removeMarkup$.unsubscribe();
   }
 
 
@@ -90,7 +97,7 @@ export class FieldComponent implements OnInit {
       && targetField[1] === this.field['fieldDesignation'][1]) {
       this.backGround$ = this.field['fieldColor'] + ' lastMoveTarget';
     } else {
-      this.backGround$ = this.field['fieldColor'];
+      // this.backGround$ = this.field['fieldColor'];
     }
 
   }
