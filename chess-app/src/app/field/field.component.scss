@@ -12,8 +12,13 @@
   align-items: center;
   border: solid 2px #282c34;
 }
-.possibleMove {
-  background: #c6ecc6;
+
+.SANDYBROWN {
+  background: sandybrown;
+}
+
+.BROWN {
+  background: brown;
 }
 
 .lastMoveSource {
@@ -22,13 +27,8 @@
 .lastMoveTarget {
   background: grey;
 }
-
-.SANDYBROWN {
-  background: sandybrown;
-}
-
-.BROWN {
-  background: brown;
+.possibleMove {
+  border: dashed 3px #282c34;
 }
 
 .clicked {

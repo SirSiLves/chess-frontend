@@ -15,30 +15,34 @@ export class MoveService {
   private targetField$: BehaviorSubject<any>;
   public loadingPicture$: BehaviorSubject<boolean>;
   public onClick$: EventEmitter<number> = new EventEmitter<number>();
+  public removeMarkup$: EventEmitter<boolean> = new EventEmitter<boolean>(false);
   public clickedCount: number;
+  public possibleFields$: Subject<any>;
 
-  public lastBotSourceField: BehaviorSubject<any>;
-  public lastBotTargetField: BehaviorSubject<any>;
-  public possibleFields: Subject<any>;
+  public lastBotSourceField: any;
+  public lastBotTargetField: any;
 
   constructor(private httpService: HttpService, private toast: ToastrService, private matrixService: MatrixService) {
     this.sourceField$ = new BehaviorSubject<any>({fieldDesignation: []});
     this.targetField$ = new BehaviorSubject<any>({fieldDesignation: []});
     this.clickedCount = 0;
     this.loadingPicture$ = new BehaviorSubject<any>(false);
-    this.lastBotSourceField = new BehaviorSubject<any>("eifach öpis");
-    this.lastBotTargetField = new BehaviorSubject<any>("eifach öpis");
-    this.possibleFields = new Subject<any>();
+    this.possibleFields$ = new Subject<any>();
+
+    this.lastBotSourceField = null;
+    this.lastBotTargetField = null;
   }
+
 
   getValidField(clickedField) {
     const clickedFieldObj = {
       sourceField: clickedField.fieldDesignation,
     }
 
-    this.httpService.retrieveValidFields(clickedFieldObj).subscribe(possibleFields => {
-      this.possibleFields.next(possibleFields);
+    this.httpService.retrieveValidFields(clickedFieldObj).subscribe(responsePossibleFields => {
+      this.possibleFields$.next(responsePossibleFields);
     });
+
   }
 
   resetLastPlayed() {
@@ -50,6 +54,7 @@ export class MoveService {
   prepareMove(clickedField) {
     this.clickedCount++;
     this.onClick$.emit(this.clickedCount);
+    this.removeMarkup$.emit(true);
 
     if (this.clickedCount == 1 && clickedField.figure != null && this.loadingPicture$.value == false) {
 
@@ -98,7 +103,6 @@ export class MoveService {
 
     this.httpService.getGamePicture().subscribe(responsePicture => {
       this.matrixService.setMatrix(responsePicture.board.fieldMatrix);
-
       this.loadingPicture$.next(false);
       // this.printSuccessUnitTestsForApi(responsePicture.board.moveHistory);
     });
@@ -107,10 +111,11 @@ export class MoveService {
   executeBotMove() {
     this.httpService.doBotMove().subscribe(responseBotMove => {
       // this.toast.info(responseBotMove)
-      this.reloadGamePicture();
 
-      this.lastBotSourceField.next(responseBotMove[0].fieldDesignation);
-      this.lastBotTargetField.next(responseBotMove[1].fieldDesignation);
+      this.lastBotSourceField = responseBotMove[0].fieldDesignation;
+      this.lastBotTargetField = responseBotMove[1].fieldDesignation;
+
+      this.reloadGamePicture();
     });
   }
 
