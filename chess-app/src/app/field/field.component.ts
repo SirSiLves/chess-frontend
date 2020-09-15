@@ -18,6 +18,8 @@ export class FieldComponent implements OnInit {
   moveEvent$: any;
   backGround$: string;
 
+  //TODO OUTPUT / INPUT
+
   // possibleFields$: Subscription;
   // removeMarkup$: Subscription;
   // lastBotMove$: Subscription;
