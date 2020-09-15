@@ -21,7 +21,7 @@ export class BoardComponent implements OnInit {
   constructor(private httpService: HttpService, private toast: ToastrService,
               private matrixService: MatrixService, public coordinaterService: CoordinaterService) {
   }
-  //TODO OUTPUT / INPUT
+  //TODO OUTPUT / INPUT auf FIELD
 
 
   ngOnInit() {

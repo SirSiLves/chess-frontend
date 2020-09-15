@@ -18,7 +18,7 @@ export class FieldComponent implements OnInit {
   moveEvent$: any;
   backGround$: string;
 
-  //TODO OUTPUT / INPUT
+  //TODO OUTPUT / INPUT auf BOARD
 
   // possibleFields$: Subscription;
   // removeMarkup$: Subscription;
