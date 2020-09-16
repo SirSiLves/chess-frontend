@@ -42,7 +42,7 @@ export class FieldComponent implements OnInit {
     });
 
     this.lastMoveFieldsSubscription = this.moveService.lastMoveFields$.subscribe(lastMovesResponse => {
-      if(lastMovesResponse != undefined) this.markupLastMoveField(lastMovesResponse);
+      if (lastMovesResponse != undefined) this.markupLastMoveField(lastMovesResponse);
     });
 
   }
@@ -69,26 +69,25 @@ export class FieldComponent implements OnInit {
         }
       }
     }
-    // if (!isPossibleField) {
-    //   this.backGround = this.field['fieldColor'];
-    // }
+    if (!isPossibleField)
+      if(!(this.backGround.includes('lastMoveSource') || this.backGround.includes('lastMoveTarget'))){
+        this.backGround = this.field['fieldColor'];
+      }
   }
 
   markupLastMoveField(lastMoveFields): void {
-    console.log("call")
-      const sourceField = lastMoveFields.sourceField.fieldDesignation;
-      const targetField = lastMoveFields.targetField.fieldDesignation;
+    const sourceField = lastMoveFields.sourceField.fieldDesignation;
+    const targetField = lastMoveFields.targetField.fieldDesignation;
 
-      if (sourceField != null && sourceField[0] === this.field['fieldDesignation'][0]
-        && sourceField[1] === this.field['fieldDesignation'][1]) {
-        this.backGround = 'lastMoveSource';
-      } else if (targetField != null && targetField[0] === this.field['fieldDesignation'][0]
-        && targetField[1] === this.field['fieldDesignation'][1]) {
-        this.backGround = this.field['fieldColor'] + ' lastMoveTarget';
-      }
-      else {
-        this.backGround = this.field['fieldColor'];
-      }
+    if (sourceField != null && sourceField[0] === this.field['fieldDesignation'][0]
+      && sourceField[1] === this.field['fieldDesignation'][1]) {
+      this.backGround = 'lastMoveSource';
+    } else if (targetField != null && targetField[0] === this.field['fieldDesignation'][0]
+      && targetField[1] === this.field['fieldDesignation'][1]) {
+      this.backGround = this.field['fieldColor'] + ' lastMoveTarget';
+    } else {
+      this.backGround = this.field['fieldColor'];
+    }
   }
 
 

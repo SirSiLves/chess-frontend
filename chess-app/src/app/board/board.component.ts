@@ -16,6 +16,7 @@ export class BoardComponent implements OnInit {
 
   @Output() possibleFieldsEvent$: EventEmitter<any> = new EventEmitter<any>();
 
+  private matrixSubscription: Subscription;
   private clickCount: number = 0;
   private sourceField: any;
   private targetField: any;
@@ -36,7 +37,7 @@ export class BoardComponent implements OnInit {
   ngOnInit() {
     this.coordinate = this.matrixService.getCoordinate();
 
-    this.matrixService.getMatrix().subscribe(matrixData => {
+    this.matrixSubscription = this.matrixService.getMatrix().subscribe(matrixData => {
       this.boardMatrix$ = matrixData;
       this.resetMarkup();
     });
@@ -45,6 +46,7 @@ export class BoardComponent implements OnInit {
   }
 
   ngOnDestroy() {
+    this.matrixSubscription.unsubscribe();
   }
 
   onFieldClick(clickedField) {
@@ -71,7 +73,6 @@ export class BoardComponent implements OnInit {
       this.possibleFieldsEvent$.emit(responsePossibleFields);
     });
   }
-
 
   resetMarkup(): void {
     this.clickCount = 0;
