@@ -73,6 +73,7 @@ export class HttpService {
   doBotMove(): Observable<any> {
     return this.http.get('http://localhost:8080/api/move/doBotMove', {
       withCredentials: true,
+      responseType: 'text'
     }).pipe(
       tap(data => {
         // console.log('server data bot move:', data)

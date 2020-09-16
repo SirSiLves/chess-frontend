@@ -1,7 +1,6 @@
-import {Injectable} from '@angular/core';
+import {Injectable, EventEmitter} from '@angular/core';
 import {BehaviorSubject, Observable} from "rxjs";
-import {HttpService} from "./http.service";
-import {ToastrService} from "ngx-toastr";
+
 
 
 @Injectable({
@@ -14,10 +13,7 @@ export class MatrixService {
     x: string[]; y: string[];
   };
 
-  public botEnabled: boolean;
-
-
-  constructor(private httpService: HttpService, private toast: ToastrService) {
+  constructor() {
     this.fieldMatrix$ = new BehaviorSubject<any>({
       a: {}, b: {}, c: {}, d: {},
       e: {}, f: {}, g: {}, h: {}
@@ -28,21 +24,8 @@ export class MatrixService {
     };
 
     this.preBuildMatrix();
-
-    this.httpService.getPreGamePicture().subscribe(
-      data => {
-        if(data.message != 'The game is not yet initialized'){
-          this.setMatrix(data.board.fieldMatrix);
-        }
-        else {
-          //TODO better text output
-          this.toast.info(data.message);
-        }
-      }
-    );
-
-    this.botEnabled = true;
   }
+
 
   preBuildMatrix() {
     let toggler = true;
@@ -55,27 +38,27 @@ export class MatrixService {
         let field = {}
         if (toggler) {
 
-          Object.assign(field, {fieldColor: "BROWN"})
-          Object.assign(field, {fieldDesignation: [this.coordinate.x[i], this.coordinate.y[j]]})
+          Object.assign(field, {fieldColor: "BROWN"});
+          Object.assign(field, {fieldDesignation: [this.coordinate.x[i], this.coordinate.y[j]]});
 
           Object.assign(fieldRow, {[this.coordinate.y[j]]: field});
 
         } else {
 
-          Object.assign(field, {fieldColor: "SANDYBROWN"})
-          Object.assign(field, {fieldDesignation: [this.coordinate.x[i], this.coordinate.y[j]]})
+          Object.assign(field, {fieldColor: "SANDYBROWN"});
+          Object.assign(field, {fieldDesignation: [this.coordinate.x[i], this.coordinate.y[j]]});
 
           Object.assign(fieldRow, {[this.coordinate.y[j]]: field});
 
         }
         toggler = !toggler;
       }
-      Object.assign(this.fieldMatrix$.value, {[this.coordinate.x[i]]: fieldRow})
+      Object.assign(this.fieldMatrix$.value, {[this.coordinate.x[i]]: fieldRow});
     }
   }
 
   setMatrix(boardMatrix): void {
-    this.fieldMatrix$.next(boardMatrix)
+    this.fieldMatrix$.next(boardMatrix);
   }
 
   getMatrix(): Observable<any> {

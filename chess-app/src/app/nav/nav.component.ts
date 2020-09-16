@@ -12,7 +12,6 @@ import {MoveService} from "../services/move.service";
 })
 export class NavComponent implements OnInit {
 
-  //@Output() clickedEvent = new EventEmitter();
 
   constructor(private httpService: HttpService,
               private toast: ToastrService,
@@ -25,20 +24,17 @@ export class NavComponent implements OnInit {
   }
 
   handleBot(): void {
-    this.matrixService.botEnabled = !this.matrixService.botEnabled
+    this.moveService.botEnabled = !this.moveService.botEnabled
   }
 
 
   createGame(): void {
-
     this.httpService.initializeGame().subscribe(responseInitialize => {
-
       this.httpService.getGamePicture().subscribe(responsePicture => {
-
-        // this.moveService.resetLastPlayed();
-
+        //reset history subscription
+        this.moveService.lastMoveFields$.next(undefined);
+        //overwrite field matrix
         this.matrixService.setMatrix(responsePicture.board.fieldMatrix);
-        //console.log(responseInitialize);
         this.toast.success(responseInitialize);
       });
     });

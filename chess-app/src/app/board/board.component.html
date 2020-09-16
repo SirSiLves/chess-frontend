@@ -7,7 +7,11 @@
         <div class="fieldColumn">
           <ul *ngIf="column.value">
             <li *ngFor="let field of column.value | keyvalue">
-              <app-field  [field]="field.value"></app-field>
+              <app-field
+                [field]="field.value"
+                (clickOnFieldEvent$)="onFieldClick($event)"
+                [possibleFieldsEvent$]="possibleFieldsEvent$">
+              </app-field>
             </li>
           </ul>
         </div>
