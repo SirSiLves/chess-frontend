@@ -3,6 +3,7 @@ import {HttpService} from "../services/http.service";
 import {ToastrService} from "ngx-toastr";
 import {MatrixService} from "../services/matrix.service";
 import {MoveService} from "../services/move.service";
+import {take} from "rxjs/operators";
 
 
 @Component({
@@ -29,8 +30,8 @@ export class NavComponent implements OnInit {
 
 
   createGame(): void {
-    this.httpService.initializeGame().subscribe(responseInitialize => {
-      this.httpService.getGamePicture().subscribe(responsePicture => {
+    this.httpService.initializeGame().pipe(take(1)).subscribe(responseInitialize => {
+      this.httpService.getGamePicture().pipe(take(1)).subscribe(responsePicture => {
         //reset history subscription
         this.moveService.lastMoveFields$.next(undefined);
         //overwrite field matrix

@@ -5,6 +5,7 @@ import {CoordinaterService} from "../services/coordinater.service";
 import {MoveService} from "../services/move.service";
 import {HttpService} from "../services/http.service";
 import {BehaviorSubject, Subject, Subscription} from "rxjs";
+import {take} from "rxjs/operators";
 
 
 @Component({
@@ -69,7 +70,7 @@ export class BoardComponent implements OnInit {
       sourceField: clickedSourceField.fieldDesignation,
     }
 
-    this.httpService.retrieveValidFields(clickedFieldObj).subscribe(responsePossibleFields => {
+    this.httpService.retrieveValidFields(clickedFieldObj).pipe(take(1)).subscribe(responsePossibleFields => {
       this.possibleFieldsEvent$.emit(responsePossibleFields);
     });
   }
