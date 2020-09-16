@@ -24,11 +24,6 @@ export class FieldComponent implements OnInit {
   public backGround: string;
 
 
-  // private removeMarkupSubscription$: Subscription;
-  // private possibleFieldSubscription$: Subscription;
-  // private lastMoveFields$: Subscription;
-
-
   constructor(public coordinaterService: CoordinaterService,
               public moveService: MoveService) {
   }
@@ -89,56 +84,6 @@ export class FieldComponent implements OnInit {
       this.backGround = this.field['fieldColor'];
     }
   }
-
-
-  // clickedFieldForMove(clickedField): void {
-  //   if ((clickedField.figure != null || this.moveService.clickedCount > 0) && this.isClicked$ == false) {
-  //     this.moveEvent$ = this.moveService.onClick$
-  //       .pipe(take(2))
-  //       .subscribe(event => {
-  //         if (event == 1) {
-  //           this.isClicked$ = true;
-  //         } else {
-  //           this.isClicked$ = false;
-  //           this.moveEvent$.unsubscribe();
-  //         }
-  //       });
-  //
-  //     this.moveService.prepareMove(clickedField);
-  //   }
-  // }
-
-  // markupPossibleField(possibleFields): void {
-  //   for (let i = 0; i < possibleFields.length; i++) {
-  //     let field = possibleFields[i].fieldDesignation;
-  //
-  //     if (field[0] === this.field['fieldDesignation'][0] && field[1] === this.field['fieldDesignation'][1]) {
-  //       this.backGround$ = this.field['fieldColor'] + ' possibleMove';
-  //     }
-  //   }
-  // }
-
-  //
-  // markupLastMove(lastMove): void {
-  //
-  //   const sourceField = lastMove.sourceField.fieldDesignation;
-  //   const targetField = lastMove.targetField.fieldDesignation;
-  //
-  //   // console.log(sourceField != null && sourceField[0] === this.field['fieldDesignation'][0]
-  //   //   && sourceField[1] === this.field['fieldDesignation'][1]);
-  //
-  //
-  //   if (sourceField != null && sourceField[0] === this.field['fieldDesignation'][0]
-  //     && sourceField[1] === this.field['fieldDesignation'][1]) {
-  //     this.backGround$ = 'lastMoveSource';
-  //   } else if (targetField != null && targetField[0] === this.field['fieldDesignation'][0]
-  //     && targetField[1] === this.field['fieldDesignation'][1]) {
-  //     this.backGround$ = this.field['fieldColor'] + ' lastMoveTarget';
-  //   } else {
-  //     this.backGround$ = this.field['fieldColor'];
-  //   }
-  //
-  // }
 
 }
 
