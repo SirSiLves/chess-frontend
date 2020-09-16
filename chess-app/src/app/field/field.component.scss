@@ -24,11 +24,14 @@
 .lastMoveSource {
   background: lightgray;
 }
+
 .lastMoveTarget {
   background: grey;
 }
+
 .possibleMove {
-  border: dashed 3px #282c34;
+  border: inset 3px #282c34;
+  background: #c6ecc6;
 }
 
 .clicked {

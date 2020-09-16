@@ -1,18 +1,8 @@
 
-<ng-template [ngIf]="field['fieldColor'] === 'BROWN'">
-  <div class="field {{this.backGround$}}" (mouseover)="coordinaterService.markupDesignation(field)"
-       (click)="this.clickedFieldForMove(field)" [ngClass]="isClicked$ ? 'clicked' : ''">
-    <ng-template [ngIf]="this.figure != null">
-
-      <app-figure [figure]="this.figure"></app-figure>
-
-    </ng-template>
-  </div>
-</ng-template>
-
-<ng-template [ngIf]="field['fieldColor'] === 'SANDYBROWN'">
-  <div class="field {{this.backGround$}}" (mouseover)="coordinaterService.markupDesignation(field)"
-       (click)="this.clickedFieldForMove(field)" [ngClass]="isClicked$ ? 'clicked' : ''">
+<ng-template [ngIf]="field">
+  <div class="field {{this.backGround}}"
+       (mouseover)="coordinaterService.markupDesignation(field)"
+       (click)="onClick(field)">
     <ng-template [ngIf]="this.figure != null">
 
       <app-figure [figure]="this.figure"></app-figure>
@@ -22,6 +12,27 @@
 </ng-template>
 
 
+<!--<ng-template [ngIf]="field['fieldColor'] === 'BROWN'">-->
+<!--  <div class="field {{this.backGround$}}" (mouseover)="coordinaterService.markupDesignation(field)"-->
+<!--       (click)="this.clickedFieldForMove(field)" [ngClass]="isClicked$ ? 'clicked' : ''">-->
+<!--    <ng-template [ngIf]="this.figure != null">-->
+
+<!--      <app-figure [figure]="this.figure"></app-figure>-->
+
+<!--    </ng-template>-->
+<!--  </div>-->
+<!--</ng-template>-->
+
+<!--<ng-template [ngIf]="field['fieldColor'] === 'SANDYBROWN'">-->
+<!--  <div class="field {{this.backGround$}}" (mouseover)="coordinaterService.markupDesignation(field)"-->
+<!--       (click)="this.clickedFieldForMove(field)" [ngClass]="isClicked$ ? 'clicked' : ''">-->
+<!--    <ng-template [ngIf]="this.figure != null">-->
+
+<!--      <app-figure [figure]="this.figure"></app-figure>-->
+
+<!--    </ng-template>-->
+<!--  </div>-->
+<!--</ng-template>-->
 
 
 <!--<ng-template [ngIf]="field['fieldColor'] === 'BROWN'">-->

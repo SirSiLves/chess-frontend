@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {HttpService} from "../services/http.service";
+import {Component, OnInit, Output, EventEmitter, Input} from '@angular/core';
 import {ToastrService} from 'ngx-toastr';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatrixService} from "../services/matrix.service";
 import {CoordinaterService} from "../services/coordinater.service";
+import {MoveService} from "../services/move.service";
+import {HttpService} from "../services/http.service";
+import {BehaviorSubject, Subject, Subscription} from "rxjs";
 
 
 @Component({
@@ -13,15 +14,23 @@ import {CoordinaterService} from "../services/coordinater.service";
 })
 export class BoardComponent implements OnInit {
 
-  boardMatrix$: { column: any };
-  coordinate: {
+  @Output() possibleFieldsEvent$: EventEmitter<any> = new EventEmitter<any>();
+
+  private clickCount: number = 0;
+  private sourceField: any;
+  private targetField: any;
+
+  public boardMatrix$: { column: any };
+  public coordinate: {
     x: string[]; y: string[]
   };
 
-  constructor(private httpService: HttpService, private toast: ToastrService,
-              private matrixService: MatrixService, public coordinaterService: CoordinaterService) {
+  constructor(private toast: ToastrService,
+              private matrixService: MatrixService,
+              public coordinaterService: CoordinaterService,
+              private httpService: HttpService,
+              private moveService: MoveService) {
   }
-  //TODO OUTPUT / INPUT auf FIELD
 
 
   ngOnInit() {
@@ -29,10 +38,46 @@ export class BoardComponent implements OnInit {
 
     this.matrixService.getMatrix().subscribe(matrixData => {
       this.boardMatrix$ = matrixData;
+      this.resetMarkup();
     });
 
-    //console.log(this.boardMatrix$);
+    this.moveService.preLoadGamePicture();
   }
+
+  ngOnDestroy() {
+  }
+
+  onFieldClick(clickedField) {
+    this.clickCount++;
+
+    if (this.clickCount == 1 && clickedField.figure != null) {
+      this.emitPossibleFields(clickedField);
+      this.sourceField = clickedField;
+    } else if (this.clickCount == 2) {
+      this.targetField = clickedField;
+      this.moveService.doMove(this.sourceField, this.targetField);
+      this.resetMarkup();
+    } else {
+      this.resetMarkup();
+    }
+  }
+
+  emitPossibleFields(clickedSourceField) {
+    const clickedFieldObj = {
+      sourceField: clickedSourceField.fieldDesignation,
+    }
+
+    this.httpService.retrieveValidFields(clickedFieldObj).subscribe(responsePossibleFields => {
+      this.possibleFieldsEvent$.emit(responsePossibleFields);
+    });
+  }
+
+
+  resetMarkup(): void {
+    this.clickCount = 0;
+    this.possibleFieldsEvent$.emit(null);
+  }
+
 
 
 }
