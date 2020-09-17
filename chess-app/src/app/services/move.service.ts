@@ -63,7 +63,7 @@ export class MoveService {
 
       setTimeout(() => {
         this.loadingPicture$.next(false);
-      }, 1);
+      }, 2000);
 
     });
   }
