@@ -14,6 +14,7 @@ export class MoveService {
   private loadingPicture$: BehaviorSubject<boolean> = new BehaviorSubject<any>(false);
   public lastMoveFields$: BehaviorSubject<any> = new BehaviorSubject<any>(undefined);
   public botEnabled: boolean = true;
+  private AUTOTURNES: number = 1000;
 
 
   constructor(private httpService: HttpService,
@@ -29,10 +30,11 @@ export class MoveService {
     }
 
     this.httpService.doMove(moveObj).pipe(take(1)).subscribe(validateResponse => {
+      console.log(validateResponse);
       if (validateResponse.state) {
         this.reloadGamePicture();
-        this.loadingPicture$.pipe(take(1)).subscribe(state => {
-          if(state && this.botEnabled) this.doBotMove();
+        this.loadingPicture$.pipe(take(this.AUTOTURNES)).subscribe(state => {
+          if (!state && this.botEnabled) this.doBotMove();
         });
       } else {
         this.toast.warning(validateResponse.text)
@@ -54,23 +56,23 @@ export class MoveService {
 
     this.httpService.getGamePicture().pipe(take(1)).subscribe(responsePicture => {
       this.lastMoveFields$.next(responsePicture.board.moveHistory[Object.keys(responsePicture.board.moveHistory).length - 1]);
-      this.printSuccessUnitTestsForApi(responsePicture.board.moveHistory);
 
       this.matrixService.setMatrix(responsePicture.board.fieldMatrix);
-      this.loadingPicture$.next(false);
+
+      // this.printSuccessUnitTestsForApi(responsePicture.board.moveHistory);
+
+      setTimeout(() => {
+        this.loadingPicture$.next(false);
+      }, 1);
+
     });
   }
 
   preLoadGamePicture(): void {
     this.httpService.getPreGamePicture().pipe(take(1)).subscribe(
       data => {
-        if (data.message != 'The game is not yet initialized') {
-          this.lastMoveFields$.next(data.board.moveHistory[Object.keys(data.board.moveHistory).length - 1]);
-          this.matrixService.setMatrix(data.board.fieldMatrix);
-        } else {
-          //TODO better text output
-          this.toast.info(data.message);
-        }
+        this.lastMoveFields$.next(data.board.moveHistory[Object.keys(data.board.moveHistory).length - 1]);
+        this.matrixService.setMatrix(data.board.fieldMatrix);
       }
     );
   }
