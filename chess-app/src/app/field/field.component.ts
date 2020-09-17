@@ -36,15 +36,15 @@ export class FieldComponent implements OnInit {
       this.markupPossibleField(possibleFields);
     });
 
-    this.lastMoveFieldsSubscription = this.moveService.lastMoveFields$.subscribe(lastMovesResponse => {
-      if (lastMovesResponse != undefined) this.markupLastMoveField(lastMovesResponse);
-    });
+    // this.lastMoveFieldsSubscription = this.moveService.lastMoveFields$.subscribe(lastMovesResponse => {
+    //   if (lastMovesResponse != undefined) this.markupLastMoveField(lastMovesResponse);
+    // });
 
   }
 
   ngOnDestroy(): void {
     this.possibleFieldsSubscription.unsubscribe();
-    this.lastMoveFieldsSubscription.unsubscribe();
+    // this.lastMoveFieldsSubscription.unsubscribe();
   }
 
 

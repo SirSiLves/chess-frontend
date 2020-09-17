@@ -8,7 +8,7 @@ import {BehaviorSubject, Observable} from "rxjs";
 })
 export class MatrixService {
 
-  private readonly fieldMatrix$: BehaviorSubject<IMatrix>;
+  public readonly fieldMatrix$: BehaviorSubject<IMatrix>;
   private readonly coordinate: {
     x: string[]; y: string[];
   };
@@ -61,9 +61,9 @@ export class MatrixService {
     this.fieldMatrix$.next(boardMatrix);
   }
 
-  getMatrix(): Observable<any> {
-    return this.fieldMatrix$;
-  }
+  // getMatrix(): Observable<any> {
+  //   return this.fieldMatrix$;
+  // }
 
   getCoordinate() {
     return this.coordinate;

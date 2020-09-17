@@ -11,9 +11,10 @@ import {take} from "rxjs/operators";
 })
 export class MoveService {
 
-  private loadingPicture$: BehaviorSubject<boolean> = new BehaviorSubject<any>(false);
-  public lastMoveFields$: BehaviorSubject<any> = new BehaviorSubject<any>(undefined);
+  // public loadingPicture$: Subject<boolean> = new Subject<boolean>();
+  // public lastMoveFields$: BehaviorSubject<any> = new BehaviorSubject<any>(undefined);
   public botEnabled: boolean = true;
+  public runningGame: boolean = false;
   private AUTOTURNES: number = 1000;
 
 
@@ -24,18 +25,19 @@ export class MoveService {
 
 
   doMove(sourceField, targetField): void {
+    this.runningGame = true;
+
     const moveObj = {
       sourceField: sourceField.fieldDesignation,
       targetField: targetField.fieldDesignation
     }
 
     this.httpService.doMove(moveObj).pipe(take(1)).subscribe(validateResponse => {
-      console.log(validateResponse);
       if (validateResponse.state) {
         this.reloadGamePicture();
-        this.loadingPicture$.pipe(take(this.AUTOTURNES)).subscribe(state => {
-          if (!state && this.botEnabled) this.doBotMove();
-        });
+        // this.loadingPicture$.pipe(take(this.AUTOTURNES)).subscribe(state => {
+        //   if (!state && this.botEnabled) this.doBotMove();
+        // });
       } else {
         this.toast.warning(validateResponse.text)
         // this.printErrorUnitTestsForApi(moveObj);
@@ -44,7 +46,7 @@ export class MoveService {
   }
 
   doBotMove(): void {
-    if (this.botEnabled) {
+    if (this.botEnabled && this.runningGame) {
       this.httpService.doBotMove().pipe(take(1)).subscribe(responseBotMove => {
         this.reloadGamePicture();
       });
@@ -52,18 +54,19 @@ export class MoveService {
   }
 
   reloadGamePicture(): void {
-    this.loadingPicture$.next(true);
+    // this.loadingPicture$.next(true);
 
     this.httpService.getGamePicture().pipe(take(1)).subscribe(responsePicture => {
-      this.lastMoveFields$.next(responsePicture.board.moveHistory[Object.keys(responsePicture.board.moveHistory).length - 1]);
+      // this.lastMoveFields$.next(responsePicture.board.moveHistory[Object.keys(responsePicture.board.moveHistory).length - 1]);
 
       this.matrixService.setMatrix(responsePicture.board.fieldMatrix);
 
       // this.printSuccessUnitTestsForApi(responsePicture.board.moveHistory);
 
       setTimeout(() => {
-        this.loadingPicture$.next(false);
-      }, 2000);
+        // this.loadingPicture$.next(false);
+        this.doBotMove();
+      }, 50);
 
     });
   }
@@ -71,14 +74,14 @@ export class MoveService {
   preLoadGamePicture(): void {
     this.httpService.getPreGamePicture().pipe(take(1)).subscribe(
       data => {
-        this.lastMoveFields$.next(data.board.moveHistory[Object.keys(data.board.moveHistory).length - 1]);
+        // this.lastMoveFields$.next(data.board.moveHistory[Object.keys(data.board.moveHistory).length - 1]);
         this.matrixService.setMatrix(data.board.fieldMatrix);
       }
     );
   }
 
 
-  printSuccessUnitTestsForApi(moveHistory) {
+printSuccessUnitTestsForApi(moveHistory) {
     // assertTrue(handleMoveService.handleMove(new String[]{'f', '7'}, new String[]{'f', '5'}).isState());
 
     const moveHistorySize = Object.keys(moveHistory).length

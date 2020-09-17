@@ -22,7 +22,7 @@ export class BoardComponent implements OnInit {
   private sourceField: any;
   private targetField: any;
 
-  public boardMatrix$: { column: any };
+  public boardMatrix$: any //{ column: any };
   public coordinate: {
     x: string[]; y: string[]
   };
@@ -38,7 +38,7 @@ export class BoardComponent implements OnInit {
   ngOnInit() {
     this.coordinate = this.matrixService.getCoordinate();
 
-    this.matrixSubscription = this.matrixService.getMatrix().subscribe(matrixData => {
+    this.matrixSubscription = this.matrixService.fieldMatrix$.subscribe(matrixData => {
       this.boardMatrix$ = matrixData;
       this.resetMarkup();
     });
