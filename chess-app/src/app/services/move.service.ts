@@ -11,21 +11,26 @@ import {take} from "rxjs/operators";
 })
 export class MoveService {
 
-  // public loadingPicture$: Subject<boolean> = new Subject<boolean>();
   // public lastMoveFields$: BehaviorSubject<any> = new BehaviorSubject<any>(undefined);
   public botEnabled: boolean = true;
-  public runningGame: boolean = false;
-  private AUTOTURNES: number = 1000;
+  public refreshBoard$: EventEmitter<boolean> = new EventEmitter<boolean>();
+  public botInfinity: boolean = true;
 
 
   constructor(private httpService: HttpService,
               private toast: ToastrService,
               private matrixService: MatrixService) {
+
+    // this.botEnabled$.subscribe(state => {
+    //   if(state) this.doBotMove();
+    // });
+    this.refreshBoard$.subscribe(state => {
+      if(state) this.reloadGamePicture();
+    })
   }
 
 
   doMove(sourceField, targetField): void {
-    this.runningGame = true;
 
     const moveObj = {
       sourceField: sourceField.fieldDesignation,
@@ -34,10 +39,10 @@ export class MoveService {
 
     this.httpService.doMove(moveObj).pipe(take(1)).subscribe(validateResponse => {
       if (validateResponse.state) {
-        this.reloadGamePicture();
-        // this.loadingPicture$.pipe(take(this.AUTOTURNES)).subscribe(state => {
-        //   if (!state && this.botEnabled) this.doBotMove();
-        // });
+        this.refreshBoard$.emit(true);
+
+        if(this.botEnabled) this.doBotMove();
+
       } else {
         this.toast.warning(validateResponse.text)
         // this.printErrorUnitTestsForApi(moveObj);
@@ -46,27 +51,32 @@ export class MoveService {
   }
 
   doBotMove(): void {
-    if (this.botEnabled && this.runningGame) {
+    if(this.botInfinity) {
       this.httpService.doBotMove().pipe(take(1)).subscribe(responseBotMove => {
-        this.reloadGamePicture();
+        this.refreshBoard$.emit(true);
+
+        //call recursive
+        if (this.botInfinity && this.botEnabled) {
+          setTimeout(() => {
+            this.doBotMove();
+          }, 100);
+        }
+
       });
     }
+
   }
 
   reloadGamePicture(): void {
-    // this.loadingPicture$.next(true);
-
     this.httpService.getGamePicture().pipe(take(1)).subscribe(responsePicture => {
       // this.lastMoveFields$.next(responsePicture.board.moveHistory[Object.keys(responsePicture.board.moveHistory).length - 1]);
-
       this.matrixService.setMatrix(responsePicture.board.fieldMatrix);
 
       // this.printSuccessUnitTestsForApi(responsePicture.board.moveHistory);
 
-      setTimeout(() => {
-        // this.loadingPicture$.next(false);
-        this.doBotMove();
-      }, 50);
+      // setTimeout(() => {
+      //   this.doBotMove();
+      // }, 50);
 
     });
   }
@@ -81,7 +91,7 @@ export class MoveService {
   }
 
 
-printSuccessUnitTestsForApi(moveHistory) {
+  printSuccessUnitTestsForApi(moveHistory) {
     // assertTrue(handleMoveService.handleMove(new String[]{'f', '7'}, new String[]{'f', '5'}).isState());
 
     const moveHistorySize = Object.keys(moveHistory).length

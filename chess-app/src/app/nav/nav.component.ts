@@ -30,22 +30,28 @@ export class NavComponent implements OnInit {
 
 
   createGame(): void {
-    this.moveService.runningGame = false;
+    this.moveService.botInfinity = false;
 
     this.httpService.initializeGame().pipe(take(1)).subscribe(responseInitialize => {
-      this.httpService.getGamePicture().pipe(take(1)).subscribe(responsePicture => {
-        //reset history subscription
+      this.moveService.refreshBoard$.emit(true);
+      this.toast.success(responseInitialize);
 
-        // this.moveService.lastMoveFields$.next(undefined);
+      // this.moveService.botInfinity = true;
 
-        //overwrite field matrix
-        this.matrixService.setMatrix(responsePicture.board.fieldMatrix);
-        this.toast.success(responseInitialize);
-      });
+      // this.httpService.getGamePicture().pipe(take(1)).subscribe(responsePicture => {
+      //   //reset history subscription
+      //
+      //   // this.moveService.lastMoveFields$.next(undefined);
+      //
+      //   //overwrite field matrix
+      //   // this.matrixService.setMatrix(responsePicture.board.fieldMatrix);
+      //   // this.moveService.isGameStarted$ = true;
+      //
+      // });
+
     });
 
   }
-
 
 
 }
