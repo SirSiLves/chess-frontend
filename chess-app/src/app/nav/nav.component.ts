@@ -4,6 +4,7 @@ import {ToastrService} from "ngx-toastr";
 import {MatrixService} from "../services/matrix.service";
 import {MoveService} from "../services/move.service";
 import {take} from "rxjs/operators";
+import {Subscription} from "rxjs";
 
 
 @Component({
@@ -16,9 +17,9 @@ export class NavComponent implements OnInit {
 
   constructor(private httpService: HttpService,
               private toast: ToastrService,
-              public matrixService: MatrixService,
               public moveService: MoveService) {
   }
+
 
   ngOnInit(): void {
 
@@ -30,27 +31,19 @@ export class NavComponent implements OnInit {
 
 
   createGame(): void {
-    this.moveService.botInfinity = false;
+    this.moveService.botInfinityState = false;
 
-    this.httpService.initializeGame().pipe(take(1)).subscribe(responseInitialize => {
-      this.moveService.refreshBoard$.emit(true);
-      this.toast.success(responseInitialize);
-
-      // this.moveService.botInfinity = true;
-
-      // this.httpService.getGamePicture().pipe(take(1)).subscribe(responsePicture => {
-      //   //reset history subscription
-      //
-      //   // this.moveService.lastMoveFields$.next(undefined);
-      //
-      //   //overwrite field matrix
-      //   // this.matrixService.setMatrix(responsePicture.board.fieldMatrix);
-      //   // this.moveService.isGameStarted$ = true;
-      //
-      // });
-
-    });
-
+    setTimeout(() => {
+      if (!this.moveService.botIsMoving) {
+        this.httpService.initializeGame().subscribe(responseInitialize => {
+          this.moveService.refreshBoardEvent$.emit(true);
+          this.toast.success(responseInitialize);
+        });
+      }
+      else {
+        this.createGame();
+      }
+    }, 100);
   }
 
 
