@@ -2,14 +2,28 @@
 <div *ngIf="showResult" (click)="this.hideWinnerPopup()" class="popup" id="winnerPopup">
   <div class="popup_inner">
     <div class="d-flex flex-column bd-highlight align-items-center m-4">
-      <h1 *ngIf="winner == true">
-        Player
-        <span class="player"> {{winnerColor}} </span>
-        won the game!
-      </h1>
-      <h1 *ngIf="remis == true">
-        we have a remis
-      </h1>
+      <div *ngIf="winner == true">
+        <p>
+          Player
+          <span class="player"> {{winnerColor}} </span>
+          won the game!
+        </p>
+
+      </div>
+      <div *ngIf="remis == true">
+        <p>
+          We have a remis
+        </p>
+
+      </div>
+<!--      <h1 *ngIf="winner == true">-->
+<!--        Player-->
+<!--        <span class="player"> {{winnerColor}} </span>-->
+<!--        won the game!-->
+<!--      </h1>-->
+<!--      <h1 *ngIf="remis == true">-->
+<!--        we have a remis-->
+<!--      </h1>-->
     </div>
   </div>
 </div>

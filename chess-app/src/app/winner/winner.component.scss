@@ -15,19 +15,38 @@
 }
 
 .popup_inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
-  left: 30%;
-  right: 30%;
-  top: 30%;
-  /*bottom: 45%;*/
-  max-width: 500px;
+  left: 20%;
+  right: 20%;
+  top: 20%;
+  bottom: 20%;
+  //max-width: 500px;
+  //min-width: 110px;
   margin: auto;
   color: white;
-  background-color: #c6ecc6;
+  border-top-color: brown;
+  border-left-color: brown;
+  border-right-color: sandybrown;
+  border-bottom-color: sandybrown;
+  background: #282c34;
   border-style: solid;
   border-radius: 0.5rem;
-  border-color: #282c34;
-  border-width: 3px;
+  border-width: 5px;
+  width: 50vw;
+  height: 25vw;
+  max-height: 25vh;
+  max-width: 50vh;
+
+
+  p {
+    text-wrap: none;
+    font-size: 4vw;
+    margin: 10px;
+  }
+
 }
 
 .hideWin {
@@ -63,3 +82,4 @@
     opacity: 1;
   }
 }
+
