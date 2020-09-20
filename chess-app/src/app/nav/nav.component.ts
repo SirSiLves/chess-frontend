@@ -1,10 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {HttpService} from "../services/http.service";
 import {ToastrService} from "ngx-toastr";
-import {MatrixService} from "../services/matrix.service";
 import {MoveService} from "../services/move.service";
-import {take} from "rxjs/operators";
-import {Subscription} from "rxjs";
+import {GameHandlerService} from "../services/game-handler.service";
+
 
 
 @Component({
@@ -14,10 +13,12 @@ import {Subscription} from "rxjs";
 })
 export class NavComponent implements OnInit {
 
+  private tryCount: number = 0;
 
   constructor(private httpService: HttpService,
               private toast: ToastrService,
-              public moveService: MoveService) {
+              public moveService: MoveService,
+              private gameHandlerService: GameHandlerService) {
   }
 
 
@@ -34,14 +35,16 @@ export class NavComponent implements OnInit {
     this.moveService.botInfinityState = false;
 
     setTimeout(() => {
-      if (!this.moveService.botIsMoving) {
+      if (!this.moveService.botIsMoving || this.tryCount >= 1000) {
         this.httpService.initializeGame().subscribe(responseInitialize => {
-          this.moveService.refreshBoardEvent$.emit(true);
+          this.gameHandlerService.isGameEnded = false;
+          this.gameHandlerService.refreshBoardEvent$.emit(true);
           this.toast.success(responseInitialize);
         });
       }
       else {
         this.createGame();
+        this.tryCount++;
       }
     }, 100);
   }

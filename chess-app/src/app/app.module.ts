@@ -21,6 +21,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {InterceptorService} from "./services/interceptor.service";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {FormsModule} from "@angular/forms";
+import { WinnerComponent } from './winner/winner.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import {FormsModule} from "@angular/forms";
     BishopComponent,
     KnightComponent,
     RookComponent,
-    QueenComponent
+    QueenComponent,
+    WinnerComponent
   ],
   imports: [
     BrowserModule,

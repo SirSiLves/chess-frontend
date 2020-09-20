@@ -6,6 +6,7 @@ import {MoveService} from "../services/move.service";
 import {HttpService} from "../services/http.service";
 import {BehaviorSubject, Subject, Subscription} from "rxjs";
 import {take} from "rxjs/operators";
+import {GameHandlerService} from "../services/game-handler.service";
 
 
 @Component({
@@ -31,7 +32,8 @@ export class BoardComponent implements OnInit {
               private matrixService: MatrixService,
               public coordinaterService: CoordinaterService,
               private httpService: HttpService,
-              private moveService: MoveService) {
+              private moveService: MoveService,
+              private gameHandlerService: GameHandlerService) {
   }
 
 
@@ -43,7 +45,7 @@ export class BoardComponent implements OnInit {
       this.resetMarkup();
     });
 
-    this.moveService.preLoadGamePicture();
+    this.gameHandlerService.refreshBoardEvent$.emit(true);
   }
 
   ngOnDestroy() {
@@ -51,17 +53,19 @@ export class BoardComponent implements OnInit {
   }
 
   onFieldClick(clickedField) {
-    this.clickCount++;
+    if(!this.gameHandlerService.isGameEnded){
+      this.clickCount++;
 
-    if (this.clickCount == 1 && clickedField.figure != null) {
-      this.emitPossibleFields(clickedField);
-      this.sourceField = clickedField;
-    } else if (this.clickCount == 2) {
-      this.targetField = clickedField;
-      this.moveService.doMove(this.sourceField, this.targetField);
-      this.resetMarkup();
-    } else {
-      this.resetMarkup();
+      if (this.clickCount == 1 && clickedField.figure != null) {
+        this.emitPossibleFields(clickedField);
+        this.sourceField = clickedField;
+      } else if (this.clickCount == 2) {
+        this.targetField = clickedField;
+        this.moveService.doMove(this.sourceField, this.targetField);
+        this.resetMarkup();
+      } else {
+        this.resetMarkup();
+      }
     }
   }
 

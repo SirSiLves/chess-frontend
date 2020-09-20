@@ -16,19 +16,14 @@ export class MoveService {
   public botEnabled: boolean = true;
   public botInfinityState: boolean = true;
   public botIsMoving: boolean = false;
-  public doBotMoveEvent:  EventEmitter<boolean> = new EventEmitter<boolean>();
-  public refreshBoardEvent$: EventEmitter<boolean> = new EventEmitter<boolean>();
+  public doBotMoveEvent$:  EventEmitter<boolean> = new EventEmitter<boolean>();
+  public moveDoneEvent$:  EventEmitter<boolean> = new EventEmitter<boolean>();
 
 
   constructor(private httpService: HttpService,
-              private toast: ToastrService,
-              private matrixService: MatrixService) {
+              private toast: ToastrService) {
 
-    this.refreshBoardEvent$.subscribe(state => {
-      if (state) this.reloadGamePicture();
-    });
-
-    this.doBotMoveEvent.subscribe(state => {
+    this.doBotMoveEvent$.subscribe(state => {
       if(state) this.doBotMove();
     });
 
@@ -38,10 +33,10 @@ export class MoveService {
   doInfinityBotLoop() {
     setTimeout(() => {
       if (this.botInfinityState && this.botEnabled) {
-        if(!this.botIsMoving) this.doBotMoveEvent.emit(true);
+        if(!this.botIsMoving) this.doBotMoveEvent$.emit(true);
         this.doInfinityBotLoop();
       }
-    }, 100);
+    }, 250);
   }
 
 
@@ -54,14 +49,14 @@ export class MoveService {
 
     this.httpService.doMove(moveObj).pipe(take(1)).subscribe(validateResponse => {
       if (validateResponse.state) {
-        this.refreshBoardEvent$.emit(true);
+        this.moveDoneEvent$.emit(true);
 
         if(this.botInfinityEnabled && this.botEnabled){
           this.botInfinityState = true;
           this.doInfinityBotLoop();
         }
         else if (this.botEnabled) {
-          this.doBotMoveEvent.emit(true);
+          this.doBotMoveEvent$.emit(true);
         }
 
       } else {
@@ -74,45 +69,12 @@ export class MoveService {
   doBotMove(): void {
     this.botIsMoving = true;
     this.httpService.doBotMove().subscribe(responseBotMove => {
-      this.refreshBoardEvent$.emit(true);
+      this.moveDoneEvent$.emit(true);
       this.botIsMoving = false;
     });
   }
 
-  reloadGamePicture(): void {
-    this.httpService.getGamePicture().subscribe(responsePicture => {
-      this.matrixService.setMatrix(responsePicture.board.fieldMatrix);
-      this.lastMoveFields$.next(responsePicture.board.moveHistory[Object.keys(responsePicture.board.moveHistory).length - 1]);
-      // this.printSuccessUnitTestsForApi(responsePicture.board.moveHistory);
-    });
-  }
 
-  preLoadGamePicture(): void {
-    this.httpService.getPreGamePicture().pipe(take(1)).subscribe(
-      data => {
-        this.lastMoveFields$.next(data.board.moveHistory[Object.keys(data.board.moveHistory).length - 1]);
-        this.matrixService.setMatrix(data.board.fieldMatrix);
-      }
-    );
-  }
-
-
-  printSuccessUnitTestsForApi(moveHistory) {
-    // assertTrue(handleMoveService.handleMove(new String[]{'f', '7'}, new String[]{'f', '5'}).isState());
-
-    const moveHistorySize = Object.keys(moveHistory).length
-    let testString = '';
-
-    for (let i = 0; i < moveHistorySize; i++) {
-      testString += 'assertTrue(handleMoveService.handleMove(';
-
-      let sourceField = 'new String[]{"' + moveHistory[i].sourceField.fieldDesignation[0] + '", "' + moveHistory[i].sourceField.fieldDesignation[1] + '"}';
-      let targetField = 'new String[]{"' + moveHistory[i].targetField.fieldDesignation[0] + '", "' + moveHistory[i].targetField.fieldDesignation[1] + '"}';
-
-      testString += sourceField + ', ' + targetField + ').isState());' + '\n';
-    }
-    console.log(testString);
-  }
 
   printErrorUnitTestsForApi(moveObj) {
     // assertFalse(handleMoveService.handleMove(new String[]{'f', '7'}, new String[]{'f', '5'}).isState());
