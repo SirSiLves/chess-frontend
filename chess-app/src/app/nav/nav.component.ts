@@ -38,6 +38,7 @@ export class NavComponent implements OnInit {
       if (!this.moveService.botIsMoving || this.tryCount >= 1000) {
         this.httpService.initializeGame().subscribe(responseInitialize => {
           this.gameHandlerService.isGameEnded = false;
+          this.moveService.botEnabled = true;
           this.gameHandlerService.refreshBoardEvent$.emit(true);
           this.toast.success(responseInitialize);
         });

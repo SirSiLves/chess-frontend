@@ -1,8 +1,7 @@
 import {Injectable, EventEmitter} from '@angular/core';
-import {BehaviorSubject, Observable, Subject, Subscription} from 'rxjs';
+import {BehaviorSubject} from 'rxjs';
 import {HttpService} from './http.service';
 import {ToastrService} from 'ngx-toastr';
-import {MatrixService} from './matrix.service';
 import {take} from "rxjs/operators";
 
 
