@@ -21,7 +21,7 @@ export class GameHandlerService {
 
 
     this.moveService.moveDoneEvent$.subscribe(state => {
-      if(state){
+      if (state) {
         this.reloadGamePicture();
       }
     });
@@ -44,13 +44,12 @@ export class GameHandlerService {
     });
   }
 
-  validateGameSate(gameState){
+  validateGameSate(gameState): void {
     const checkMate = gameState.checkMate;
     const remis = gameState.remis;
 
-    if(checkMate || remis){
+    if (checkMate || remis) {
       this.isGameEnded = true;
-      this.moveService.botEnabled = false;
       this.gameState$.next(gameState);
     }
   }
@@ -64,7 +63,6 @@ export class GameHandlerService {
       }
     );
   }
-
 
 
   printSuccessUnitTestsForApi(moveHistory) {

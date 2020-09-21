@@ -13,7 +13,6 @@ export class MoveService {
   public botInfinityEnabled: boolean = true;
   public lastMoveFields$: BehaviorSubject<any> = new BehaviorSubject<any>(undefined);
   public botEnabled: boolean = true;
-  public botInfinityState: boolean = true;
   public botIsMoving: boolean = false;
   public doBotMoveEvent$:  EventEmitter<boolean> = new EventEmitter<boolean>();
   public moveDoneEvent$:  EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -31,7 +30,7 @@ export class MoveService {
 
   doInfinityBotLoop() {
     setTimeout(() => {
-      if (this.botInfinityState && this.botEnabled) {
+      if (this.botInfinityEnabled && this.botEnabled) {
         if(!this.botIsMoving) this.doBotMoveEvent$.emit(true);
         this.doInfinityBotLoop();
       }
@@ -51,7 +50,6 @@ export class MoveService {
         this.moveDoneEvent$.emit(true);
 
         if(this.botInfinityEnabled && this.botEnabled){
-          this.botInfinityState = true;
           this.doInfinityBotLoop();
         }
         else if (this.botEnabled) {

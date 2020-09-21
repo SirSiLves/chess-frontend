@@ -8,7 +8,7 @@ import {GameHandlerService} from "../services/game-handler.service";
 })
 export class WinnerComponent implements OnInit {
 
-  public winnerColor: string = 'BLACK';
+  public winnerColor: string;
   public winner: boolean = false;
   public remis: boolean = false;
   public showResult: boolean = false;

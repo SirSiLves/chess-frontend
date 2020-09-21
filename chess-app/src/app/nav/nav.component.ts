@@ -23,7 +23,11 @@ export class NavComponent implements OnInit {
 
 
   ngOnInit(): void {
-
+    this.gameHandlerService.gameState$.subscribe(state => {
+      if(state) {
+        this.moveService.botInfinityEnabled = false;
+      }
+    });
   }
 
   handleBot(): void {
@@ -32,13 +36,13 @@ export class NavComponent implements OnInit {
 
 
   createGame(): void {
-    this.moveService.botInfinityState = false;
+    this.moveService.botInfinityEnabled = false;
 
     setTimeout(() => {
       if (!this.moveService.botIsMoving || this.tryCount >= 1000) {
         this.httpService.initializeGame().subscribe(responseInitialize => {
           this.gameHandlerService.isGameEnded = false;
-          this.moveService.botEnabled = true;
+          this.moveService.botInfinityEnabled = true;
           this.gameHandlerService.refreshBoardEvent$.emit(true);
           this.toast.success(responseInitialize);
         });
