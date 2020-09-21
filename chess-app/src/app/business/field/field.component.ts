@@ -1,9 +1,8 @@
 import {Component, OnInit, Input, EventEmitter, Output} from '@angular/core';
-import {CoordinaterService} from "../services/coordinater.service";
-import {MoveService} from "../services/move.service";
-import {take} from "rxjs/operators";
+import {CoordinaterService} from "../../services/coordinater.service";
+import {MoveService} from "../../services/move.service";
 import {BehaviorSubject, Subject, Subscription} from "rxjs";
-import {BoardComponent} from "../board/board.component";
+
 
 @Component({
   selector: 'app-field',

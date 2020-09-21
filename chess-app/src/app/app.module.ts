@@ -3,25 +3,26 @@ import {NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {BoardComponent} from './board/board.component';
+import {BoardComponent} from './business/board/board.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import {FieldComponent} from './field/field.component';
+import {FieldComponent} from './business/field/field.component';
 import {FooterComponent} from './footer/footer.component';
-import {NavComponent} from './nav/nav.component';
+import {NavComponent} from './header/nav/nav.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {FigureComponent} from './figure/figure.component';
-import {PawnComponent} from './figure/pawn/pawn.component';
-import {KingComponent} from './figure/king/king.component';
-import {BishopComponent} from './figure/bishop/bishop.component';
-import {KnightComponent} from './figure/knight/knight.component';
-import {RookComponent} from './figure/rook/rook.component';
-import {QueenComponent} from './figure/queen/queen.component';
+import {FigureComponent} from './business/figure/figure.component';
+import {PawnComponent} from './business/figure/pawn/pawn.component';
+import {KingComponent} from './business/figure/king/king.component';
+import {BishopComponent} from './business/figure/bishop/bishop.component';
+import {KnightComponent} from './business/figure/knight/knight.component';
+import {RookComponent} from './business/figure/rook/rook.component';
+import {QueenComponent} from './business/figure/queen/queen.component';
 import {ToastrModule} from "ngx-toastr";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {InterceptorService} from "./services/interceptor.service";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {FormsModule} from "@angular/forms";
-import { WinnerComponent } from './winner/winner.component';
+import { WinnerComponent } from './business/winner/winner.component';
+import { ClockComponent } from './header/clock/clock.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { WinnerComponent } from './winner/winner.component';
     KnightComponent,
     RookComponent,
     QueenComponent,
-    WinnerComponent
+    WinnerComponent,
+    ClockComponent
   ],
   imports: [
     BrowserModule,

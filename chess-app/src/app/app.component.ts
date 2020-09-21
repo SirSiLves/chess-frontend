@@ -1,5 +1,4 @@
 import {Component, ViewChild} from '@angular/core';
-import {BoardComponent} from "./board/board.component";
 
 
 @Component({
@@ -10,10 +9,8 @@ import {BoardComponent} from "./board/board.component";
 export class AppComponent {
   title = 'chess-app';
 
-  // @ViewChild('appBoard') appBoard: BoardComponent;
 
   constructor() {
-    // this.appBoard.loadGame()
   }
 
 }

@@ -1,12 +1,12 @@
 import {Component, OnInit, Output, EventEmitter, Input} from '@angular/core';
 import {ToastrService} from 'ngx-toastr';
-import {MatrixService} from "../services/matrix.service";
-import {CoordinaterService} from "../services/coordinater.service";
-import {MoveService} from "../services/move.service";
-import {HttpService} from "../services/http.service";
-import {BehaviorSubject, Subject, Subscription} from "rxjs";
+import {MatrixService} from "../../services/matrix.service";
+import {CoordinaterService} from "../../services/coordinater.service";
+import {MoveService} from "../../services/move.service";
+import {HttpService} from "../../services/http.service";
+import {Subscription} from "rxjs";
 import {take} from "rxjs/operators";
-import {GameHandlerService} from "../services/game-handler.service";
+import {GameHandlerService} from "../../services/game-handler.service";
 
 
 @Component({

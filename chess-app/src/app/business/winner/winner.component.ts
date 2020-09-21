@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {GameHandlerService} from "../services/game-handler.service";
+import {GameHandlerService} from "../../services/game-handler.service";
 
 @Component({
   selector: 'app-winner',

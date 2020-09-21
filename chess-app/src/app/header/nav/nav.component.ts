@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {HttpService} from "../services/http.service";
+import {HttpService} from "../../services/http.service";
 import {ToastrService} from "ngx-toastr";
-import {MoveService} from "../services/move.service";
-import {GameHandlerService} from "../services/game-handler.service";
+import {MoveService} from "../../services/move.service";
+import {GameHandlerService} from "../../services/game-handler.service";
 
 
 
