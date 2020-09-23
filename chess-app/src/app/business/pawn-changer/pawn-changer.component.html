@@ -2,7 +2,7 @@
   <div class="popup_figures_inner">
     <div class="text-area">
 
-      <div>
+      <div [ngClass]="(this.figureColor$ == 'BLACK')? 'black-font':''">
         Choose your
       </div>
       <div [ngClass]="(this.figureColor$ == 'WHITE')? 'black-font':''">
