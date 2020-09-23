@@ -1,8 +1,8 @@
 
-<ng-template [ngIf]="field">
+<ng-template [ngIf]="field$">
   <div class="field {{this.backGround}}"
-       (mouseover)="coordinaterService.markupDesignation(field)"
-       (click)="onClick(field)">
+       (mouseover)="coordinaterService.markupDesignation(field$)"
+       (click)="onClick(field$)">
     <ng-template [ngIf]="this.figure != null">
 
       <app-figure [figure]="this.figure"></app-figure>
@@ -10,5 +10,8 @@
     </ng-template>
   </div>
 </ng-template>
+
+
+<app-pawn-changer *ngIf="showPawnSelector" [figureColor$]="figureColor$"> </app-pawn-changer>
 
 

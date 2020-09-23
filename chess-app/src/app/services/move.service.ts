@@ -1,5 +1,5 @@
 import {Injectable, EventEmitter} from '@angular/core';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 import {HttpService} from './http.service';
 import {ToastrService} from 'ngx-toastr';
 import {take} from "rxjs/operators";
@@ -28,7 +28,7 @@ export class MoveService {
   }
 
 
-  doInfinityBotLoop() {
+  doInfinityBotLoop(): void {
     setTimeout(() => {
       if (this.botInfinityEnabled && this.botEnabled) {
         if(!this.botIsMoving) this.doBotMoveEvent$.emit(true);
@@ -70,7 +70,6 @@ export class MoveService {
       this.botIsMoving = false;
     });
   }
-
 
 
   printErrorUnitTestsForApi(moveObj) {

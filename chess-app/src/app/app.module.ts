@@ -23,6 +23,7 @@ import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {FormsModule} from "@angular/forms";
 import { WinnerComponent } from './business/winner/winner.component';
 import { ClockComponent } from './header/clock/clock.component';
+import { PawnChangerComponent } from './business/pawn-changer/pawn-changer.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { ClockComponent } from './header/clock/clock.component';
     RookComponent,
     QueenComponent,
     WinnerComponent,
-    ClockComponent
+    ClockComponent,
+    PawnChangerComponent
   ],
   imports: [
     BrowserModule,

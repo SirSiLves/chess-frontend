@@ -82,6 +82,18 @@ export class HttpService {
     );
   }
 
+  doPawnChange(selectedFigure): Observable<any> {
+    return this.http.post('http://localhost:8080/api/move/doChangePawn', selectedFigure, {
+      withCredentials: true,
+      responseType: 'text'
+    }).pipe(
+      tap(data => {
+        // console.log('server data do pawn change:', data)
+      }),
+      catchError(this.handleError('doPawnChange'))
+    );
+  }
+
 
   private handleError(operation: String) {
     return (err: any) => {

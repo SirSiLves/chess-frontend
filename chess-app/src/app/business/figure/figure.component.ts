@@ -18,7 +18,6 @@ export class FigureComponent implements OnInit {
     this.figureType = this.figure['figureType'];
     this.figureColor = this.figure['figureColor']
 
-
     // console.log(this.figure)
 
   }
