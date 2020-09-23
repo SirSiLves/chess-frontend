@@ -13,6 +13,7 @@ export class GameHandlerService {
   public refreshBoardEvent$: EventEmitter<boolean> = new EventEmitter<boolean>();
   public gameState$: Subject<any> = new Subject();
   public isGameEnded: boolean = false;
+  public duration: string;
 
 
   constructor(private httpService: HttpService,

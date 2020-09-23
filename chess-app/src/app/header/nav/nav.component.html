@@ -10,17 +10,17 @@
       <app-clock></app-clock>
     </div>
 
+    <div class="mb-2 mt-3 mr-3">
+      <label class="switch">
+        <input class="switch-input" type="checkbox" checked (click)="handleBot()"/>
+        <span class="switch-label" data-on="BOT ON" data-off="BOT OFF"></span>
+        <span class="switch-handle"></span>
+      </label>
+    </div>
+
     <div class="mt-2 mr-2">
       <button type="button" class="btn btn-dark" (click)="this.createGame()">Create a new Game</button>
     </div>
-
-    <!--    <div class="mb-2 mt-3 mr-3">-->
-    <!--      <label class="switch">-->
-    <!--        <input class="switch-input" type="checkbox" checked (click)="handleBot()"/>-->
-    <!--        <span class="switch-label" data-on="BOT ON" data-off="BOT OFF"></span>-->
-    <!--        <span class="switch-handle"></span>-->
-    <!--      </label>-->
-    <!--    </div>-->
 
   </div>
 

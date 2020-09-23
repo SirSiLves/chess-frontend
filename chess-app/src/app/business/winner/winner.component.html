@@ -1,43 +1,51 @@
 <div *ngIf="showResult" (click)="this.hideWinnerPopup()" class="popup" id="winnerPopup">
   <div class="popup_inner">
     <div class="d-flex flex-column bd-highlight align-items-center m-4">
-      <div *ngIf="winner == true">
-        <div class="text-area">
-          <div *ngIf="this.winnerColor=='BLACK'">
-            <div class="black-font">
-              {{winnerColor}}
-            </div>
+      <div class="text-area">
+
+        <div *ngIf="winner == true">
+          <div>
             <div>
-              won
-              <br>
-              the Game
-            </div>
-          </div>
-          <div *ngIf="this.winnerColor=='WHITE'">
-            <div>
-              {{winnerColor}}
-            </div>
-            <div class="black-font">
-              won
-              <br>
-              the Game
+              <div [ngClass]="(this.winnerColor == 'BLACK')? 'black-font':''">
+                {{winnerColor}}
+              </div>
+              <div
+                [ngClass]="(this.winnerColor == 'BLACK')? '':'black-font'">
+                won
+                <br>
+                the Game
+              </div>
             </div>
           </div>
         </div>
 
-      </div>
-      <div *ngIf="remis == true">
-        <div class="text-area">
+        <div *ngIf="remis == true">
           <div>
             <div>
-              we have a
-            </div>
-            <div class="black-font">
-              remis
+              <div>
+                we have a
+              </div>
+              <div class="black-font">
+                remis
+              </div>
             </div>
           </div>
         </div>
+
+        <div class="time">
+          <div
+            [ngClass]="(this.winnerColor == 'BLACK')? 'black-font':''">
+            Your needed
+            <br>
+            time
+          </div>
+          <div
+            [ngClass]="(this.winnerColor == 'BLACK')? '':'black-font'">
+            {{this.gameHandlerService.duration}}
+          </div>
+        </div>
       </div>
+
     </div>
   </div>
 </div>
