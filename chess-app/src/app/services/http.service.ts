@@ -11,6 +11,8 @@ import {Observable, throwError} from "rxjs";
 })
 export class HttpService {
 
+  //TODO send errors to senety log analyse
+
   constructor(private http: HttpClient, private toast: ToastrService) {
   }
 
@@ -83,7 +85,7 @@ export class HttpService {
   }
 
   doPawnChange(selectedFigure): Observable<any> {
-    return this.http.post('http://localhost:8080/api/move/doChangePawn', selectedFigure, {
+    return this.http.post('http://localhost:8080/api/move/doPawnPromotion', selectedFigure, {
       withCredentials: true,
       responseType: 'text'
     }).pipe(

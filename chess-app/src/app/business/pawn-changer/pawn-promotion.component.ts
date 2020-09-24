@@ -5,10 +5,10 @@ import {HttpService} from "../../services/http.service";
 
 @Component({
   selector: 'app-pawn-changer',
-  templateUrl: './pawn-changer.component.html',
-  styleUrls: ['./pawn-changer.component.scss']
+  templateUrl: './pawn-promotion.component.html',
+  styleUrls: ['./pawn-promotion.component.scss']
 })
-export class PawnChangerComponent implements OnInit {
+export class PawnPromotionComponent implements OnInit {
 
 
   @Input() figureColor$: string;

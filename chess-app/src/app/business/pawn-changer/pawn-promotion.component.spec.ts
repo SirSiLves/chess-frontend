@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PawnChangerComponent } from './pawn-changer.component';
+import { PawnPromotionComponent } from './pawn-promotion.component';
 
 describe('PawnChangerComponent', () => {
-  let component: PawnChangerComponent;
-  let fixture: ComponentFixture<PawnChangerComponent>;
+  let component: PawnPromotionComponent;
+  let fixture: ComponentFixture<PawnPromotionComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PawnChangerComponent ]
+      declarations: [ PawnPromotionComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PawnChangerComponent);
+    fixture = TestBed.createComponent(PawnPromotionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
