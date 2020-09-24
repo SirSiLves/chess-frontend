@@ -44,8 +44,8 @@
 
     .figure {
       border-bottom: solid #c6ecc6;
-      margin-bottom: 15px;
       border-radius: 1rem;
+      margin-bottom: 7px;
 
       img {
         width: 8vw;
@@ -74,24 +74,28 @@
   @media all and (max-width: 640px) {
     .text-area {
       font-size: 60px;
+      border-width: 6px;
     }
   }
 
   @media all and (max-width: 450px) {
     .text-area {
       font-size: 45px;
+      border-width: 4px;
     }
   }
 
   @media all and (max-width: 300px) {
     .text-area {
       font-size: 30px;
+      border-width: 3px;
     }
   }
 
   @media all and (max-width: 200px) {
     .text-area {
       font-size: 20px;
+      border-width: 2px;
     }
   }
 

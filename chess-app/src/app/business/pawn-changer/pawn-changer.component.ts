@@ -12,31 +12,22 @@ export class PawnChangerComponent implements OnInit {
 
 
   @Input() figureColor$: string;
-  hover: boolean = false;
 
   constructor(private gameHandlerService: GameHandlerService,
               private httpService: HttpService) {
   }
 
   ngOnInit(): void {
-
   }
 
 
   doPawnChange(selectedPawn): void {
     this.httpService.doPawnChange(selectedPawn).subscribe(responseChange => {
-      console.log("CHANGE DONE!!!");
-      console.log(responseChange);
-
+      // console.log(responseChange);
       this.gameHandlerService.refreshBoardEvent$.emit(true);
     });
   }
 
-  toggleColor() {
-    if (this.figureColor$ == 'BLACK') {
-      this.figureColor$ = 'WHITE'
-    } else {
-      this.figureColor$ = 'BLACK'
-    }
-  }
+
+  //TODO Toaster from PRICER nehmen....
 }
