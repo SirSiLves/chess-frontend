@@ -1,0 +1,157 @@
+
+.popup_inner {
+  //height: 220px;
+
+  .text-area {
+
+  }
+
+  .figure-list {
+    //margin-bottom: 7px;
+    //border-bottom: solid #51A351;
+
+    img {
+      width: 8vw;
+      height: 8vw;
+      max-height: 8vh;
+      max-width: 8vh;
+    }
+
+    .black-hover:hover {
+      border-bottom: solid black;
+      border-radius: 1rem;
+    }
+
+    .white-hover:hover {
+      border-bottom: solid white;
+      border-radius: 1rem;
+    }
+  }
+
+  @media all and (max-width: 990px) {
+
+
+  }
+
+  @media all and (max-width: 640px) {
+
+  }
+
+  @media all and (max-width: 450px) {
+
+  }
+
+  @media all and (max-width: 300px) {
+
+  }
+
+  @media all and (max-width: 200px) {
+
+  }
+
+}
+
+
+//.popup_figures {
+//  position: fixed;
+//  width: 100%;
+//  height: 100%;
+//  top: 0;
+//  left: 0;
+//  right: 0;
+//  bottom: 0;
+//  margin: auto;
+//  background-color: rgba(0, 0, 0, 0.5);
+//
+//  animation-name: showAnimation;
+//  animation-duration: 1s;
+//  opacity: 1;
+//}
+//
+//.popup_figures_inner {
+//  position: absolute;
+//  left: 20%;
+//  right: 20%;
+//  top: 35%;
+//  bottom: 50%;
+//  margin: auto;
+//  width: auto;
+//  height: auto;
+//  max-width: 600px;
+//
+//
+//  .text-area {
+//    padding: 20px 0 0 5px;
+//    opacity: 0.9;
+//    text-shadow: 2px 1px 3px #282c34;
+//    text-align: left;
+//    border-color: #282c34;
+//    border-style: inset;
+//    border-radius: 0.5rem;
+//    border-width: 7px;
+//    font-size: 100px;
+//    color: white;
+//
+//    .black-font {
+//      color: black;
+//    }
+//
+//    .figure {
+//      border-bottom: solid #51A351;
+//      border-radius: 1rem;
+//      margin-bottom: 7px;
+//
+//      img {
+//        width: 8vw;
+//        height: 8vw;
+//        max-height: 8vh;
+//        max-width: 8vh;
+//      }
+//    }
+//
+//    .black-hover:hover {
+//      border-bottom: solid black;
+//    }
+//
+//    .white-hover:hover {
+//      border-bottom: solid white;
+//    }
+//  }
+//
+//
+//  @media all and (max-width: 768px) {
+//    .text-area {
+//      font-size: 70px;
+//    }
+//  }
+//
+//  @media all and (max-width: 640px) {
+//    .text-area {
+//      font-size: 60px;
+//      border-width: 6px;
+//    }
+//  }
+//
+//  @media all and (max-width: 450px) {
+//    .text-area {
+//      font-size: 45px;
+//      border-width: 4px;
+//    }
+//  }
+//
+//  @media all and (max-width: 300px) {
+//    .text-area {
+//      font-size: 30px;
+//      border-width: 3px;
+//    }
+//  }
+//
+//  @media all and (max-width: 200px) {
+//    .text-area {
+//      font-size: 20px;
+//      border-width: 2px;
+//    }
+//  }
+//
+//
+//}

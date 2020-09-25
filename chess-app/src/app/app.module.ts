@@ -21,9 +21,9 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {InterceptorService} from "./services/interceptor.service";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {FormsModule} from "@angular/forms";
-import { WinnerComponent } from './business/winner/winner.component';
+import { EndingComponent } from './business/ending/ending.component';
 import { ClockComponent } from './header/clock/clock.component';
-import { PawnPromotionComponent } from './business/pawn-changer/pawn-promotion.component';
+import { PawnPromotionComponent } from './business/pawn-promotion/pawn-promotion.component';
 
 @NgModule({
   declarations: [
@@ -39,9 +39,10 @@ import { PawnPromotionComponent } from './business/pawn-changer/pawn-promotion.c
     KnightComponent,
     RookComponent,
     QueenComponent,
-    WinnerComponent,
+    EndingComponent,
     ClockComponent,
-    PawnPromotionComponent
+    PawnPromotionComponent,
+    EndingComponent
   ],
   imports: [
     BrowserModule,

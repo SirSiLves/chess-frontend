@@ -1,0 +1,64 @@
+<div class="popup">
+  <div class="popup_inner">
+
+    <div class="text-area">
+      <div [ngClass]="(this.figureColor$ == 'BLACK')? 'black-font':'white-font'">
+        Choose your
+      </div>
+      <div [ngClass]="(this.figureColor$ == 'WHITE')? 'black-white':'black-font'">
+        figure
+      </div>
+    </div>
+
+    <div class="figure-list">
+      <div [ngClass]="(this.figureColor$ == 'WHITE')? 'figure black-hover':'figure white-hover'">
+        <ng-template [ngIf]="this.figureColor$ == 'WHITE'">
+          <img src="/assets/images/rook_w.png" alt="rook white"
+               (click)="this.doPawnChange({figureType: 'ROOK'})">
+        </ng-template>
+
+        <ng-template [ngIf]="this.figureColor$ == 'BLACK'">
+          <img src="/assets/images/rook_b.png" alt="rook black"
+               (click)="this.doPawnChange({figureType: 'ROOK'})">
+        </ng-template>
+      </div>
+
+      <div [ngClass]="(this.figureColor$ == 'WHITE')? 'figure black-hover':'figure white-hover'">
+        <ng-template [ngIf]="this.figureColor$ == 'WHITE'">
+          <img src="/assets/images/knight_w.png" alt="knight white"
+               (click)="this.doPawnChange({figureType: 'KNIGHT'})">
+        </ng-template>
+
+        <ng-template [ngIf]="this.figureColor$ == 'BLACK'">
+          <img src="/assets/images/knight_b.png" alt="knight black"
+               (click)="this.doPawnChange({figureType: 'KNIGHT'})">
+        </ng-template>
+      </div>
+
+      <div [ngClass]="(this.figureColor$ == 'WHITE')? 'figure black-hover':'figure white-hover'">
+        <ng-template [ngIf]="this.figureColor$ == 'WHITE'">
+          <img src="/assets/images/bishop_w.png" alt="bisho white"
+               (click)="this.doPawnChange({figureType: 'BISHOP'})">
+        </ng-template>
+
+        <ng-template [ngIf]="this.figureColor$ == 'BLACK'">
+          <img src="/assets/images/bishop_b.png" alt="bishop black"
+               (click)="this.doPawnChange({figureType: 'BISHOP'})">
+        </ng-template>
+      </div>
+
+      <div [ngClass]="(this.figureColor$ == 'WHITE')? 'figure black-hover':'figure white-hover'">
+        <ng-template [ngIf]="this.figureColor$ == 'WHITE'">
+          <img src="/assets/images/queen_w.png" alt="queen white"
+               (click)="this.doPawnChange({figureType: 'QUEEN'})">
+        </ng-template>
+
+        <ng-template [ngIf]="this.figureColor$ == 'BLACK'">
+          <img src="/assets/images/queen_b.png" alt="queen black"
+               (click)="this.doPawnChange({figureType: 'QUEEN'})">
+        </ng-template>
+      </div>
+
+    </div>
+  </div>
+</div>

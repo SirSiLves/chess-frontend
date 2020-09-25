@@ -1,17 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import {GameHandlerService} from "../../services/game-handler.service";
 
+
+
 @Component({
-  selector: 'app-winner',
-  templateUrl: './winner.component.html',
-  styleUrls: ['./winner.component.scss']
+  selector: 'app-ending',
+  templateUrl: './ending.component.html',
+  styleUrls: ['./ending.component.scss']
 })
-export class WinnerComponent implements OnInit {
+export class EndingComponent implements OnInit {
 
   public winnerColor: string;
   public winner: boolean = false;
   public remis: boolean = false;
   public showResult: boolean = false;
+  public remisReason: string;
 
   constructor(public gameHandlerService: GameHandlerService) { }
 
@@ -22,15 +25,15 @@ export class WinnerComponent implements OnInit {
 
       this.winner = gameState.checkMate;
       this.remis = gameState.remis;
+      this.remisReason = gameState.remisReason;
 
-      if(this.winner){
+      if(this.winner) {
         this.winnerColor = gameState.winner;
       }
     });
-
   }
 
-  hideWinnerPopup(){
+  hideWinnerPopup(): void {
     this.showResult = false;
   }
 

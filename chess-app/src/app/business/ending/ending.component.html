@@ -11,9 +11,7 @@
               </div>
               <div
                 [ngClass]="(this.winnerColor == 'BLACK')? '':'black-font'">
-                won
-                <br>
-                the Game
+                won the Game
               </div>
             </div>
           </div>
@@ -23,10 +21,10 @@
           <div>
             <div>
               <div>
-                We have a
+                Remis
               </div>
               <div class="black-font">
-                remis
+                {{this.remisReason}}
               </div>
             </div>
           </div>

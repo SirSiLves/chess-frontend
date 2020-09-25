@@ -18,93 +18,67 @@
   position: absolute;
   left: 20%;
   right: 20%;
-  top: 30%;
-  bottom: 70%;
+  top: 50%;
+  bottom: 50%;
   margin: auto;
-  width: auto;
-  height: auto;
-  max-width: 550px;
+  background: #51A351;
+  opacity: 0.9;
+  border-color: #282c34;
+  border-style: inset;
+  border-radius: 0.5rem;
+  border-width: 7px;
+  width: 55vw;
+  height: 35vw;
+  max-height: 35vh;
+  max-width: 55vh;
 
   .text-area {
+    padding: 20px 0 12px 5px;
     display: flex;
     justify-content: left;
     flex-wrap: wrap;
     word-break: keep-all;
-    padding: 20px 0 12px 2px;
-    background: #c6ecc6;
     text-shadow: 2px 1px 3px #282c34;
     text-align: left;
-    border-color: #282c34;
-    border-style: inset;
-    border-radius: 0.5rem;
-    border-width: 7px;
     font-size: 100px;
-    color: white;
 
     .time {
-      margin-top: 7px;
+      //margin-top: 7px;
     }
 
-    .black-font{
+    .white-font {
+      color: white;
+    }
+
+    .black-font {
       color: black;
+      //font-size: 75px;
     }
-    .time {
-      font-size: calc(50px + .5vw);
-    }
+
   }
 
   @media all and (max-width: 768px) {
-    .text-area {
-      font-size: 70px;
-      border-width: 6px;
 
-      .time {
-        font-size: calc(30px + .5vw);
-      }
-    }
   }
 
   @media all and (max-width: 640px) {
-    .text-area {
-      font-size: 60px;
-      border-width: 5px;
 
-      .time {
-        font-size: calc(20px + .5vw);
-
-      }
-    }
   }
 
   @media all and (max-width: 450px) {
-    .text-area {
-      font-size: 45px;
-    }
+
   }
 
   @media all and (max-width: 300px) {
-    .text-area {
-      font-size: 30px;
-      border-width: 4px;
-      padding: 10px 0 6px 1px;
 
-      .time {
-        font-size: calc(15px + .5vw);
-      }
-    }
   }
 
   @media all and (max-width: 200px) {
-    .text-area {
-      font-size: 20px;
-      border-width: 3px;
 
-      .time {
-        font-size: calc(8px + .5vw);
-      }
-    }
   }
 }
+
+
 
 .hideWin {
   display: none;

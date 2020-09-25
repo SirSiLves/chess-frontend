@@ -6,7 +6,7 @@ import {HttpService} from "../../services/http.service";
 @Component({
   selector: 'app-pawn-changer',
   templateUrl: './pawn-promotion.component.html',
-  styleUrls: ['./pawn-promotion.component.scss']
+  styleUrls: ['../ending/ending.component.scss', '../pawn-promotion/pawn-promotion.component.scss']
 })
 export class PawnPromotionComponent implements OnInit {
 
@@ -29,5 +29,4 @@ export class PawnPromotionComponent implements OnInit {
   }
 
 
-  //TODO Toaster from PRICER nehmen....
 }
