@@ -2,13 +2,14 @@
 .btn {
   border-radius: 0.3rem;
   border: solid 2px #282c34;
+  margin-bottom: 5px;
 }
 .btn:hover {
   background: dodgerblue;
 }
 
 .container{
-  justify-content: space-evenly;
+  justify-content: space-around;
 }
 
 
@@ -16,13 +17,13 @@
   position: relative;
   display: block;
   vertical-align: top;
-  width: 96px;
-  height: 33px;
-  padding: 1px;
+  width: 113px;
+  height: 35px;
   background: -webkit-linear-gradient(top, #eeeeee, #FFFFFF 25px);
-  border-radius: 18px;
+  border-radius: 0.4rem;
   cursor: pointer;
   box-sizing: content-box;
+  //margin-top: 5px;;
 }
 
 .switch-input {
@@ -61,14 +62,14 @@
 
 .switch-label:before {
   content: attr(data-off);
-  right: 15px;
+  right: 20px;
   color: #aaaaaa;
   text-shadow: 0 1px rgba(255, 255, 255, 0.5);
 }
 
 .switch-label:after {
   content: attr(data-on);
-  left: 15px;
+  left: 20px;
   color: #FFFFFF;
   text-shadow: 0 1px rgba(0, 0, 0, 0.2);
   opacity: 0;
@@ -90,12 +91,12 @@
 
 .switch-handle {
   position: absolute;
-  top: 4px;
+  top: 2px;
   left: 3px;
   width: 32px;
-  height: 32px;
+  height: 35px;
   background: -webkit-linear-gradient(top, #FFFFFF 40%, #f0f0f0);
-  border-radius: 100%;
+  border-radius: 0.4rem;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
 }
 
@@ -104,14 +105,14 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  margin: -6px 0 0 -6px;
+  //margin: -6px 0 0 -6px;
   width: 12px;
   height: 12px;
   box-shadow: inset 0 1px rgba(0, 0, 0, 0.02);
 }
 
 .switch-input:checked ~ .switch-handle {
-  left: 63px;
+  left: 79px;
   box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.2);
 }
 

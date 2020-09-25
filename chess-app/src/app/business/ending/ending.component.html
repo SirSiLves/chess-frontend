@@ -6,12 +6,22 @@
         <div *ngIf="winner == true">
           <div>
             <div>
-              <div [ngClass]="(this.winnerColor == 'BLACK')? 'black-font':''">
+              <div [ngClass]="(this.winnerColor == 'BLACK')? 'black-font':'white-font'">
                 {{winnerColor}}
               </div>
               <div
-                [ngClass]="(this.winnerColor == 'BLACK')? '':'black-font'">
+                [ngClass]="(this.winnerColor == 'BLACK')? 'white-font':'black-font'">
                 won the Game
+              </div>
+            </div>
+            <div class="time">
+              <div
+                [ngClass]="(this.winnerColor == 'BLACK')? 'black-font':'white-font'">
+                Your needed time
+              </div>
+              <div
+                [ngClass]="(this.winnerColor == 'BLACK')? 'time white-font':'time black-font'">
+                {{this.gameHandlerService.duration}}
               </div>
             </div>
           </div>
@@ -20,26 +30,23 @@
         <div *ngIf="remis == true">
           <div>
             <div>
-              <div>
+              <div class="remis">
                 Remis
               </div>
               <div class="black-font">
                 {{this.remisReason}}
               </div>
             </div>
-          </div>
-        </div>
-
-        <div class="time">
-          <div
-            [ngClass]="(this.winnerColor == 'BLACK')? 'black-font':''">
-            Your needed
-            <br>
-            time
-          </div>
-          <div
-            [ngClass]="(this.winnerColor == 'BLACK')? 'time ':'time black-font'">
-            {{this.gameHandlerService.duration}}
+            <div class="time">
+              <div
+                [ngClass]="(this.winnerColor == 'BLACK')? 'black-font':'white-font'">
+                Your needed time
+              </div>
+              <div
+                [ngClass]="(this.winnerColor == 'BLACK')? 'time white-font':'time black-font'">
+                {{this.gameHandlerService.duration}}
+              </div>
+            </div>
           </div>
         </div>
       </div>

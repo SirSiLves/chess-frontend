@@ -55,7 +55,7 @@ export class HttpService {
       withCredentials: true,
     }).pipe(
       tap(data => {
-        console.log('server data move:', data)
+        // console.log('server data move:', data)
       }),
       catchError(this.handleError('validateMove'))
     );

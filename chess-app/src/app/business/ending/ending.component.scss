@@ -15,69 +15,245 @@
 }
 
 .popup_inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
   left: 20%;
-  right: 20%;
+  right: 21.5%;
   top: 50%;
   bottom: 50%;
   margin: auto;
-  background: #51A351;
-  opacity: 0.9;
-  border-color: #282c34;
-  border-style: inset;
-  border-radius: 0.5rem;
-  border-width: 7px;
-  width: 55vw;
-  height: 35vw;
-  max-height: 35vh;
-  max-width: 55vh;
+  //width: 48vw;
+  //height: 37vw;
+  //max-height: 37vh;
+  //max-width: 48vh;
 
   .text-area {
-    padding: 20px 0 12px 5px;
-    display: flex;
-    justify-content: left;
-    flex-wrap: wrap;
+    margin-left: 15px;
     word-break: keep-all;
     text-shadow: 2px 1px 3px #282c34;
     text-align: left;
+    font-size: 80px;
+    padding: 20px;
+    background: #51A351;
+    opacity: 0.9;
+    border-color: #282c34;
+    border-style: inset;
+    border-radius: 0.5rem;
+    border-width: 7px;
+  }
+
+  .remis {
     font-size: 100px;
+    color: white;
+  }
+
+  .time {
+    margin-top: 10px;
+  }
+
+  .white-font {
+    color: white;
+  }
+
+  .black-font {
+    color: black;
+  }
+
+
+  @media screen and (max-width: 915px), screen and (max-height: 900px) {
+    .text-area {
+      font-size: 60px;
+      padding: 15px;
+    }
+
+    .remis {
+      font-size: 80px;
+      color: white;
+    }
 
     .time {
-      //margin-top: 7px;
+      //font-size: 50px;
+      margin-top: 7px;
     }
 
     .white-font {
       color: white;
+      margin-bottom: 10px;
     }
 
     .black-font {
-      color: black;
-      //font-size: 75px;
+      //font-size: 45px;
+      //color: black;
+    }
+  }
+
+  @media screen and (max-width: 690px), screen and (max-height: 685px) {
+    .text-area {
+      font-size: 50px;
+      padding: 12px;
     }
 
+    .remis {
+      font-size: 65px;
+      color: white;
+    }
+
+    .time {
+      //font-size: 30px;
+      margin-top: 7px;
+    }
+
+    .white-font {
+      color: white;
+      margin-bottom: 10px;
+    }
+
+    .black-font {
+      //font-size: 30px;
+      //color: black;
+    }
   }
 
-  @media all and (max-width: 768px) {
+  @media screen and (max-width: 485px), screen and (max-height: 500px) {
+    .text-area {
+      font-size: 40px;
+      padding: 10px;
+    }
 
+    .remis {
+      font-size: 50px;
+      color: white;
+    }
+
+
+    .time {
+      //font-size: 30px;
+      margin-top: 5px;
+    }
+
+    .white-font {
+      color: white;
+      margin-bottom: 5px;
+    }
+
+    .black-font {
+      //font-size: 30px;
+      //color: black;
+    }
   }
 
-  @media all and (max-width: 640px) {
+  @media screen and (max-width: 385px), screen and (max-height: 400px) {
+    .text-area {
+      font-size: 35px;
+      padding: 8px;
+    }
 
+    .remis {
+      font-size: 45px;
+      color: white;
+    }
+
+    .time {
+      //font-size: 20px;
+      margin-top: 5px;
+    }
+
+    .white-font {
+      color: white;
+      margin-bottom: 5px;
+    }
+
+    .black-font {
+      //font-size: 20px;
+      //color: black;
+    }
   }
 
-  @media all and (max-width: 450px) {
+  @media screen and (max-width: 285px), screen and (max-height: 300px) {
+    .text-area {
+      font-size: 30px;
+      padding: 5px;
+    }
 
+    .remis {
+      font-size: 40px;
+      color: white;
+    }
+
+    .time {
+      //font-size: 20px;
+      margin-top: 2px;
+    }
+
+    .white-font {
+      color: white;
+      margin-bottom: 2px;
+    }
+
+    .black-font {
+      //font-size: 20px;
+      //color: black;
+    }
   }
 
-  @media all and (max-width: 300px) {
+  @media screen and (max-width: 235px), screen and (max-height: 240px) {
+    .text-area {
+      font-size: 20px;
+      padding: 4px;
+    }
 
+    .remis {
+      font-size: 25px;
+      color: white;
+    }
+
+    .time {
+      //font-size: 10px;
+      margin-top: 2px;
+    }
+
+    .white-font {
+      color: white;
+      margin-bottom: 2px;
+    }
+
+    .black-font {
+      //font-size: 10px;
+      //color: black;
+    }
   }
 
-  @media all and (max-width: 200px) {
+  @media screen and (max-width: 185px), screen and (max-height: 190px) {
+    .text-area {
+      font-size: 15px;
+      padding: 3px;
+    }
 
+    .remis {
+      font-size: 20px;
+      color: white;
+    }
+
+    .time {
+      //font-size: 10px;
+      margin-top: 1px;
+    }
+
+    .white-font {
+      color: white;
+      margin-bottom: 1px;
+    }
+
+    .black-font {
+      //font-size: 10px;
+      //color: black;
+    }
   }
+
+
 }
-
 
 
 .hideWin {

@@ -1,20 +1,41 @@
 
 .popup_inner {
-  //height: 220px;
+  //width: 50vw;
+  //height: 25vw;
+  //max-height: 25vh;
+  //max-width: 50vh;
 
   .text-area {
+    font-size: 80px;
 
+    .white-font {
+      color: white;
+      margin-bottom: 10px;
+    }
+
+    .black-font {
+      font-size: 70px;
+      color: black;
+    }
   }
 
   .figure-list {
-    //margin-bottom: 7px;
     //border-bottom: solid #51A351;
+    margin-top: 15px;
 
     img {
       width: 8vw;
       height: 8vw;
       max-height: 8vh;
       max-width: 8vh;
+    }
+
+    .black-hover {
+      border-bottom: solid #51A351;
+    }
+
+    .white-hover {
+      border-bottom: solid #51A351;
     }
 
     .black-hover:hover {
@@ -28,26 +49,157 @@
     }
   }
 
-  @media all and (max-width: 990px) {
 
+  @media screen and (max-width: 915px), screen and (max-height: 900px) {
+    .text-area {
+      font-size: 60px;
 
+      .white-font {
+        color: white;
+        margin-bottom: 10px;
+      }
+
+      .black-font {
+        font-size: 50px;
+        color: black;
+      }
+    }
+
+    .figure-list {
+      margin-top: 13px;
+    }
   }
 
-  @media all and (max-width: 640px) {
+  @media screen and (max-width: 685px), screen and (max-height: 685px) {
+    .text-area {
+      font-size: 40px;
 
+      .white-font {
+        color: white;
+        margin-bottom: 10px;
+      }
+
+      .black-font {
+        font-size: 32px;
+        color: black;
+      }
+    }
+
+    .figure-list {
+      margin-top: 11px;
+    }
   }
 
-  @media all and (max-width: 450px) {
+  @media screen and (max-width: 485px), screen and (max-height: 500px) {
+    .text-area {
+      font-size: 30px;
 
+      .white-font {
+        color: white;
+        margin-bottom: 10px;
+      }
+
+      .black-font {
+        font-size: 22px;
+        color: black;
+      }
+    }
+
+    .figure-list {
+      margin-top: 10px;
+    }
   }
 
-  @media all and (max-width: 300px) {
+  @media screen and (max-width: 385px), screen and (max-height: 400px) {
+    .text-area {
+      font-size: 20px;
 
+      .white-font {
+        color: white;
+        margin-bottom: 10px;
+      }
+
+      .black-font {
+        font-size: 12px;
+        color: black;
+      }
+    }
+
+    .figure-list {
+      margin-top: 9px;
+    }
   }
 
-  @media all and (max-width: 200px) {
+  @media screen and (max-width: 285px), screen and (max-height: 300px) {
+    .text-area {
+      font-size: 15px;
 
+      .white-font {
+        color: white;
+        margin-bottom: 10px;
+      }
+
+      .black-font {
+        font-size: 11px;
+        color: black;
+      }
+    }
+
+    .figure-list {
+      margin-top: 7px;
+    }
   }
+
+  @media screen and (max-width: 235px), screen and (max-height: 240px) {
+    .text-area {
+      font-size: 10px;
+
+      .white-font {
+        color: white;
+        margin-bottom: 10px;
+      }
+
+      .black-font {
+        font-size: 7px;
+        color: black;
+      }
+    }
+
+    .figure-list {
+      margin-top: 5px;
+    }
+  }
+
+  @media screen and (max-width: 185px), screen and (max-height: 190px) {
+    .text-area {
+      font-size: 5px;
+
+      .white-font {
+        color: white;
+        margin-bottom: 10px;
+      }
+
+      .black-font {
+        font-size: 4px;
+        color: black;
+      }
+    }
+    .figure-list {
+      .black-hover {
+        border-bottom: none;
+      }
+
+      .white-hover {
+        border-bottom: none;
+      }
+    }
+
+    .figure-list {
+      margin-top: 3px;
+    }
+  }
+
+
 
 }
 

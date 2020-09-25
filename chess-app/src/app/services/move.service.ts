@@ -57,7 +57,10 @@ export class MoveService {
         }
 
       } else {
-        this.toast.warning(validateResponse.text)
+        if(validateResponse.text == 'Check!'){
+          this.toast.warning(validateResponse.text)
+        }
+
         // this.printErrorUnitTestsForApi(moveObj);
       }
     });
