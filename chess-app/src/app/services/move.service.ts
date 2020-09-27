@@ -10,7 +10,7 @@ import {take} from "rxjs/operators";
 })
 export class MoveService {
 
-  public botInfinity: boolean = true;
+  public botInfinity: boolean = false;
 
   public lastMoveFields$: BehaviorSubject<any> = new BehaviorSubject<any>(undefined);
   public botEnabled: boolean = true;
@@ -54,6 +54,8 @@ export class MoveService {
     this.httpService.doMove(moveObj).pipe(take(1)).subscribe(validateResponse => {
       this.isMoving$.next(false);
       this.isGameStopped$.next(false);
+
+      console.log(validateResponse);
 
       if (validateResponse.state) {
         if (this.botEnabled) {

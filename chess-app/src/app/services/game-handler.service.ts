@@ -24,9 +24,10 @@ export class GameHandlerService {
 
     this.moveService.isMoving$.subscribe(movingState => {
       if (!movingState) {
-        this.reloadGamePicture();
+       this.refreshBoardEvent$.emit(true);
       }
     });
+
 
     this.refreshBoardEvent$.subscribe(state => {
       if (state) {
@@ -42,7 +43,7 @@ export class GameHandlerService {
       this.moveService.lastMoveFields$.next(responsePicture.board.moveHistory[Object.keys(responsePicture.board.moveHistory).length - 1]);
 
       this.validateGameSate(responsePicture.gameState);
-      // this.printSuccessUnitTestsForApi(responsePicture.board.moveHistory);
+      this.printSuccessUnitTestsForApi(responsePicture.board.moveHistory);
     });
   }
 

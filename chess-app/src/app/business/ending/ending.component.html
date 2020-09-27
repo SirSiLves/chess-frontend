@@ -37,13 +37,11 @@
                 {{this.remisReason}}
               </div>
             </div>
-            <div class="time">
-              <div
-                [ngClass]="(this.winnerColor == 'BLACK')? 'black-font':'white-font'">
+            <div class="white-font">
+              <div>
                 Your needed time
               </div>
-              <div
-                [ngClass]="(this.winnerColor == 'BLACK')? 'time white-font':'time black-font'">
+              <div class="black-font">
                 {{this.gameHandlerService.duration}}
               </div>
             </div>
