@@ -11,6 +11,7 @@ import {Subject} from "rxjs";
 export class GameHandlerService {
 
   public refreshBoardEvent$: EventEmitter<boolean> = new EventEmitter<boolean>();
+  public resetClockEvent$: EventEmitter<boolean> = new EventEmitter<boolean>();
   public gameState$: Subject<any> = new Subject();
   public isGameEnded: boolean = false;
   public duration: string;
@@ -21,8 +22,8 @@ export class GameHandlerService {
               private moveService: MoveService) {
 
 
-    this.moveService.moveDoneEvent$.subscribe(state => {
-      if (state) {
+    this.moveService.isMoving$.subscribe(movingState => {
+      if (!movingState) {
         this.reloadGamePicture();
       }
     });
@@ -50,6 +51,7 @@ export class GameHandlerService {
     const remis = gameState.remis;
 
     if (checkMate || remis) {
+      this.moveService.isGameStopped$.next(true)
       this.isGameEnded = true;
       this.gameState$.next(gameState);
     }

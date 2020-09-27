@@ -29,10 +29,14 @@ export class ClockComponent implements OnInit {
       }
     });
 
-    this.moveService.moveDoneEvent$.subscribe(moveEvent => {
+    this.moveService.isMoving$.subscribe(moveEvent => {
       this.start();
     });
 
+
+    this.gameHandlerService.resetClockEvent$.subscribe(event => {
+      this.reset();
+    });
   }
 
   start() {

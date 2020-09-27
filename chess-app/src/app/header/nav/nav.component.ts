@@ -3,6 +3,7 @@ import {HttpService} from "../../services/http.service";
 import {ToastrService} from "ngx-toastr";
 import {MoveService} from "../../services/move.service";
 import {GameHandlerService} from "../../services/game-handler.service";
+import {Subscription} from "rxjs";
 
 
 
@@ -13,7 +14,8 @@ import {GameHandlerService} from "../../services/game-handler.service";
 })
 export class NavComponent implements OnInit {
 
-  private tryCount: number = 0;
+  private isMovingSubscription: Subscription;
+
 
   constructor(private httpService: HttpService,
               private toast: ToastrService,
@@ -23,11 +25,11 @@ export class NavComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.gameHandlerService.gameState$.subscribe(state => {
-      if(state) {
-        this.moveService.botInfinityEnabled = false;
-      }
-    });
+    // this.moveService.isGameStopped$.subscribe(gameClickedEvent => {
+    //   console.log("DEBUG");
+    //   console.log(gameClickedEvent);
+    // });
+
   }
 
   handleBot(): void {
@@ -36,23 +38,45 @@ export class NavComponent implements OnInit {
 
 
   createGame(): void {
-    this.moveService.botInfinityEnabled = false;
+    this.moveService.isGameStopped$.next(true);
 
-    setTimeout(() => {
-      if (!this.moveService.botIsMoving || this.tryCount >= 1000) {
+    this.isMovingSubscription = this.moveService.isMoving$.subscribe(isMoving => {
+      if(!isMoving){
         this.httpService.initializeGame().subscribe(responseInitialize => {
-          this.gameHandlerService.isGameEnded = false;
-          this.moveService.botInfinityEnabled = true;
           this.gameHandlerService.refreshBoardEvent$.emit(true);
+          this.gameHandlerService.resetClockEvent$.emit(true);
           this.toast.success(responseInitialize);
+
+          this.gameHandlerService.isGameEnded = false;
+          this.isMovingSubscription.unsubscribe();
         });
       }
-      else {
-        this.createGame();
-        this.tryCount++;
-      }
-    }, 100);
+    });
+
+
+
+
+    // setTimeout(() => {
+    //   if (!this.moveService.botIsMoving || this.tryCount >= 1000) {
+    //     this.httpService.initializeGame().subscribe(responseInitialize => {
+    //       this.gameHandlerService.isGameEnded = false;
+    //       this.gameHandlerService.refreshBoardEvent$.emit(true);
+    //       this.gameHandlerService.newGameEvent$.emit(true);
+    //
+    //       this.moveService.botInfinity = true;
+    //       this.toast.success(responseInitialize);
+    //     });
+    //   }
+    //   else {
+    //     this.createGame();
+    //     this.tryCount++;
+    //   }
+    // }, 750);
   }
 
+
+  initNewGame() {
+
+  }
 
 }

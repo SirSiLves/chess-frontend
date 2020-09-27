@@ -10,28 +10,32 @@ import {take} from "rxjs/operators";
 })
 export class MoveService {
 
-  public botInfinityEnabled: boolean = true;
+  public botInfinity: boolean = true;
+
   public lastMoveFields$: BehaviorSubject<any> = new BehaviorSubject<any>(undefined);
   public botEnabled: boolean = true;
-  public botIsMoving: boolean = false;
-  public doBotMoveEvent$:  EventEmitter<boolean> = new EventEmitter<boolean>();
-  public moveDoneEvent$:  EventEmitter<boolean> = new EventEmitter<boolean>();
+  public doBotMoveEvent$: EventEmitter<boolean> = new EventEmitter<boolean>();
+  public isMoving$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
+  public isGameStopped$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
 
   constructor(private httpService: HttpService,
               private toast: ToastrService) {
 
     this.doBotMoveEvent$.subscribe(state => {
-      if(state) this.doBotMove();
+      if (state) {
+        this.doBotMove();
+      }
     });
-
   }
 
 
   doInfinityBotLoop(): void {
     setTimeout(() => {
-      if (this.botInfinityEnabled && this.botEnabled) {
-        if(!this.botIsMoving) this.doBotMoveEvent$.emit(true);
+      if (!this.isGameStopped$.getValue()) {
+        if (!this.isMoving$.getValue()) {
+          this.doBotMoveEvent$.emit(true);
+        }
         this.doInfinityBotLoop();
       }
     }, 250);
@@ -45,19 +49,24 @@ export class MoveService {
       targetField: targetField.fieldDesignation
     }
 
-    this.httpService.doMove(moveObj).pipe(take(1)).subscribe(validateResponse => {
-      if (validateResponse.state) {
-        this.moveDoneEvent$.emit(true);
+    this.isMoving$.next(true);
 
-        if(this.botInfinityEnabled && this.botEnabled){
-          this.doInfinityBotLoop();
-        }
-        else if (this.botEnabled) {
+    this.httpService.doMove(moveObj).pipe(take(1)).subscribe(validateResponse => {
+      this.isMoving$.next(false);
+      this.isGameStopped$.next(false);
+
+      if (validateResponse.state) {
+        if (this.botEnabled) {
           this.doBotMoveEvent$.emit(true);
+
+          if (this.botInfinity) {
+            this.doInfinityBotLoop();
+          }
+
         }
 
       } else {
-        if(validateResponse.text == 'Check!'){
+        if (validateResponse.text == 'Check!') {
           this.toast.warning(validateResponse.text)
         }
 
@@ -67,10 +76,9 @@ export class MoveService {
   }
 
   doBotMove(): void {
-    this.botIsMoving = true;
+    this.isMoving$.next(true);
     this.httpService.doBotMove().subscribe(responseBotMove => {
-      this.moveDoneEvent$.emit(true);
-      this.botIsMoving = false;
+      this.isMoving$.next(false);
     });
   }
 
