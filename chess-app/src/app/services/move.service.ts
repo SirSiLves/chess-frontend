@@ -17,6 +17,7 @@ export class MoveService {
   public doBotMoveEvent$: EventEmitter<boolean> = new EventEmitter<boolean>();
   public isMoving$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
   public isGameStopped$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public pawnChanging$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
 
   constructor(private httpService: HttpService,
@@ -55,10 +56,9 @@ export class MoveService {
       this.isMoving$.next(false);
       this.isGameStopped$.next(false);
 
-      console.log(validateResponse);
-
       if (validateResponse.state) {
-        if (this.botEnabled) {
+
+        if (this.botEnabled && this.pawnChanging$.getValue() == false) {
           this.doBotMoveEvent$.emit(true);
 
           if (this.botInfinity) {

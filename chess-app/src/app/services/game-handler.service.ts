@@ -36,6 +36,11 @@ export class GameHandlerService {
     });
   }
 
+  triggerBotMove(): void {
+    this.moveService.pawnChanging$.next(false);
+    this.moveService.doBotMoveEvent$.emit(true)
+  }
+
 
   reloadGamePicture(): void {
     this.httpService.getGamePicture().subscribe(responsePicture => {
@@ -43,7 +48,7 @@ export class GameHandlerService {
       this.moveService.lastMoveFields$.next(responsePicture.board.moveHistory[Object.keys(responsePicture.board.moveHistory).length - 1]);
 
       this.validateGameSate(responsePicture.gameState);
-      this.printSuccessUnitTestsForApi(responsePicture.board.moveHistory);
+      // this.printSuccessUnitTestsForApi(responsePicture.board.moveHistory);
     });
   }
 

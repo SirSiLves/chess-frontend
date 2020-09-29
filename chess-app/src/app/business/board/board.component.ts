@@ -53,7 +53,7 @@ export class BoardComponent implements OnInit {
   }
 
   onFieldClick(clickedField) {
-    if(!this.gameHandlerService.isGameEnded){
+    if(!this.gameHandlerService.isGameEnded && this.moveService.isMoving$.getValue() == false){
       this.clickCount++;
 
       if (this.clickCount == 1 && clickedField.figure != null) {

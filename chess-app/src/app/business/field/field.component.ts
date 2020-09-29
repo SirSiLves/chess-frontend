@@ -97,15 +97,12 @@ export class FieldComponent implements OnInit {
     if ((this.figure != null && this.figure.figureType == 'PAWN')
       && (this.field$.fieldDesignation[1] == 1 || this.field$.fieldDesignation[1] == 8)) {
 
+      //wait with bot move
+      this.moveService.pawnChanging$.next(true);
+
       // //CALL pawn-changer component
       this.figureColor$ = this.figure.figureColor;
       this.showPawnSelector = true;
-
-      // this.pawnSelectorEvent$.subscribe(state => {
-      //   if (state) {
-      //     this.showPawnSelector = false;
-      //   }
-      // });
 
     }
 
