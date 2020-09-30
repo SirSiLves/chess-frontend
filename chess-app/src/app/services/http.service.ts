@@ -25,9 +25,6 @@ export class HttpService {
   }
 
   public getGamePicture(): Observable<any> {
-    // HttpClient.get() returns the body of the response as an untyped JSON object.
-    // We specify the type as SomeClassOrInterfaceto get a typed result.
-    // https://stackoverflow.com/questions/35326689/how-to-catch-exception-correctly-from-http-request
     return this.http.get<IMatrix>('http://localhost:8080/api/game/getGamePicture', {
       withCredentials: true
     }).pipe(
@@ -55,7 +52,7 @@ export class HttpService {
       withCredentials: true,
     }).pipe(
       tap(data => {
-        // console.log('server data move:', data)
+        console.log('server data move:', data)
       }),
       catchError(this.handleError('validateMove'))
     );
