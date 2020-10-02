@@ -29,14 +29,14 @@ export class ClockComponent implements OnInit {
       }
     });
 
-    this.moveService.isMoving$.subscribe(moveEvent => {
-      this.start();
-    });
+    // this.moveService.isMoving$.subscribe(moveEvent => {
+    //   this.start();
+    // });
 
 
-    this.gameHandlerService.resetClockEvent$.subscribe(event => {
-      this.reset();
-    });
+    // this.gameHandlerService.resetClockEvent$.subscribe(event => {
+    //   this.reset();
+    // });
   }
 
   start() {
@@ -56,7 +56,8 @@ export class ClockComponent implements OnInit {
   stop() {
     this.running = false;
     this.timeStopped = new Date();
-    this.gameHandlerService.duration = this.time;
+    //TODO
+    // this.gameHandlerService.duration = this.time;
     clearInterval(this.started);
   }
 

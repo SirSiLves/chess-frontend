@@ -38,9 +38,9 @@ export class FieldComponent implements OnInit {
       this.markupPossibleField(possibleFields);
     });
 
-    this.lastMoveFieldsSubscription = this.moveService.lastMoveFields$.subscribe(lastMovesResponse => {
-      if (lastMovesResponse != undefined) this.markupLastMoveField(lastMovesResponse);
-    });
+    // this.lastMoveFieldsSubscription = this.moveService.lastMoveFields$.subscribe(lastMovesResponse => {
+    //   if (lastMovesResponse != undefined) this.markupLastMoveField(lastMovesResponse);
+    // });
 
     this.figureHandling();
 
@@ -48,7 +48,7 @@ export class FieldComponent implements OnInit {
 
   ngOnDestroy(): void {
     this.possibleFieldsSubscription.unsubscribe();
-    this.lastMoveFieldsSubscription.unsubscribe();
+    // this.lastMoveFieldsSubscription.unsubscribe();
   }
 
 
@@ -98,7 +98,7 @@ export class FieldComponent implements OnInit {
       && (this.field$.fieldDesignation[1] == 1 || this.field$.fieldDesignation[1] == 8)) {
 
       //wait with bot move
-      this.moveService.pawnChanging$.next(true);
+      // this.moveService.pawnChanging$.next(true);
 
       // //CALL pawn-changer component
       this.figureColor$ = this.figure.figureColor;

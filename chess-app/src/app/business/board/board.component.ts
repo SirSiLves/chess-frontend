@@ -45,7 +45,7 @@ export class BoardComponent implements OnInit {
       this.resetMarkup();
     });
 
-    this.gameHandlerService.refreshBoardEvent$.emit(true);
+    // this.gameHandlerService.refreshBoardEvent$.emit(true);
   }
 
   ngOnDestroy() {
@@ -53,7 +53,7 @@ export class BoardComponent implements OnInit {
   }
 
   onFieldClick(clickedField) {
-    if(!this.gameHandlerService.isGameEnded && this.moveService.isMoving$.getValue() == false){
+    if(!this.gameHandlerService.isGameEnded){
       this.clickCount++;
 
       if (this.clickCount == 1 && clickedField.figure != null) {
@@ -61,7 +61,7 @@ export class BoardComponent implements OnInit {
         this.sourceField = clickedField;
       } else if (this.clickCount == 2) {
         this.targetField = clickedField;
-        this.moveService.doMove(this.sourceField, this.targetField);
+        // this.moveService.doMove(this.sourceField, this.targetField);
         this.resetMarkup();
       } else {
         this.resetMarkup();
