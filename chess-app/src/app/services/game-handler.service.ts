@@ -1,9 +1,7 @@
-import {EventEmitter, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpService} from "./http.service";
 import {MatrixService} from "./matrix.service";
-import {MoveService} from "./move.service";
-import {take} from "rxjs/operators";
-import {Subject} from "rxjs";
+import {BehaviorSubject, Subject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -13,15 +11,16 @@ export class GameHandlerService {
   // public refreshBoardEvent$: EventEmitter<boolean> = new EventEmitter<boolean>();
   // public resetClockEvent$: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+  public isRefreshing$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
   public gameState$: Subject<any> = new Subject();
   public isGameEnded: boolean = false;
+  public gameBoard: any;
 
   // public duration: string;
 
 
   constructor(private httpService: HttpService,
-              private matrixService: MatrixService,
-              private moveService: MoveService) {
+              private matrixService: MatrixService) {
 
 
     // this.moveService.isMoving$.subscribe(movingState => {
@@ -29,6 +28,8 @@ export class GameHandlerService {
     //     this.refreshBoardEvent$.emit(true);
     //   }
     // });
+
+    this.reloadGamePicture();
 
 
     // this.refreshBoardEvent$.subscribe(state => {
@@ -47,11 +48,14 @@ export class GameHandlerService {
 
 
   reloadGamePicture(): void {
+    this.isRefreshing$.next(true);
+
     this.httpService.getGamePicture().subscribe(responsePicture => {
       this.matrixService.setMatrix(responsePicture.board.fieldMatrix);
       // this.moveService.lastMoveFields$.next(responsePicture.board.moveHistory[Object.keys(responsePicture.board.moveHistory).length - 1]);
-
       this.validateGameSate(responsePicture.gameState);
+      this.gameBoard = responsePicture.board;
+      this.isRefreshing$.next(false);
       // this.printSuccessUnitTestsForApi(responsePicture.board.moveHistory);
     });
   }
@@ -61,9 +65,9 @@ export class GameHandlerService {
     const remis = gameState.remis;
 
     if (checkMate || remis) {
+      this.gameState$.next(gameState);
+      this.isGameEnded = true;
       // this.moveService.isGameStopped$.next(true)
-      // this.isGameEnded = true;
-      // this.gameState$.next(gameState);
     }
   }
 

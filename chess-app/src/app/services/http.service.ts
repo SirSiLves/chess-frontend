@@ -93,6 +93,17 @@ export class HttpService {
     );
   }
 
+  switchPlayer(): Observable<any> {
+    return this.http.post('http://localhost:8080/api/game/switchPlayer' , {
+      withCredentials: true
+    }).pipe(
+      tap(data => {
+        // console.log('server data possible fields:', data)
+      }),
+      catchError(this.handleError('switchPlayer'))
+    );
+  }
+
 
   private handleError(operation: String) {
     return (err: any) => {

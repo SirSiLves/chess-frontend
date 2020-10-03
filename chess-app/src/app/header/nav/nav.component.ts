@@ -38,6 +38,13 @@ export class NavComponent implements OnInit {
   createGame(): void {
     this.httpService.initializeGame().subscribe(responseInitialize => {
       this.toast.success(responseInitialize);
+      this.gameHandlerService.isGameEnded = false;
+      this.gameHandlerService.reloadGamePicture();
+    });
+  }
+
+  switchPlayer(): void {
+    this.httpService.switchPlayer().subscribe(switchResponse => {
       this.gameHandlerService.reloadGamePicture();
     });
   }
