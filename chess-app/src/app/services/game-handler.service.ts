@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import {HttpService} from "./http.service";
 import {MatrixService} from "./matrix.service";
 import {BehaviorSubject, Subject} from "rxjs";
@@ -8,13 +8,11 @@ import {BehaviorSubject, Subject} from "rxjs";
 })
 export class GameHandlerService {
 
-  // public refreshBoardEvent$: EventEmitter<boolean> = new EventEmitter<boolean>();
-  // public resetClockEvent$: EventEmitter<boolean> = new EventEmitter<boolean>();
-
+  public resetClockEvent$: EventEmitter<boolean> = new EventEmitter<boolean>();
   public isRefreshing$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
   public gameState$: Subject<any> = new Subject();
   public moveHistory$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
-  public isGameEnded$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public isGameEnded$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
   public gameBoard: any;
   public whiteBottom: boolean = true;
 
@@ -25,28 +23,8 @@ export class GameHandlerService {
               private matrixService: MatrixService) {
 
 
-    // this.moveService.isMoving$.subscribe(movingState => {
-    //   if (!movingState) {
-    //     this.refreshBoardEvent$.emit(true);
-    //   }
-    // });
-
     this.reloadGamePicture();
-
-
-    // this.refreshBoardEvent$.subscribe(state => {
-    //   if (state) {
-    //     this.reloadGamePicture();
-    //   }
-    // });
   }
-
-  // triggerBotMove(): void {
-  //   if(this.moveService.botEnabled) {
-  //     this.moveService.pawnChanging$.next(false);
-  //     this.moveService.doBotMoveEvent$.emit(true)
-  //   }
-  // }
 
 
   reloadGamePicture(): void {
@@ -60,8 +38,6 @@ export class GameHandlerService {
       }
 
       this.moveHistory$.next(responsePicture.board.moveHistory[Object.keys(responsePicture.board.moveHistory).length - 1])
-
-      // this.moveService.lastMoveFields$.next(responsePicture.board.moveHistory[Object.keys(responsePicture.board.moveHistory).length - 1]);
 
       this.validateGameSate(responsePicture.gameState);
       this.gameBoard = responsePicture.board;
@@ -77,7 +53,6 @@ export class GameHandlerService {
     if (checkMate || remis) {
       this.gameState$.next(gameState);
       this.isGameEnded$.next(true);
-      // this.moveService.isGameStopped$.next(true)
     }
   }
 

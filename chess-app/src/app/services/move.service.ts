@@ -11,9 +11,10 @@ import {GameHandlerService} from "./game-handler.service";
 })
 export class MoveService {
 
-  public botEnabled: boolean = true;
   public isGameEndedSubscription: Subscription;
+  public botEnabled: boolean = true;
   public botIsMoving$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
 
   constructor(private httpService: HttpService,
               private toast: ToastrService,
@@ -21,7 +22,7 @@ export class MoveService {
 
 
     this.isGameEndedSubscription = this.gameHandlerService.isGameEnded$.subscribe(state => {
-      if(!state && !this.gameHandlerService.whiteBottom && this.botEnabled) {
+      if(state == null && !this.gameHandlerService.whiteBottom && this.botEnabled) {
         this.doBotMove();
       }
     });
@@ -42,6 +43,8 @@ export class MoveService {
 
 
   doMove(sourceField, targetField): void {
+
+    this.gameHandlerService.isGameEnded$.next(false);
 
     const moveObj = {
       sourceField: sourceField.fieldDesignation,
@@ -77,6 +80,8 @@ export class MoveService {
   }
 
   doBotMove(): void {
+
+    this.gameHandlerService.isGameEnded$.next(false);
 
     setTimeout(() => {
       if(this.gameHandlerService.isRefreshing$.getValue() == false) {
