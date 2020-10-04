@@ -13,7 +13,6 @@ import {Subscription} from "rxjs";
 })
 export class NavComponent implements OnInit {
 
-  private isMovingSubscription: Subscription;
 
 
   constructor(private httpService: HttpService,
@@ -33,20 +32,22 @@ export class NavComponent implements OnInit {
 
   handleBot(): void {
     this.moveService.botEnabled = !this.moveService.botEnabled
+    if(this.moveService.botEnabled) {
+      this.moveService.doBotMove();
+    }
   }
 
   createGame(): void {
     this.httpService.initializeGame().subscribe(responseInitialize => {
       this.toast.success(responseInitialize);
-      this.gameHandlerService.isGameEnded = false;
+      this.gameHandlerService.isGameEnded$.next(false);
       this.gameHandlerService.reloadGamePicture();
     });
   }
 
   switchPlayer(): void {
-    this.httpService.switchPlayer().subscribe(switchResponse => {
-      this.gameHandlerService.reloadGamePicture();
-    });
+    this.gameHandlerService.whiteBottom = !this.gameHandlerService.whiteBottom;
+    this.gameHandlerService.reloadGamePicture();
   }
 
 

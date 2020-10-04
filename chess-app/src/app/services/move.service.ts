@@ -12,28 +12,19 @@ import {GameHandlerService} from "./game-handler.service";
 export class MoveService {
 
   public botEnabled: boolean = true;
-
+  public isGameEndedSubscription: Subscription;
   public botIsMoving$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-
-
-  // public botInfinity: boolean = false;
-  //
-  // public lastMoveFields$: BehaviorSubject<any> = new BehaviorSubject<any>(undefined);
-  // public doBotMoveEvent$: EventEmitter<boolean> = new EventEmitter<boolean>();
-  // public isMoving$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
-  // public isGameStopped$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  // public pawnChanging$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-
 
   constructor(private httpService: HttpService,
               private toast: ToastrService,
               private gameHandlerService: GameHandlerService) {
 
-    // this.doBotMoveEvent$.subscribe(state => {
-    //   if (state) {
-    //     this.doBotMove();
-    //   }
-    // });
+
+    this.isGameEndedSubscription = this.gameHandlerService.isGameEnded$.subscribe(state => {
+      if(!state && !this.gameHandlerService.whiteBottom && this.botEnabled) {
+        this.doBotMove();
+      }
+    });
 
   }
 
@@ -57,11 +48,7 @@ export class MoveService {
       targetField: targetField.fieldDesignation
     }
 
-    // this.isMoving$.next(true);
-
     this.httpService.doMove(moveObj).pipe(take(1)).subscribe(validateResponse => {
-      // this.isMoving$.next(false);
-      // this.isGameStopped$.next(false);
 
       if (validateResponse.state) {
         this.gameHandlerService.reloadGamePicture();
@@ -90,11 +77,14 @@ export class MoveService {
   }
 
   doBotMove(): void {
+
     setTimeout(() => {
       if(this.gameHandlerService.isRefreshing$.getValue() == false) {
+        this.botIsMoving$.next(true);
         this.httpService.doBotMove().subscribe(responseBotMove => {
-          // this.isMoving$.next(false);
+
           this.gameHandlerService.reloadGamePicture();
+          this.botIsMoving$.next(false);
         });
       }
       else {
@@ -102,10 +92,6 @@ export class MoveService {
       }
 
     }, 250);
-
-
-    // this.isMoving$.next(true);
-
 
   }
 

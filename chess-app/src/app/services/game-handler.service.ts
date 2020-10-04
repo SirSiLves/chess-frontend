@@ -13,8 +13,10 @@ export class GameHandlerService {
 
   public isRefreshing$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
   public gameState$: Subject<any> = new Subject();
-  public isGameEnded: boolean = false;
+  public moveHistory$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  public isGameEnded$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public gameBoard: any;
+  public whiteBottom: boolean = true;
 
   // public duration: string;
 
@@ -51,8 +53,16 @@ export class GameHandlerService {
     this.isRefreshing$.next(true);
 
     this.httpService.getGamePicture().subscribe(responsePicture => {
-      this.matrixService.setMatrix(responsePicture.board.fieldMatrix);
+      if (this.whiteBottom) {
+        this.matrixService.setReverseMatrix(responsePicture.board.fieldMatrix);
+      } else {
+        this.matrixService.setMatrix(responsePicture.board.fieldMatrix);
+      }
+
+      this.moveHistory$.next(responsePicture.board.moveHistory[Object.keys(responsePicture.board.moveHistory).length - 1])
+
       // this.moveService.lastMoveFields$.next(responsePicture.board.moveHistory[Object.keys(responsePicture.board.moveHistory).length - 1]);
+
       this.validateGameSate(responsePicture.gameState);
       this.gameBoard = responsePicture.board;
       this.isRefreshing$.next(false);
@@ -66,7 +76,7 @@ export class GameHandlerService {
 
     if (checkMate || remis) {
       this.gameState$.next(gameState);
-      this.isGameEnded = true;
+      this.isGameEnded$.next(true);
       // this.moveService.isGameStopped$.next(true)
     }
   }

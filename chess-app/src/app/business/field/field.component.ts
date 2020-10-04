@@ -2,6 +2,7 @@ import {Component, OnInit, Input, EventEmitter, Output} from '@angular/core';
 import {CoordinaterService} from "../../services/coordinater.service";
 import {MoveService} from "../../services/move.service";
 import {BehaviorSubject, Subject, Subscription} from "rxjs";
+import {GameHandlerService} from "../../services/game-handler.service";
 
 
 @Component({
@@ -19,7 +20,7 @@ export class FieldComponent implements OnInit {
   @Output() figureColor$: string;
 
 
-  private lastMoveFieldsSubscription: Subscription;
+  private moveHistorySubscription: Subscription;
   private possibleFieldsSubscription: Subscription;
 
   public figure: any; //Map<string, any>;
@@ -28,7 +29,8 @@ export class FieldComponent implements OnInit {
 
 
   constructor(public coordinaterService: CoordinaterService,
-              public moveService: MoveService) {
+              public moveService: MoveService,
+              public gameHandlerService: GameHandlerService) {
   }
 
   ngOnInit(): void {
@@ -38,17 +40,18 @@ export class FieldComponent implements OnInit {
       this.markupPossibleField(possibleFields);
     });
 
-    // this.lastMoveFieldsSubscription = this.moveService.lastMoveFields$.subscribe(lastMovesResponse => {
-    //   if (lastMovesResponse != undefined) this.markupLastMoveField(lastMovesResponse);
-    // });
+    this.moveHistorySubscription = this.gameHandlerService.moveHistory$.subscribe(lastMovesResponse => {
+      if (lastMovesResponse != null) {
+        this.markupLastMoveField(lastMovesResponse);
+      }
+    });
 
     this.figureHandling();
-
   }
 
   ngOnDestroy(): void {
     this.possibleFieldsSubscription.unsubscribe();
-    // this.lastMoveFieldsSubscription.unsubscribe();
+    this.moveHistorySubscription.unsubscribe();
   }
 
 

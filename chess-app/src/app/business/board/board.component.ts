@@ -26,9 +26,7 @@ export class BoardComponent implements OnInit {
   private targetField: any;
 
   public boardMatrix$: any //{ column: any };
-  public coordinate: {
-    x: string[]; y: string[]
-  };
+  public coordinate$: BehaviorSubject<any>;
 
   constructor(private toast: ToastrService,
               private matrixService: MatrixService,
@@ -40,26 +38,22 @@ export class BoardComponent implements OnInit {
 
 
   ngOnInit() {
-    this.coordinate = this.matrixService.getCoordinate();
+    this.coordinate$ = this.matrixService.getCoordinate();
 
     this.matrixSubscription = this.matrixService.fieldMatrix$.subscribe(matrixData => {
       this.boardMatrix$ = matrixData;
       this.resetMarkup();
     });
-
-
-    // this.gameHandlerService.refreshBoardEvent$.emit(true);
   }
 
   ngOnDestroy() {
     this.matrixSubscription.unsubscribe();
   }
 
+
   onFieldClick(clickedField) {
 
-    console.log(this.gameHandlerService.gameBoard.lastPlayed);
-
-    if (!this.gameHandlerService.isGameEnded) {
+    if (!this.gameHandlerService.isGameEnded$.getValue()) {
       this.clickCount++;
 
       if (this.clickCount == 1 && clickedField.figure != null) {
@@ -86,6 +80,8 @@ export class BoardComponent implements OnInit {
     this.httpService.retrieveValidFields(clickedFieldObj).pipe(take(1)).subscribe(responsePossibleFields => {
       this.possibleFieldsEvent$.emit(responsePossibleFields);
       this.possibleFields = responsePossibleFields;
+
+      if(responsePossibleFields.length == 0) this.clickCount = 0;
     });
   }
 

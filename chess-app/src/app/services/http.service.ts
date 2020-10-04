@@ -59,7 +59,7 @@ export class HttpService {
   }
 
   retrieveValidFields(clickedField): Observable<any> {
-    return this.http.post('http://localhost:8080/api/validFields/getFields' , clickedField, {
+    return this.http.post('http://localhost:8080/api/validFields/getFields', clickedField, {
       withCredentials: true
     }).pipe(
       tap(data => {
@@ -70,7 +70,7 @@ export class HttpService {
   }
 
   doBotMove(): Observable<any> {
-    return this.http.get('http://localhost:8080/api/move/doBotMove', {
+    return this.http.post('http://localhost:8080/api/move/doBotMove', null, {
       withCredentials: true,
       responseType: 'text'
     }).pipe(
@@ -93,16 +93,16 @@ export class HttpService {
     );
   }
 
-  switchPlayer(): Observable<any> {
-    return this.http.post('http://localhost:8080/api/game/switchPlayer' , {
-      withCredentials: true
-    }).pipe(
-      tap(data => {
-        // console.log('server data possible fields:', data)
-      }),
-      catchError(this.handleError('switchPlayer'))
-    );
-  }
+  // switchPlayer(): Observable<any> {
+  //   return this.http.post('http://localhost:8080/api/game/switchPlayer', null, {
+  //     withCredentials: true
+  //   }).pipe(
+  //     tap(data => {
+  //       // console.log('server data possible fields:', data)
+  //     }),
+  //     catchError(this.handleError('switchPlayer'))
+  //   );
+  // }
 
 
   private handleError(operation: String) {
