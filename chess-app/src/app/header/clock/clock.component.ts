@@ -57,8 +57,6 @@ export class ClockComponent implements OnInit {
   stop() {
     this.running = false;
     this.timeStopped = new Date();
-    //TODO
-    // this.gameHandlerService.duration = this.time;
     clearInterval(this.started);
   }
 
