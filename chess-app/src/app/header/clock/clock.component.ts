@@ -25,6 +25,7 @@ export class ClockComponent implements OnInit {
   ngOnInit() {
     this.gameHandlerService.isGameEnded$.subscribe(state => {
       if (state) {
+        this.gameHandlerService.duration = this.time;
         this.stop();
       }
       else if(state != null && state == false) {

@@ -16,7 +16,7 @@ export class GameHandlerService {
   public gameBoard: any;
   public whiteBottom: boolean = true;
 
-  // public duration: string;
+  public duration: string;
 
 
   constructor(private httpService: HttpService,
