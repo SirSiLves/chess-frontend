@@ -25,9 +25,6 @@ export class HttpService {
   }
 
   public getGamePicture(): Observable<any> {
-    // HttpClient.get() returns the body of the response as an untyped JSON object.
-    // We specify the type as SomeClassOrInterfaceto get a typed result.
-    // https://stackoverflow.com/questions/35326689/how-to-catch-exception-correctly-from-http-request
     return this.http.get<IMatrix>('http://localhost:8080/api/game/getGamePicture', {
       withCredentials: true
     }).pipe(
@@ -62,7 +59,7 @@ export class HttpService {
   }
 
   retrieveValidFields(clickedField): Observable<any> {
-    return this.http.post('http://localhost:8080/api/validFields/getFields' , clickedField, {
+    return this.http.post('http://localhost:8080/api/validFields/getFields', clickedField, {
       withCredentials: true
     }).pipe(
       tap(data => {
@@ -73,7 +70,7 @@ export class HttpService {
   }
 
   doBotMove(): Observable<any> {
-    return this.http.get('http://localhost:8080/api/move/doBotMove', {
+    return this.http.post('http://localhost:8080/api/move/doBotMove', null, {
       withCredentials: true,
       responseType: 'text'
     }).pipe(
@@ -95,6 +92,17 @@ export class HttpService {
       catchError(this.handleError('doPawnChange'))
     );
   }
+
+  // switchPlayer(): Observable<any> {
+  //   return this.http.post('http://localhost:8080/api/game/switchPlayer', null, {
+  //     withCredentials: true
+  //   }).pipe(
+  //     tap(data => {
+  //       // console.log('server data possible fields:', data)
+  //     }),
+  //     catchError(this.handleError('switchPlayer'))
+  //   );
+  // }
 
 
   private handleError(operation: String) {

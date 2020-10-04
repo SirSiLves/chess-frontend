@@ -3,6 +3,7 @@ import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 import {HttpService} from './http.service';
 import {ToastrService} from 'ngx-toastr';
 import {take} from "rxjs/operators";
+import {GameHandlerService} from "./game-handler.service";
 
 
 @Injectable({
@@ -10,65 +11,66 @@ import {take} from "rxjs/operators";
 })
 export class MoveService {
 
-  public botInfinity: boolean = false;
-
-  public lastMoveFields$: BehaviorSubject<any> = new BehaviorSubject<any>(undefined);
+  public isGameEndedSubscription: Subscription;
   public botEnabled: boolean = true;
-  public doBotMoveEvent$: EventEmitter<boolean> = new EventEmitter<boolean>();
-  public isMoving$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
-  public isGameStopped$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  public pawnChanging$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public botIsMoving$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
 
   constructor(private httpService: HttpService,
-              private toast: ToastrService) {
+              private toast: ToastrService,
+              private gameHandlerService: GameHandlerService) {
 
-    this.doBotMoveEvent$.subscribe(state => {
-      if (state) {
+
+    this.isGameEndedSubscription = this.gameHandlerService.isGameEnded$.subscribe(state => {
+      if(state == null && !this.gameHandlerService.whiteBottom && this.botEnabled) {
         this.doBotMove();
       }
     });
+
   }
 
 
-  doInfinityBotLoop(): void {
-    setTimeout(() => {
-      if (!this.isGameStopped$.getValue()) {
-        if (!this.isMoving$.getValue()) {
-          this.doBotMoveEvent$.emit(true);
-        }
-        this.doInfinityBotLoop();
-      }
-    }, 250);
-  }
+  // doInfinityBotLoop(): void {
+  //   setTimeout(() => {
+  //     if (!this.isGameStopped$.getValue()) {
+  //       if (!this.isMoving$.getValue()) {
+  //         this.doBotMoveEvent$.emit(true);
+  //       }
+  //       this.doInfinityBotLoop();
+  //     }
+  //   }, 250);
+  // }
 
 
   doMove(sourceField, targetField): void {
+
+    this.gameHandlerService.isGameEnded$.next(false);
 
     const moveObj = {
       sourceField: sourceField.fieldDesignation,
       targetField: targetField.fieldDesignation
     }
 
-    this.isMoving$.next(true);
-
     this.httpService.doMove(moveObj).pipe(take(1)).subscribe(validateResponse => {
-      this.isMoving$.next(false);
-      this.isGameStopped$.next(false);
 
       if (validateResponse.state) {
+        this.gameHandlerService.reloadGamePicture();
 
-        if (this.botEnabled && this.pawnChanging$.getValue() == false) {
-          this.doBotMoveEvent$.emit(true);
-
-          if (this.botInfinity) {
-            this.doInfinityBotLoop();
-          }
-
+        if (this.botEnabled) {
+          this.doBotMove();
         }
 
+        // if (this.botEnabled && this.pawnChanging$.getValue() == false) {
+        //   this.doBotMoveEvent$.emit(true);
+        //
+        //   // if (this.botInfinity) {
+        //   //   this.doInfinityBotLoop();
+        //   // }
+        //
+        // }
+
       } else {
-        if (validateResponse.text == 'Check!') {
+        if (validateResponse.text == 'Check!' || validateResponse.text == 'Castling is not allowed') {
           this.toast.warning(validateResponse.text)
         }
 
@@ -78,10 +80,24 @@ export class MoveService {
   }
 
   doBotMove(): void {
-    this.isMoving$.next(true);
-    this.httpService.doBotMove().subscribe(responseBotMove => {
-      this.isMoving$.next(false);
-    });
+
+    this.gameHandlerService.isGameEnded$.next(false);
+
+    setTimeout(() => {
+      if(this.gameHandlerService.isRefreshing$.getValue() == false) {
+        this.botIsMoving$.next(true);
+        this.httpService.doBotMove().subscribe(responseBotMove => {
+
+          this.gameHandlerService.reloadGamePicture();
+          this.botIsMoving$.next(false);
+        });
+      }
+      else {
+        this.doBotMove();
+      }
+
+    }, 250);
+
   }
 
 

@@ -23,7 +23,7 @@
 
   <div class="topBordDescription">
     <ul class="ulX">
-      <li *ngFor="let x of coordinate.x">
+      <li *ngFor="let x of coordinate$.getValue().x">
         <div id="{{x + '_top'}}" class="coordinate"> {{x | uppercase}} </div>
       </li>
     </ul>
@@ -31,7 +31,7 @@
 
   <div class="rightBordDescription">
     <ul class="ulY">
-      <li *ngFor="let y of coordinate.y">
+      <li *ngFor="let y of coordinate$.getValue().y">
         <div id="{{y + '_right'}}" class="coordinate"> {{y | uppercase}} </div>
       </li>
     </ul>
@@ -39,7 +39,7 @@
 
   <div class="bottomBordDescription">
     <ul class="ulX">
-      <li *ngFor="let x of coordinate.x">
+      <li *ngFor="let x of coordinate$.getValue().x">
         <div id="{{x + '_bottom'}}" class="coordinate"> {{x | uppercase}} </div>
       </li>
     </ul>
@@ -47,7 +47,7 @@
 
   <div class="leftBordDescription">
     <ul class="ulY">
-      <li *ngFor="let y of coordinate.y">
+      <li *ngFor="let y of coordinate$.getValue().y">
         <div id="{{y + '_left'}}" class="coordinate"> {{y | uppercase}} </div>
       </li>
     </ul>

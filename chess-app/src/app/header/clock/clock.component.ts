@@ -23,19 +23,20 @@ export class ClockComponent implements OnInit {
 
 
   ngOnInit() {
-    this.gameHandlerService.gameState$.subscribe(state => {
-      if(state){
+    this.gameHandlerService.isGameEnded$.subscribe(state => {
+      if (state) {
+        this.gameHandlerService.duration = this.time;
         this.stop();
+      }
+      else if(state != null && state == false) {
+        this.start();
       }
     });
 
-    this.moveService.isMoving$.subscribe(moveEvent => {
-      this.start();
-    });
-
-
     this.gameHandlerService.resetClockEvent$.subscribe(event => {
-      this.reset();
+      if (event) {
+        this.reset();
+      }
     });
   }
 
@@ -56,7 +57,6 @@ export class ClockComponent implements OnInit {
   stop() {
     this.running = false;
     this.timeStopped = new Date();
-    this.gameHandlerService.duration = this.time;
     clearInterval(this.started);
   }
 
@@ -88,7 +88,7 @@ export class ClockComponent implements OnInit {
       this.zeroPrefix(hour, 2) + ":" +
       this.zeroPrefix(min, 2) + ":" +
       this.zeroPrefix(sec, 2); // + "." +
-      // this.zeroPrefix(ms, 1);
+    // this.zeroPrefix(ms, 1);
   };
 
 

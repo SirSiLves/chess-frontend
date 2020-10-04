@@ -24,6 +24,8 @@ import {FormsModule} from "@angular/forms";
 import { EndingComponent } from './business/ending/ending.component';
 import { ClockComponent } from './header/clock/clock.component';
 import { PawnPromotionComponent } from './business/pawn-promotion/pawn-promotion.component';
+import {MatIconModule} from "@angular/material/icon";
+import {MatButtonModule} from "@angular/material/button";
 
 @NgModule({
   declarations: [
@@ -52,7 +54,9 @@ import { PawnPromotionComponent } from './business/pawn-promotion/pawn-promotion
     ToastrModule.forRoot(),
     BrowserAnimationsModule,
     MatSlideToggleModule,
-    FormsModule
+    FormsModule,
+    MatIconModule,
+    MatButtonModule
   ],
   /* providers: [
     {
