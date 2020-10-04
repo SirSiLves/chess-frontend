@@ -7,6 +7,14 @@
     <!--    </div>-->
 
     <div class="">
+      <button type="button" class="btn btn-dark" (click)="this.createGame()">Create a new Game</button>
+    </div>
+
+    <div>
+      <app-clock></app-clock>
+    </div>
+
+    <div class="">
       <label class="switch">
         <input class="switch-input" type="checkbox" checked (click)="handleBot()"/>
         <span class="switch-label" data-on="BOT ON" data-off="BOT OFF"></span>
@@ -18,13 +26,8 @@
       <button type="button" class="btn btn-dark" (click)="this.switchPlayer()">Switch Player</button>
     </div>
 
-    <div class="">
-      <button type="button" class="btn btn-dark" (click)="this.createGame()">Create a new Game</button>
-    </div>
 
-    <div>
-      <app-clock></app-clock>
-    </div>
+
 
   </div>
 
