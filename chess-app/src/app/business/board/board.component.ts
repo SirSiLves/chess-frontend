@@ -53,7 +53,9 @@ export class BoardComponent implements OnInit {
 
   onFieldClick(clickedField) {
 
-    if (!this.gameHandlerService.isGameEnded$.getValue() == true) {
+    if ((this.gameHandlerService.isGameEnded$.getValue() == false || this.gameHandlerService.isGameEnded$.getValue() == null)
+      && this.moveService.botIsMoving$.getValue() == false) {
+
       this.clickCount++;
 
       if (this.clickCount == 1 && clickedField.figure != null) {
@@ -81,7 +83,7 @@ export class BoardComponent implements OnInit {
       this.possibleFieldsEvent$.emit(responsePossibleFields);
       this.possibleFields = responsePossibleFields;
 
-      if(responsePossibleFields.length == 0) this.clickCount = 0;
+      if (responsePossibleFields.length == 0) this.clickCount = 0;
     });
   }
 
