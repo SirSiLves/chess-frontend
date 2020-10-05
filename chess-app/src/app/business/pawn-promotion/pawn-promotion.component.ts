@@ -25,7 +25,7 @@ export class PawnPromotionComponent implements OnInit {
 
   doPawnChange(selectedPawn): void {
     this.httpService.doPawnChange(selectedPawn).subscribe(responseChange => {
-      this.gameHandlerService.reloadGamePicture();
+      this.moveService.pawnChanging$.next(false);
     });
   }
 

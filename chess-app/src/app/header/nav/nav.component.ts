@@ -38,6 +38,7 @@ export class NavComponent implements OnInit {
 
       this.gameHandlerService.isGameEnded$.next(null);
       this.gameHandlerService.resetClockEvent$.emit(true);
+      this.gameHandlerService.lastPlayer = null;
 
       this.httpService.initializeGame().subscribe(responseInitialize => {
         this.toast.success(responseInitialize);

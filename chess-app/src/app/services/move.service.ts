@@ -11,9 +11,9 @@ import {GameHandlerService} from "./game-handler.service";
 })
 export class MoveService {
 
-  public isGameEndedSubscription: Subscription;
   public botEnabled: boolean = true;
   public botIsMoving$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public pawnChanging$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
 
   constructor(private httpService: HttpService,
@@ -22,9 +22,11 @@ export class MoveService {
 
     this.gameHandlerService.doBotMoveEvent.subscribe(event => {
       if ((this.botEnabled == true)
+        && (this.gameHandlerService.isGameEnded$.getValue() == false || this.gameHandlerService.isGameEnded$.getValue() == null)
         && ((this.gameHandlerService.whiteBottom == true && this.gameHandlerService.lastPlayer == 'WHITE')
           || (this.gameHandlerService.whiteBottom == false && this.gameHandlerService.lastPlayer == 'BLACK')
           || (this.gameHandlerService.whiteBottom == false && this.gameHandlerService.lastPlayer == null))) {
+
         this.doBotMove();
       }
     });
@@ -83,11 +85,11 @@ export class MoveService {
     this.botIsMoving$.next(true);
 
     setTimeout(() => {
-      if (this.gameHandlerService.isRefreshing$.getValue() == false) {
+      if (this.gameHandlerService.isRefreshing$.getValue() == false && this.pawnChanging$.getValue() == false) {
         this.httpService.doBotMove().subscribe(responseBotMove => {
 
-          this.gameHandlerService.reloadGamePicture();
           this.botIsMoving$.next(false);
+          this.gameHandlerService.reloadGamePicture();
         });
       } else {
         this.doBotMove();

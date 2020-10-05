@@ -48,8 +48,9 @@ export class GameHandlerService {
       this.lastPlayer = responsePicture.board.lastPlayed;
       this.gameBoard = responsePicture.board;
 
-      this.doBotMoveEvent.emit(true);
       this.isRefreshing$.next(false);
+
+      this.doBotMoveEvent.emit(true);
 
       this.printSuccessUnitTestsForApi(responsePicture.board.moveHistory);
     });
