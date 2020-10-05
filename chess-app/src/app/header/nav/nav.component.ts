@@ -3,7 +3,6 @@ import {HttpService} from "../../services/http.service";
 import {ToastrService} from "ngx-toastr";
 import {MoveService} from "../../services/move.service";
 import {GameHandlerService} from "../../services/game-handler.service";
-import {Subscription} from "rxjs";
 
 
 @Component({
@@ -12,7 +11,6 @@ import {Subscription} from "rxjs";
   styleUrls: ['./nav.component.scss']
 })
 export class NavComponent implements OnInit {
-
 
 
   constructor(private httpService: HttpService,
@@ -32,23 +30,29 @@ export class NavComponent implements OnInit {
 
   handleBot(): void {
     this.moveService.botEnabled = !this.moveService.botEnabled
-    if(this.moveService.botEnabled) {
-      this.moveService.doBotMove();
-    }
   }
 
   createGame(): void {
-    this.httpService.initializeGame().subscribe(responseInitialize => {
-      this.toast.success(responseInitialize);
-      this.gameHandlerService.resetClockEvent$.emit(true);
+    if (this.gameHandlerService.isRefreshing$.getValue() == false
+      && this.moveService.botIsMoving$.getValue() == false) {
+
       this.gameHandlerService.isGameEnded$.next(null);
-      this.gameHandlerService.reloadGamePicture();
-    });
+      this.gameHandlerService.resetClockEvent$.emit(true);
+
+      this.httpService.initializeGame().subscribe(responseInitialize => {
+        this.toast.success(responseInitialize);
+        this.gameHandlerService.reloadGamePicture();
+      });
+    }
   }
 
   switchPlayer(): void {
-    this.gameHandlerService.whiteBottom = !this.gameHandlerService.whiteBottom;
-    this.gameHandlerService.reloadGamePicture();
+    if (this.gameHandlerService.isRefreshing$.getValue() == false
+      && this.moveService.botIsMoving$.getValue() == false) {
+
+      this.gameHandlerService.whiteBottom = !this.gameHandlerService.whiteBottom;
+      this.gameHandlerService.reloadGamePicture();
+    }
   }
 
 

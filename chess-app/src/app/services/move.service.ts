@@ -20,9 +20,11 @@ export class MoveService {
               private toast: ToastrService,
               private gameHandlerService: GameHandlerService) {
 
-
-    this.isGameEndedSubscription = this.gameHandlerService.isGameEnded$.subscribe(state => {
-      if(state == null && !this.gameHandlerService.whiteBottom && this.botEnabled) {
+    this.gameHandlerService.doBotMoveEvent.subscribe(event => {
+      if ((this.botEnabled == true)
+        && ((this.gameHandlerService.whiteBottom == true && this.gameHandlerService.lastPlayer == 'WHITE')
+          || (this.gameHandlerService.whiteBottom == false && this.gameHandlerService.lastPlayer == 'BLACK')
+          || (this.gameHandlerService.whiteBottom == false && this.gameHandlerService.lastPlayer == null))) {
         this.doBotMove();
       }
     });
@@ -56,10 +58,6 @@ export class MoveService {
       if (validateResponse.state) {
         this.gameHandlerService.reloadGamePicture();
 
-        if (this.botEnabled) {
-          this.doBotMove();
-        }
-
         // if (this.botEnabled && this.pawnChanging$.getValue() == false) {
         //   this.doBotMoveEvent$.emit(true);
         //
@@ -82,17 +80,16 @@ export class MoveService {
   doBotMove(): void {
 
     this.gameHandlerService.isGameEnded$.next(false);
+    this.botIsMoving$.next(true);
 
     setTimeout(() => {
-      if(this.gameHandlerService.isRefreshing$.getValue() == false) {
-        this.botIsMoving$.next(true);
+      if (this.gameHandlerService.isRefreshing$.getValue() == false) {
         this.httpService.doBotMove().subscribe(responseBotMove => {
 
           this.gameHandlerService.reloadGamePicture();
           this.botIsMoving$.next(false);
         });
-      }
-      else {
+      } else {
         this.doBotMove();
       }
 

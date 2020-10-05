@@ -30,7 +30,7 @@ export class BoardComponent implements OnInit {
 
   constructor(private toast: ToastrService,
               private matrixService: MatrixService,
-              public coordinaterService: CoordinaterService,
+              public coordinateService: CoordinaterService,
               private httpService: HttpService,
               private moveService: MoveService,
               private gameHandlerService: GameHandlerService) {

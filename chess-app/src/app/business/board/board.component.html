@@ -3,7 +3,7 @@
 
 <div class="boardLayout" *ngIf="boardMatrix$">
 
-  <div class="middleContainer" (mouseleave)="coordinaterService.removeMarkupDesignation()">
+  <div class="middleContainer" (mouseleave)="coordinateService.removeMarkupDesignation()">
     <ul>
       <li *ngFor="let column of boardMatrix$ | keyvalue">
         <div class="fieldColumn">

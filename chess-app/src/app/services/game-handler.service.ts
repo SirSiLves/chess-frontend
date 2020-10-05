@@ -15,6 +15,10 @@ export class GameHandlerService {
   public isGameEnded$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
   public gameBoard: any;
   public whiteBottom: boolean = true;
+  public lastPlayer: any;
+  public doBotMoveEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+
 
   public duration: string;
 
@@ -40,9 +44,14 @@ export class GameHandlerService {
       this.moveHistory$.next(responsePicture.board.moveHistory[Object.keys(responsePicture.board.moveHistory).length - 1])
 
       this.validateGameSate(responsePicture.gameState);
+
+      this.lastPlayer = responsePicture.board.lastPlayed;
       this.gameBoard = responsePicture.board;
+
+      this.doBotMoveEvent.emit(true);
       this.isRefreshing$.next(false);
-      // this.printSuccessUnitTestsForApi(responsePicture.board.moveHistory);
+
+      this.printSuccessUnitTestsForApi(responsePicture.board.moveHistory);
     });
   }
 

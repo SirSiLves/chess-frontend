@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {GameHandlerService} from "../../services/game-handler.service";
 import {HttpService} from "../../services/http.service";
+import {MoveService} from "../../services/move.service";
 
 
 @Component({
@@ -14,7 +15,8 @@ export class PawnPromotionComponent implements OnInit {
   @Input() figureColor$: string;
 
   constructor(private gameHandlerService: GameHandlerService,
-              private httpService: HttpService) {
+              private httpService: HttpService,
+              private moveService: MoveService) {
   }
 
   ngOnInit(): void {
