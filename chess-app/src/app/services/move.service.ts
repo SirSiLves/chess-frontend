@@ -86,8 +86,8 @@ export class MoveService {
 
     setTimeout(() => {
       if (this.gameHandlerService.isRefreshing$.getValue() == false && this.pawnChanging$.getValue() == false) {
-        this.httpService.doBotMove().subscribe(responseBotMove => {
 
+        this.httpService.doBotMove().subscribe(responseBotMove => {
           this.botIsMoving$.next(false);
           this.gameHandlerService.reloadGamePicture();
         });
