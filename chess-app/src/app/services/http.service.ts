@@ -1,19 +1,24 @@
-import {Injectable} from '@angular/core';
+import {ErrorHandler, Injectable, Injector} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpParams} from "@angular/common/http";
 import {catchError, tap} from "rxjs/operators";
 import {IMatrix} from "./matrix.service";
 import {ToastrService} from "ngx-toastr";
 import {Observable, throwError} from "rxjs";
+import * as Sentry from "@sentry/browser";
 
+
+Sentry.init({
+  dsn: "https://04cbdd38844d4649a320d96582bf0c45@o386758.ingest.sentry.io/5453737"
+});
 
 @Injectable({
   providedIn: 'root'
 })
-export class HttpService {
+export class HttpService implements ErrorHandler {
 
-  //TODO send errors to senety log analyse
 
-  constructor(private http: HttpClient, private toast: ToastrService) {
+  constructor(private http: HttpClient,
+              private toast: ToastrService) {
   }
 
   public getPreGamePicture(): Observable<any> {
@@ -93,33 +98,25 @@ export class HttpService {
     );
   }
 
-  // switchPlayer(): Observable<any> {
-  //   return this.http.post('http://localhost:8080/api/game/switchPlayer', null, {
-  //     withCredentials: true
-  //   }).pipe(
-  //     tap(data => {
-  //       // console.log('server data possible fields:', data)
-  //     }),
-  //     catchError(this.handleError('switchPlayer'))
-  //   );
-  // }
-
-
-  private handleError(operation: String) {
+  handleError(operation: String) {
     return (err: any) => {
       let errMsg = `error in ${operation}() retrieving ${"API URL"}`;
       //console.log(`${errMsg}:`, err)
 
+      const eventId = Sentry.captureException(err.originalError || err);
       if (err instanceof HttpErrorResponse) {
         console.log(`status: ${err.status}, ${err.statusText}`);
         if (err.error.message) {
           this.toast.error(err.error.message);
         } else {
           this.toast.error(errMsg);
+          Sentry.showReportDialog({ eventId });
         }
-
       }
+
       return throwError(err);
     }
   }
+
+
 }
