@@ -61,8 +61,10 @@ ul {
 
   .alertCheck {
     //background: red;
-    box-shadow: 0 0 100px 1px rgba(255, 0, 0, 0.5);
-    transition: all 500ms ease-out;
+    border: solid red;
+    box-shadow: 0 0 75px 20px rgba(255, 0, 0, 0.8);
+    //box-shadow: 0 0 100px 1px rgba(200, 0, 0, 0.7);
+    //transition: all 500ms ease-out;
   }
 }
 
