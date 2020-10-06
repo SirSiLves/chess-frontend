@@ -21,12 +21,14 @@ export class BoardComponent implements OnInit {
 
 
   private matrixSubscription: Subscription;
+  private gameStateSubscription: Subscription;
   private clickCount: number = 0;
   private sourceField: any;
   private targetField: any;
 
   public boardMatrix$: any //{ column: any };
   public coordinate$: BehaviorSubject<any>;
+  public alertCheck: boolean = false;
 
   constructor(private toast: ToastrService,
               private matrixService: MatrixService,
@@ -43,6 +45,15 @@ export class BoardComponent implements OnInit {
     this.matrixSubscription = this.matrixService.fieldMatrix$.subscribe(matrixData => {
       this.boardMatrix$ = matrixData;
       this.resetMarkup();
+    });
+
+    this.gameStateSubscription = this.gameHandlerService.gameState$.subscribe(state => {
+        if(state.check) {
+          this.alertCheck = true;
+        }
+        else {
+          this.alertCheck = false;
+        }
     });
   }
 

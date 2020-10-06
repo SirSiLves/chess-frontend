@@ -21,14 +21,16 @@ export class EndingComponent implements OnInit {
   ngOnInit(): void {
 
     this.gameHandlerService.gameState$.subscribe(gameState => {
-      this.showResult = true;
+      if(gameState.checkMate ||gameState.remis) {
+        this.showResult = true;
 
-      this.winner = gameState.checkMate;
-      this.remis = gameState.remis;
-      this.remisReason = gameState.remisReason;
+        this.winner = gameState.checkMate;
+        this.remis = gameState.remis;
+        this.remisReason = gameState.remisReason;
 
-      if(this.winner) {
-        this.winnerColor = gameState.winner;
+        if(this.winner) {
+          this.winnerColor = gameState.winner;
+        }
       }
     });
   }

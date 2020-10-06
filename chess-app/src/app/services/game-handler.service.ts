@@ -2,6 +2,7 @@ import {EventEmitter, Injectable} from '@angular/core';
 import {HttpService} from "./http.service";
 import {MatrixService} from "./matrix.service";
 import {BehaviorSubject, Subject} from "rxjs";
+import {ToastrService} from "ngx-toastr";
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,8 @@ export class GameHandlerService {
 
 
   constructor(private httpService: HttpService,
-              private matrixService: MatrixService) {
+              private matrixService: MatrixService,
+              private toast: ToastrService) {
 
 
     this.reloadGamePicture();
@@ -49,10 +51,9 @@ export class GameHandlerService {
       this.gameBoard = responsePicture.board;
 
       this.isRefreshing$.next(false);
-
       this.doBotMoveEvent.emit(true);
 
-      this.printSuccessUnitTestsForApi(responsePicture.board.moveHistory);
+      // this.printSuccessUnitTestsForApi(responsePicture.board.moveHistory);
     });
   }
 
@@ -63,6 +64,9 @@ export class GameHandlerService {
     if (checkMate || remis) {
       this.gameState$.next(gameState);
       this.isGameEnded$.next(true);
+    }
+    else {
+      this.gameState$.next(gameState);
     }
   }
 

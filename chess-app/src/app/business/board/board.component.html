@@ -4,7 +4,7 @@
 <div class="boardLayout" *ngIf="boardMatrix$">
 
   <div class="middleContainer" (mouseleave)="coordinateService.removeMarkupDesignation()">
-    <ul>
+    <ul [ngClass]="(this.alertCheck) ? 'alertCheck':''">
       <li *ngFor="let column of boardMatrix$ | keyvalue">
         <div class="fieldColumn">
           <ul *ngIf="column.value">

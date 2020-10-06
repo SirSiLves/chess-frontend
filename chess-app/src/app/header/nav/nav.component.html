@@ -14,6 +14,10 @@
       <app-clock></app-clock>
     </div>
 
+<!--    <div *ngIf="this.alertCheck" [ngClass]="(this.alertCheck) ? 'check':'hidden'">-->
+<!--      Check!-->
+<!--    </div>-->
+
     <div class="">
       <label class="switch">
         <input class="switch-input" type="checkbox" checked (click)="handleBot()"/>
@@ -26,9 +30,9 @@
       <button type="button" class="btn btn-dark" (click)="this.switchPlayer()">Switch Player</button>
     </div>
 
-
-
-
   </div>
 
 </nav>
+
+<div [ngClass]="(this.alertCheck) ? 'checkLine':'line'">
+</div>

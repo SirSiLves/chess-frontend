@@ -1,14 +1,27 @@
+.line {
+  box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.3);
+}
+
+.check {
+
+}
+
+.checkLine {
+  box-shadow: 0 0 10px 5px rgba(255, 0, 0, 0.3);
+  transition: all 0.5s ease-out;
+}
 
 .btn {
   border-radius: 0.3rem;
   border: solid 2px #282c34;
   margin-bottom: 5px;
 }
+
 .btn:hover {
   background: dodgerblue;
 }
 
-.container{
+.container {
   justify-content: space-around;
 }
 

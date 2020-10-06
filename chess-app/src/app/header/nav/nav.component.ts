@@ -3,6 +3,7 @@ import {HttpService} from "../../services/http.service";
 import {ToastrService} from "ngx-toastr";
 import {MoveService} from "../../services/move.service";
 import {GameHandlerService} from "../../services/game-handler.service";
+import {Subscription} from "rxjs";
 
 
 @Component({
@@ -12,6 +13,8 @@ import {GameHandlerService} from "../../services/game-handler.service";
 })
 export class NavComponent implements OnInit {
 
+  public alertCheck: boolean = false;
+  private gameStateSubscription: Subscription;
 
   constructor(private httpService: HttpService,
               private toast: ToastrService,
@@ -25,6 +28,16 @@ export class NavComponent implements OnInit {
     //   console.log("DEBUG");
     //   console.log(gameClickedEvent);
     // });
+
+    this.gameStateSubscription = this.gameHandlerService.gameState$.subscribe(state => {
+      if(state.check) {
+        this.alertCheck = true;
+      }
+      else {
+        this.alertCheck = false;
+      }
+      console.log(this.alertCheck);
+    });
 
   }
 
