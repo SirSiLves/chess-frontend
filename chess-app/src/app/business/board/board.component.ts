@@ -48,7 +48,7 @@ export class BoardComponent implements OnInit {
     });
 
     this.gameStateSubscription = this.gameHandlerService.gameState$.subscribe(state => {
-        if(state.check) {
+        if(state.check && !state.checkMate) {
           this.alertCheck = true;
         }
         else {

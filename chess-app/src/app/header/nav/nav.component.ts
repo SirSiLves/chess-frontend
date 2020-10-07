@@ -36,7 +36,6 @@ export class NavComponent implements OnInit {
       else {
         this.alertCheck = false;
       }
-      console.log(this.alertCheck);
     });
 
   }
