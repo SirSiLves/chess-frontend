@@ -68,6 +68,9 @@ export class HttpService implements ErrorHandler {
       withCredentials: true
     }).pipe(
       tap(data => {
+        if(data == null) {
+          this.initializeGame()
+        }
         // console.log('server data possible fields:', data)
       }),
       catchError(this.handleError('retrieveValidFields'))
