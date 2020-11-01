@@ -1,17 +1,17 @@
 
-# Stage 1
-FROM node:10-alpine as build-step
-RUN mkdir -p /app
-WORKDIR /app
-COPY package.json /app
+### STAGE 1: Build ###
+FROM node:12.7-alpine AS build
+WORKDIR /usr/src/app
+COPY package.json package-lock.json ./
 RUN npm install
-COPY . /app
-RUN npm run build --prod
+COPY . .
+RUN npm run build
 
-# Stage 2
+### STAGE 2: Run ###
 FROM nginx:1.17.1-alpine
-COPY --from=build-step /app /Users/yvesr/own/temp
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY --from=build /usr/src/app/dist/chess-app /usr/share/nginx/html
 
 
-# docker build -t chess-frontend-docker/chess-app .
-# docker save chess-frontend-docker/chess-app:latest -o "../../temp/chess-frontend-docker.tar" chess-frontend-docker/chess-app
+# docker build -t chess-frontend-docker:latest .
+# docker save chess-frontend-docker:latest -o "../../temp/chess-frontend-docker.tar" chess-frontend-docker
