@@ -5,6 +5,7 @@ import {IMatrix} from "./matrix.service";
 import {ToastrService} from "ngx-toastr";
 import {Observable, throwError} from "rxjs";
 import * as Sentry from "@sentry/browser";
+import { environment } from '../../environments/environment';
 
 
 Sentry.init({
@@ -22,7 +23,7 @@ export class HttpService implements ErrorHandler {
   }
 
   public getPreGamePicture(): Observable<any> {
-    return this.http.get('http://localhost:8081/api/game/getGamePicture', {
+    return this.http.get(environment.apiPath + '/game/getGamePicture', {
       withCredentials: true
     }).pipe(
       catchError(this.handleError('getPreGamePicture'))
@@ -30,41 +31,41 @@ export class HttpService implements ErrorHandler {
   }
 
   public getGamePicture(): Observable<any> {
-    return this.http.get<IMatrix>('http://localhost:8081/api/game/getGamePicture', {
+    return this.http.get<IMatrix>(environment.apiPath + '/game/getGamePicture', {
       withCredentials: true
     }).pipe(
       tap(data => {
-        console.log('server data gamePicture:', data)
+        // console.log('server data gamePicture:', data)
       }),
       catchError(this.handleError('getGamePicture'))
     );
   }
 
   initializeGame(): Observable<any> {
-    return this.http.get('http://localhost:8081/api/initialize/createGame', {
+    return this.http.get(environment.apiPath + '/initialize/createGame', {
       withCredentials: true,
       responseType: 'text'
     }).pipe(
       tap(data => {
-        console.log('server data initialize:', data)
+        // console.log('server data initialize:', data)
       }),
       catchError(this.handleError('initializeGame'))
     );
   }
 
   doMove(moveObj): Observable<any> {
-    return this.http.post('http://localhost:8081/api/move/doMove', moveObj, {
+    return this.http.post(environment.apiPath + '/move/doMove', moveObj, {
       withCredentials: true,
     }).pipe(
       tap(data => {
-        console.log('server data move:', data)
+        // console.log('server data move:', data)
       }),
       catchError(this.handleError('validateMove'))
     );
   }
 
   retrieveValidFields(clickedField): Observable<any> {
-    return this.http.post('http://localhost:8081/api/validFields/getFields', clickedField, {
+    return this.http.post(environment.apiPath + '/validFields/getFields', clickedField, {
       withCredentials: true
     }).pipe(
       tap(data => {
@@ -78,7 +79,7 @@ export class HttpService implements ErrorHandler {
   }
 
   doBotMove(): Observable<any> {
-    return this.http.post('http://localhost:8081/api/move/doBotMove', null, {
+    return this.http.post(environment.apiPath + '/move/doBotMove', null, {
       withCredentials: true,
       responseType: 'text'
     }).pipe(
@@ -90,7 +91,7 @@ export class HttpService implements ErrorHandler {
   }
 
   doPawnChange(selectedFigure): Observable<any> {
-    return this.http.post('http://localhost:8081/api/move/doPawnPromotion', selectedFigure, {
+    return this.http.post(environment.apiPath + '/move/doPawnPromotion', selectedFigure, {
       withCredentials: true,
       responseType: 'text'
     }).pipe(
