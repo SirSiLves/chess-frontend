@@ -22,7 +22,7 @@ export class HttpService implements ErrorHandler {
   }
 
   public getPreGamePicture(): Observable<any> {
-    return this.http.get('http://localhost:8080/api/game/getGamePicture', {
+    return this.http.get('http://localhost:8081/api/game/getGamePicture', {
       withCredentials: true
     }).pipe(
       catchError(this.handleError('getPreGamePicture'))
@@ -30,7 +30,7 @@ export class HttpService implements ErrorHandler {
   }
 
   public getGamePicture(): Observable<any> {
-    return this.http.get<IMatrix>('http://localhost:8080/api/game/getGamePicture', {
+    return this.http.get<IMatrix>('http://localhost:8081/api/game/getGamePicture', {
       withCredentials: true
     }).pipe(
       tap(data => {
@@ -41,7 +41,7 @@ export class HttpService implements ErrorHandler {
   }
 
   initializeGame(): Observable<any> {
-    return this.http.get('http://localhost:8080/api/initialize/createGame', {
+    return this.http.get('http://localhost:8081/api/initialize/createGame', {
       withCredentials: true,
       responseType: 'text'
     }).pipe(
@@ -53,7 +53,7 @@ export class HttpService implements ErrorHandler {
   }
 
   doMove(moveObj): Observable<any> {
-    return this.http.post('http://localhost:8080/api/move/doMove', moveObj, {
+    return this.http.post('http://localhost:8081/api/move/doMove', moveObj, {
       withCredentials: true,
     }).pipe(
       tap(data => {
@@ -64,7 +64,7 @@ export class HttpService implements ErrorHandler {
   }
 
   retrieveValidFields(clickedField): Observable<any> {
-    return this.http.post('http://localhost:8080/api/validFields/getFields', clickedField, {
+    return this.http.post('http://localhost:8081/api/validFields/getFields', clickedField, {
       withCredentials: true
     }).pipe(
       tap(data => {
@@ -78,7 +78,7 @@ export class HttpService implements ErrorHandler {
   }
 
   doBotMove(): Observable<any> {
-    return this.http.post('http://localhost:8080/api/move/doBotMove', null, {
+    return this.http.post('http://localhost:8081/api/move/doBotMove', null, {
       withCredentials: true,
       responseType: 'text'
     }).pipe(
@@ -90,7 +90,7 @@ export class HttpService implements ErrorHandler {
   }
 
   doPawnChange(selectedFigure): Observable<any> {
-    return this.http.post('http://localhost:8080/api/move/doPawnPromotion', selectedFigure, {
+    return this.http.post('http://localhost:8081/api/move/doPawnPromotion', selectedFigure, {
       withCredentials: true,
       responseType: 'text'
     }).pipe(
